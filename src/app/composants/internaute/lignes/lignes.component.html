@@ -1,0 +1,126 @@
+<!-- Banierre  -->
+<div class="banierre">
+    <div class="containerBanner">
+    </div>
+    <div class="chemin">
+        <h5>     
+            <a href="" routerLink="/accueil" class="ms-4"> Accueil</a> 
+            <i class="bi bi-circle-fill mx-3  icone"></i> 
+            <span>Lignes</span>
+        </h5>
+    </div>
+</div>
+<!-- Fin banierre  -->
+
+<!-- Contenu lignes  -->
+
+<div class="containerLigne container">
+    <div class="mb-5">
+        <p class="text-center fs-4">Vous voulez vous déplacer mais vous ne savez quel bus prendre ?</p>
+        <!-- <p class="text-center fs-4">Pas de panique.  Recherchez-le !</p> -->
+        <p class="text-center fs-4">Recherchez-le !</p>
+
+    </div>
+
+    <!-- Section rechercher itinéraires -->
+    <div class="sectionItineraire d-flex justify-content-center sectionEspace">
+        <form class="row g-3 ">
+            <!-- départ  -->
+            <div class="col-auto input-group-lg mb-3">
+                <input type="text" id="depart" class="form-control" placeholder="Depart...." >
+            </div>
+
+            <div class="col-auto input-group-lg mb-3">
+                <input type="text" id="arrivee" class="form-control" placeholder="Arrivée...." >
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-lg btnRechercher fw-bold mb-3">Rechercher</button>
+            </div>            
+        </form>
+    </div>
+
+    <!-- Section lignes de AFTU  -->
+    <div class="sectionLignesAFTU sectionEspace">
+        <!-- Recherhcer une ligne  -->
+        <div class="row sectionEspace ligneReseauSearch ">
+            <div class="col-sm-8">
+                <h3 class="titre">Lignes réseau AFTU </h3>
+            </div>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <!-- <input type="text" name="search" class="form-control" [(ngModel)]="filterValue" (input)="onSearch()"> -->
+                <input type="text" name="search" class="form-control" placeholder="Rechercher une ligne">
+                <button class="iconesearch input-group-text"><i class="bi bi-search"></i></button>
+              </div>
+            </div>  
+        </div>
+
+        <!-- Liste des lignes du réseau  -->
+        <div class="ligne row ">
+            <div class="col-md-4">
+                <div class="card text-center p-3 rounded-4">
+                    <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">1</span></p>
+                    <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                    <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                    <!-- Liste des sections  -->
+                    <div class="">
+                        <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                        <div class="sectionsConatiner container mb-3">
+                            <!-- section 1  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                            <!-- section 2  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                            <!-- section 3  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                            <!-- section 4  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                        </div>
+
+                        <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ 
+<!-- Modal Itinéraire complet-->
+<div class="modal fade modalItineraire" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div>
+      </div>
+    </div>
+  </div>

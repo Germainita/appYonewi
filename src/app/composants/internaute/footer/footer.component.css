@@ -1,0 +1,77 @@
+.footer{
+    /* margin-top: -5vh; */
+    border-top: 2px solid var(--base1);
+}
+.gridContainer{
+    display: grid;
+    grid-template-columns: 47% 53%;
+}
+
+.gridSection{
+    padding: 2vh 15vh;
+}
+
+.gridSection .titre{
+    color: var(--base2);
+}
+
+.firstSection {
+    border-right: 2px solid #222222;
+    /* background-color: aqua; */
+    /* padding-left: 40vh; */
+}
+
+.firstSection img{
+    width: 300px;
+    height: 100px;
+}
+
+.firstSection .iconeReseau button{
+    border: 1px solid var(--base1);
+    background-color: white;
+    border-radius: 100%;
+    padding: 1vh 1.7vh;
+    padding-bottom: 1.1vh;
+
+}
+
+.firstSection .iconeReseau button i{
+    color: var(--base1);
+}
+
+.secondSection .btnNewsletter{
+    background: var(--base2);
+    color: white;
+}
+
+.secondSection {
+    padding-top: 8vh;
+    /* background-color: blue; */
+}
+
+.secondSection ::placeholder {
+    color: rgba(0, 0, 0, 0.368);
+}
+
+.ligne{
+    margin: 0 auto;
+ }
+ 
+ .ligne a{
+     color: var(--base1);
+     text-decoration: none;
+     font-weight: bold;
+ }
+
+.copyright{
+    background-color: var(--base2);
+    color: white;
+    padding: 1vh 0;
+}
+
+/* Responsivité  */
+@media screen and (max-width:1000px){
+    .firstSection {
+        border-right: none;
+    }
+}

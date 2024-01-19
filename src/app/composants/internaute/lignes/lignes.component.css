@@ -1,0 +1,107 @@
+/* banierre  */
+.banierre .containerBanner{
+    background-image: url('../../../../assets/banniereLigne.png');
+    /* background-image: url('https://img.freepik.com/vecteurs-premium/gens-etaient-assis-arret-bus-moderne-illustration_88272-1462.jpg?size=626&ext=jpg&ga=GA1.1.1865161314.1704357552&semt=ais'); */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 500px;  
+}
+
+.chemin {
+    position: relative;
+    top: -10vh;
+    color: var(--base2);
+}
+
+.chemin a{
+    color: white;
+    text-decoration: none;
+}
+
+.chemin .icone{
+    color: var(--base1);
+    font-size: 2vh;
+}
+
+/* Conetnu de la page  */
+.sectionEspace{
+    margin: 10vh 0;
+}
+
+/* Rechercher itinéraires:  */
+.sectionItineraire .btnRechercher{
+    background-color: var(--base1);
+    color: white;
+}
+
+.sectionItineraire input{
+    border: 1px solid var(--base1);
+}
+
+/* Les titres  */
+.titre{
+    color: var(--base2);
+    font-weight: bold;
+}
+
+/* Recherche ligne  */
+.ligneReseauSearch input{
+    border-right-color: white;
+}
+.ligneReseauSearch .iconesearch{
+    background-color: white;
+    border-left-color: white;
+    color: var(--base2);
+}
+
+.ligne .card{
+    border: 1px solid var(--base2);
+}
+
+.ligne .numLigneContainer{
+    position: relative;
+    top: -6.5vh;
+}
+
+.ligne .numLigne{
+    border: 1px solid var(--base1);
+    /* width: 20%; */
+    border-radius: 100%;
+    padding: 1vh 3vh;
+    color: var(--base2);
+    background-color: white;
+}
+
+.ligne .itineraireLigne{
+    margin-top: -5vh;
+    color: var(--base1);
+}
+
+.btnItineraire{
+    color: white;
+    background-color: var(--base1);
+}
+
+/* Les section  */
+.sectionsConatiner{
+    max-height: 35vh;
+    overflow-y: scroll;
+    /* scrollbar-size: none; */
+}
+
+/* Pour firefox  */
+.sectionsConatiner{
+    scrollbar-color: white white ;
+}
+
+
+/* Pour les navigateurs chrome et edge  */
+.sectionsConatiner::-webkit-scrollbar{
+    display: none;
+}
+
+.modalItineraire{
+    margin: 30vh 0 ;
+    /* border-radius: 12vh; */
+}

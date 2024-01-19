@@ -1,0 +1,98 @@
+/* banierre  */
+.banierre .containerBanner{
+    background-image: url('../../../../assets/banniereApropos1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 500px;  
+}
+
+.chemin {
+    position: relative;
+    top: -10vh;
+    color: var(--base2);
+}
+
+.chemin a{
+    color: white;
+    text-decoration: none;
+}
+
+.chemin .icone{
+    color: var(--base1);
+    font-size: 2vh;
+}
+
+
+/* Conetnu de la page  */
+
+/* Les titres  */
+.titre{
+    color: var(--base2);
+    font-weight: bold;
+}
+
+.yoneWi{
+    color: var(--base1);
+}
+
+.sectionEspace{
+    margin: 10vh 0;
+}
+
+/* Section a propos de yone wi  */
+.apropos h5{
+    color: var(--base1);
+}
+
+
+.apropos img{
+    /* height: 85%; */
+    width: 100%;
+}
+
+/* Section notre mission  */
+.sectionMission .card {
+    min-height: 27vh;
+}
+.sectionMission .missionBox{
+    border: none;
+    background-color: var(--base1);
+    border-top-left-radius: 10vh;
+    border-bottom-right-radius: 10vh;
+    padding: 10vh 0;
+}
+
+/* Section Objectifs  */
+.cardObjectif {
+    min-height: 38vh;
+}
+.cardObjectif i{
+    position: relative;
+    top: -6vh;
+}
+
+.cardObjectif .iconeActive{
+    background-color: var(--base1);
+    color: white;
+}
+.cardObjectif .iconeTransparence{
+    background-color: var(--base2);
+    color: white;
+}
+
+.cardObjectif h5.active{
+    color: var(--base2);
+}
+
+.cardObjectif h5.inactive{
+    color: var(--base1);
+}
+
+
+
+@media screen and (max-width:1500px){
+    .cardObjectif i{
+        top: -10vh;
+    } 
+}

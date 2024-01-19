@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --base1: #2CCED2;
+    --base2: #F2743B;
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+@import "~bootstrap/dist/css/bootstrap.css"
+
+/* @import "~sweetalert2/src/sweetalert2.scss" */

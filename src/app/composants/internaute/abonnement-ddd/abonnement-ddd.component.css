@@ -1,0 +1,96 @@
+/* banierre  */
+.banierre .containerBanner{
+    background-image: url('../../../../assets/banniereDemDikk.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 500px;  
+}
+
+.contact{
+    position: relative;
+    top: -17vh;
+    left: 4vh;
+    background-color: var(--base2);
+    color: white;
+    font-weight: bold;
+}
+
+.contact a {
+    background-color: var(--base2);
+    color: white;
+    font-weight: bold;
+}
+
+/* Espaces entre les sections  */
+.sectionEspace{
+    margin: 10vh 0;
+}
+
+/* Les titres  */
+.titre{
+    color: var(--base2);
+    font-weight: bold;
+}
+
+
+/* Les offres d'abonnements  */
+.sectionOffres .sup{
+    height: 1vh;
+    width: 100%;
+    /* background-color: aqua; */
+    border-top-left-radius: 3vh;
+    border-top-right-radius: 3vh;
+}
+
+.sectionOffres .inf{
+    height: 1vh;
+    width: 100%;
+    /* background-color: aqua; */
+    border-bottom-left-radius: 3vh;
+    border-bottom-right-radius: 3vh;
+}
+
+.bgactive{
+    background-color: var(--base2);  
+}
+
+.textactive {
+    color: var(--base2);
+}
+
+.bginactive{
+    background-color: var(--base1); 
+}
+
+.textinactive {
+    color: var(--base1);
+}
+
+
+
+.sectionOffres .abonnement{
+    background-color: #F6F6F6;
+    border: none;
+    border-radius: 4vh;
+}
+ 
+.sectionOffres .btn{
+    color: white;
+    font-weight: bold;
+}
+
+/* Section comment ça marche  */
+.commentCaMarche {
+    background-color: var(--base1);
+    color: white;
+}
+
+.commentCaMarche img{
+    width: 100%;
+    min-height: 40vh;
+}
+
+.commentCaMarche i{
+    color: var(--base2);
+}

@@ -1,0 +1,38 @@
+.navbar{
+    border-bottom: 1px solid var(--base1);
+}
+
+/* Le logo  */
+.navbar .navbar-brand .logo{
+    height: 6vh;
+    /* width: 14vh; */
+}
+
+/* Le profil  */
+.navbar .profil img{
+    width: 6vh;
+    height: 6vh;
+    border-radius: 100%;
+}
+
+.collapse ul{
+    margin: 0 auto!important;
+}
+
+.collapse ul li a {
+    /* font-size: 3vh; */
+    margin: 0 3vh!important;
+    font-weight: 500;
+    color: black;
+}
+
+.btnConnexion{
+    background-color: var(--base2);
+    color: white;
+}
+
+/* .collapse ul li .active{
+    color: #F09E4D!important;
+} */
+/* Fin header  */
+/* ----------------------------------------------------- */

@@ -1,0 +1,34 @@
+/* banierre  */
+.banierre .containerBanner{
+    background-image: url('../../../../assets/politique.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 500px;  
+}
+
+/* Les titres  */
+.titre{
+    color: var(--base2);
+    font-weight: bold;
+}
+
+.yoneWi{
+    color: var(--base1);
+}
+
+.chemin {
+    position: relative;
+    top: -10vh;
+    color: var(--base2);
+}
+
+.chemin a{
+    color: white;
+    text-decoration: none;
+}
+
+.chemin .icone{
+    color: var(--base1);
+    font-size: 2vh;
+}

@@ -1,0 +1,39 @@
+<!-- Sidebar  -->
+<nav class="navbar sticky-top navbar-expand-lg bg-body shadow-sm">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand" href="#" routerLink="accueil"><img src="assets/yonewilogo.png" alt="Logo sama-gokh" class="logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" routerLink="/accueil">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" routerLink="/apropos">A propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" routerLink="/contact">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#"routerLink="/lignes">Lignes</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="#" routerLink="/mesprojets">Abonnements</a>
+                </li> -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Abonnements</a>
+                    <ul class="dropdown-menu text-center border-0 shadow-sm">
+                      <li class="mb-3 pe-5"><a class="dropdown-item" href="#" routerLink="/reseauAftu">Reseau AFTU</a></li>
+                      <li class="mb-3 pe-5"><a class="dropdown-item" href="#" routerLink="/reseauDDD">Reseau Dakar Dem Dikk</a></li>
+                    </ul>
+                </li>            
+            </ul>
+            <div class="profil">
+                <button class="btn btnConnexion">Se connecter</button>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Fin sidebar  -->
