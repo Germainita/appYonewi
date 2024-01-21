@@ -8,25 +8,26 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" routerLink="/accueil">Accueil</a>
+                    <a class="nav-link" href="#" routerLink="/accueil" routerLinkActive="active">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" routerLink="/apropos">A propos</a>
+                    <a class="nav-link" href="#" routerLink="/apropos" routerLinkActive="active">A propos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" routerLink="/contact">Contact</a>
+                    <a class="nav-link" href="#" routerLink="/contact" routerLinkActive="active">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#"routerLink="/lignes">Lignes</a>
+                    <a class="nav-link" href="#"routerLink="/lignes" routerLinkActive="active">Lignes</a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" href="#" routerLink="/mesprojets">Abonnements</a>
                 </li> -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Abonnements</a>
+                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" *ngIf="rla.isActive || rla2.isActive" class="activeAbonnements">Abonnements</a>
+                    <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" *ngIf="!rla.isActive && !rla2.isActive">Abonnements</a>
                     <ul class="dropdown-menu text-center border-0 shadow-sm">
-                      <li class="mb-3 pe-5"><a class="dropdown-item" href="#" routerLink="/reseauAftu">Reseau AFTU</a></li>
-                      <li class="mb-3 pe-5"><a class="dropdown-item" href="#" routerLink="/reseauDDD">Reseau Dakar Dem Dikk</a></li>
+                      <li class="mb-3 pe-5"><a class="dropdown-item abonnementItem" href="#" routerLink="/reseauAftu" routerLinkActive #rla="routerLinkActive">Reseau AFTU</a></li>
+                      <li class="mb-3 pe-5"><a class="dropdown-item abonnementItem" href="#" routerLink="/reseauDDD" routerLinkActive #rla2="routerLinkActive">Reseau Dakar Dem Dikk</a></li>
                     </ul>
                 </li>            
             </ul>

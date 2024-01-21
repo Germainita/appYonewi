@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <!-- Banierre  -->
 <div class="banierre">
     <div class="containerBanner">
@@ -13,7 +15,6 @@
 <!-- Fin banierre  -->
 
 <!-- Contenu lignes  -->
-
 <div class="containerLigne container">
     <div class="mb-5">
         <p class="text-center fs-4">Vous voulez vous déplacer mais vous ne savez quel bus prendre ?</p>
@@ -57,7 +58,93 @@
 
         <!-- Liste des lignes du réseau  -->
         <div class="ligne row ">
-            <div class="col-md-4">
+            <div class="col-md-4 mb-3">
+                <div class="card text-center p-3 rounded-4">
+                    <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">1</span></p>
+                    <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                    <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                    <!-- Liste des sections  -->
+                    <div class="">
+                        <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                        <div class="sectionsConatiner container mb-3">
+                            <!-- section 1  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                            <!-- section 2  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                            <!-- section 3  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                            <!-- section 4  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                        </div>
+
+                        <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center p-3 rounded-4">
+                    <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">1</span></p>
+                    <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                    <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                    <!-- Liste des sections  -->
+                    <div class="">
+                        <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                        <div class="sectionsConatiner container mb-3">
+                            <!-- section 1  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                            <!-- section 2  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                            <!-- section 3  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                            <!-- section 4  -->
+                            <div class="row mb-3">
+                                <div class="col-4">Terminus HLM Grand Yoff </div>
+                                <div class="col-4">Scat Urbam</div>
+                                <div class="col-4">150 FCFA</div>
+                            </div>
+                        </div>
+
+                        <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
                 <div class="card text-center p-3 rounded-4">
                     <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">1</span></p>
                     <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
@@ -101,26 +188,475 @@
                 </div>
             </div>
         </div>
+
+        <!-- Pagination  -->
+        <!-- Fin pagination  -->
+    </div>
+
+    <!-- Section lignes de Dakar Dem Dikk  -->
+    <div class="sectionLignesAFTU sectionEspace">
+        <!-- Recherhcer une ligne  -->
+        <div class="row sectionEspace ligneReseauSearch ">
+            <div class="col-sm-8">
+                <h3 class="titre">Lignes réseau Dakar Dem Dikk </h3>
+            </div>
+            <div class="col-sm-4">
+              <div class="input-group">
+                <!-- <input type="text" name="search" class="form-control" [(ngModel)]="filterValue" (input)="onSearch()"> -->
+                <input type="text" name="search" class="form-control" placeholder="Rechercher une ligne">
+                <button class="iconesearch input-group-text"><i class="bi bi-search"></i></button>
+              </div>
+            </div>  
+        </div>
+
+        <!-- Menu filtre pour le projet  -->
+        <div class="menuFiltre my-3">
+            <div class="filtreSection">
+                <button class="btn filtreActive fw-bold px-3" *ngIf="isUrbaine">Lignes Urbaines</button>
+                <button class="btn fw-bold px-3" *ngIf="!isUrbaine" (click)="showUrbaine()">Lignes Urbaines</button>
+            </div>
+
+            <div class="filtreSection">
+                <button class="btn filtreActive fw-bold px-3" *ngIf="isBanlieue">Lignes de banlieue</button>
+                <button class="btn fw-bold px-3" *ngIf="!isBanlieue" (click)="showBanlieue()">Lignes de banlieue</button>
+            </div>
+
+            <div class="filtreSection">
+                <button class="btn filtreActive fw-bold px-3" *ngIf="isAIBD">Lignes AIBD & Diamniadio </button>
+                <button class="btn fw-bold px-3" *ngIf="!isAIBD" (click)="showAIBD()">Lignes AIBD & Diamniadio </button> 
+            </div>
+        </div>
+
+        <!-- Les lignes urbaines  -->
+        <div class="lignesUrbaine sectionEspace" *ngIf="isUrbaine">
+            <!-- Liste des lignes du réseau  -->
+            <div class="ligne row ">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-3 rounded-4">
+                        <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">1</span></p>
+                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                        <!-- Liste des sections  -->
+                        <div class="">
+                            <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                            <div class="sectionsConatiner container mb-3">
+                                <!-- section 1  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 2  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 3  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 4  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-3 rounded-4">
+                        <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">1</span></p>
+                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                        <!-- Liste des sections  -->
+                        <div class="">
+                            <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                            <div class="sectionsConatiner container mb-3">
+                                <!-- section 1  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 2  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 3  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 4  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-3 rounded-4">
+                        <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">1</span></p>
+                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                        <!-- Liste des sections  -->
+                        <div class="">
+                            <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                            <div class="sectionsConatiner container mb-3">
+                                <!-- section 1  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 2  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 3  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 4  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Les lignes de banlieue  -->
+        <div class="lignesUrbaine sectionEspace" *ngIf="isBanlieue">
+            <!-- Liste des lignes du réseau  -->
+            <div class="ligne row ">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-3 rounded-4">
+                        <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">2</span></p>
+                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                        <!-- Liste des sections  -->
+                        <div class="">
+                            <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                            <div class="sectionsConatiner container mb-3">
+                                <!-- section 1  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 2  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 3  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 4  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-3 rounded-4">
+                        <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">5</span></p>
+                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                        <!-- Liste des sections  -->
+                        <div class="">
+                            <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                            <div class="sectionsConatiner container mb-3">
+                                <!-- section 1  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 2  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 3  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 4  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-3 rounded-4">
+                        <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">7</span></p>
+                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                        <!-- Liste des sections  -->
+                        <div class="">
+                            <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                            <div class="sectionsConatiner container mb-3">
+                                <!-- section 1  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 2  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 3  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 4  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Les lignes AIBD  -->
+        <div class="lignesUrbaine sectionEspace" *ngIf="isAIBD">
+            <!-- Liste des lignes du réseau  -->
+            <div class="ligne row ">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-3 rounded-4">
+                        <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">4</span></p>
+                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                        <!-- Liste des sections  -->
+                        <div class="">
+                            <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                            <div class="sectionsConatiner container mb-3">
+                                <!-- section 1  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 2  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 3  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 4  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-3 rounded-4">
+                        <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">6</span></p>
+                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                        <!-- Liste des sections  -->
+                        <div class="">
+                            <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                            <div class="sectionsConatiner container mb-3">
+                                <!-- section 1  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 2  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 3  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 4  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center p-3 rounded-4">
+                        <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">8</span></p>
+                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+
+                        <!-- Liste des sections  -->
+                        <div class="">
+                            <h5 class="sections fw-bold mb-3">Sections:</h5>
+
+                            <div class="sectionsConatiner container mb-3">
+                                <!-- section 1  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 2  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 3  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                                <!-- section 4  -->
+                                <div class="row mb-3">
+                                    <div class="col-4">Terminus HLM Grand Yoff </div>
+                                    <div class="col-4">Scat Urbam</div>
+                                    <div class="col-4">150 FCFA</div>
+                                </div>
+                            </div>
+
+                            <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
 
+<app-footer></app-footer>
  
 <!-- Modal Itinéraire complet-->
 <div class="modal fade modalItineraire" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content text-center">
+            
+            <div class="modal-body">
+                <h4 class="modal-title fs-5 titre mb-4" id="staticBackdropLabel">Ligne numéro 1</h4>
+                <h6 class="fw-bold">Itinéraire complet:</h6> 
+                
+                <p class="mb-5">
+                    <span></span>
+                    HLM Grand Yoff (Face Autoroute) => Scat Urbam => Liberté 6 => Derklé => Liberté 4 => Rond Point Jet d'eau => Bourguiba => Grand Dakar => Fass Médina => Sham => Avenue Blaise Diagne => Terminus Lat Dio
+                </p>         
+                <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>
+            </div>
+            
         </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>

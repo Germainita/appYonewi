@@ -8,7 +8,7 @@
 }
 
 .gridSection{
-    padding: 2vh 15vh;
+    padding: 2vh 15vh; 
 }
 
 .gridSection .titre{
@@ -24,6 +24,7 @@
 .firstSection img{
     width: 300px;
     height: 100px;
+    /* border: 1px solid magenta; */
 }
 
 .firstSection .iconeReseau button{
@@ -74,4 +75,31 @@
     .firstSection {
         border-right: none;
     }
+}
+
+@media screen and (width:1024px){
+    .gridSection{
+        padding: 2vh 0.5vh; 
+    }
+}
+@media screen and  (width: 1280px){
+    .gridSection{
+        padding: 2vh 5vh; 
+    }
+}
+@media screen and  (width: 912px){
+    .gridSection{
+        padding: 2vh 5vh; 
+    }
+}
+
+@media screen  and (max-width: 500px){
+    .gridSection{
+        padding: 2vh 5vh; 
+    }
+
+    .firstSection img{
+        width: 100%;
+    }
+
 }

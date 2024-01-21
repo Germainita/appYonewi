@@ -1,0 +1,58 @@
+.container{
+    padding: 10vh 30vh;
+}
+
+.containerContact{
+    background-image: url("../../../../assets/bgContact.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 80vh;
+    padding: 10vh 20vh;
+}
+
+.firstSection{
+    background-color: var(--base1);
+    min-height: 60vh;
+    color: white;
+}
+
+.icone{
+    position: relative;
+    top: 0.2vh !important;
+}
+
+.iconeContainer{
+    background-color: white;
+    color: var(--base2);
+}
+
+.require{
+    color: var(--base1);
+}
+
+.btnEnvoyer{
+    background-color: var(--base2);
+    color: white;
+}
+
+@media screen  and (max-width: 1000px){
+    .container{
+        padding: 10vh 5vh;
+    }
+
+    .containerContact{
+        padding: 10vh 10vh;
+    }
+}
+
+
+@media screen  and (max-width: 500px){
+    .container{
+        padding: 10vh 2vh;
+    }
+
+    .containerContact{
+        padding: 7vh 7vh;
+    }
+}

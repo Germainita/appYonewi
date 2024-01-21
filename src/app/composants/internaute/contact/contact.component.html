@@ -1,1 +1,50 @@
-<p>contact works!</p>
+<app-header></app-header>
+
+<!-- Contenu de contacter nous  -->
+<div class="container py-5">
+    <div class="containerContact rounded-5">
+        <div class="row bg-body rounded-4">
+            <div class="col-lg-5 rounded-4  firstSection py-4 px-3">
+                <h3 class="fw-bold text-center">Contactez-nous</h3>
+                <p class="mb-4 fs-5">Envoyez votre message.
+                    Notre équipe vous répondra dans mois de 24h
+                </p>
+
+                <p class="mb-4 fs-6"><i class="bi bi-telephone-fill me-3"></i> <span>77 777 77 77 </span> </p>
+                <p class="mb-4 fs-6"><i class="bi bi-envelope-fill me-3"></i> <span>yonewi.sn@gmail.com</span></p>
+
+                <!-- Les icones  -->
+                <p class="text-center mt-5">
+                    <span class="rounded-circle px-2 py-2 border mx-2 iconeContainer"><i class="bi bi-instagram fs-5 icone"></i></span>
+                    <span class="rounded-circle px-2 py-2 border mx-2 iconeContainer"><i class="bi bi-twitter fs-5 icone"></i></span>
+                    <span class="rounded-circle px-2 py-2 border mx-2 iconeContainer"><i class="bi bi-facebook fs-5 icone"></i></span>
+                    <span class="rounded-circle px-2 py-2 border mx-2 iconeContainer"><i class="bi bi-linkedin fs-5 icone"></i></span>
+                </p>
+            </div>
+
+            <div class="col-lg-7 bg-body secondSection rounded-4 py-4 px-3">
+                <form action="">
+                    <div class="mb-4">
+                        <label for="exampleFormControlInput1" class="form-label">Email: <span class="require">*</span></label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ...">
+                    </div>
+                    <div class="mb-4">
+                        <label for="exampleFormControlInput1" class="form-label">Sujet: <span class="require">*</span></label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Votre sujet ...">
+                    </div>
+                    <div class="mb-4">
+                        <label for="exampleFormControlTextarea1" class="form-label">Message: <span class="require">*</span></label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Votre suggestion ou question ..." rows="3"></textarea>
+                    </div>
+
+                    <div class="text-end">
+                        <button class=" btn btnEnvoyer fw-bold fs-5 px-5 py-2">Envoyer</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

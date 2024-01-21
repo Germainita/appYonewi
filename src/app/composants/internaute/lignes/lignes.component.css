@@ -105,3 +105,20 @@
     margin: 30vh 0 ;
     /* border-radius: 12vh; */
 }
+
+/* Lignes de Dakar Dem Dikk  */
+/* Menu filtre des projets  */
+.menuFiltre{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.menuFiltre .btn{
+    width: 100%;
+    border-bottom: 2px solid var(--base1);
+    border-radius: 0;
+}
+
+.menuFiltre .filtreActive{
+    background-color: var(--base1);
+    color: white;
+}

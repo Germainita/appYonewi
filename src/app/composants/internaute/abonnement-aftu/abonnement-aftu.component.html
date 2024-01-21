@@ -1,8 +1,11 @@
+<app-header></app-header>
+
 <!-- Banierre  -->
 <div class="banierre">
     <div class="containerBanner">
     </div>
-    <button class=" btn contact px-3 py-2">Contactez-nous</button>
+    <a href="" class="btn contact px-3 py-2" routerLink="/contact">Contactez-nous</a>        
+    <!-- <button class=" btn contact px-3 py-2">Contactez-nous</button> -->
     <!-- <div class="contact">
         <a href="" class="btn btnContact px-3 py-2">Contactez-nous</a>        
     </div> -->
@@ -39,7 +42,7 @@
                     <p class="mb-5">Toutes les lignes</p>
     
                     <div class="text-center">
-                        <a href="" class="btn bgactive px-3 py-2">Je m'abonne</a>        
+                        <a href="" class="btn bgactive px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement">Je m'abonne</a>        
                     </div>
                 </div>
                 <div class="px-4">
@@ -60,7 +63,7 @@
                     <p class="mb-5">Toutes les lignes</p>
     
                     <div class="text-center">
-                        <a href="" class="btn bginactive px-3 py-2">Je m'abonne</a>        
+                        <a href="" class="btn bginactive px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement">Je m'abonne</a>        
                     </div>
                 </div>
                 <div class="px-4">
@@ -81,7 +84,7 @@
                     <p class="mb-5">Toutes les lignes</p>
     
                     <div class="text-center">
-                        <a href="" class="btn bgactive px-3 py-2">Je m'abonne</a>        
+                        <a href="" class="btn bgactive px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement">Je m'abonne</a>        
                     </div>
                 </div>
                 <div class="px-4">
@@ -122,5 +125,24 @@
     
         </div>
 
+    </div>
+</div>
+
+<app-footer></app-footer>
+
+<!-- Modal abonnement complet-->
+<div class="modal fade modalInfoAbonnement" id="abonnement" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="abonnementLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center">
+            
+            <div class="modal-body text-center">
+                <h4 class="modal-title fs-5 contactReseau fw-bold mb-4" id="abonnementLabel">Contactez le réseau AFTU</h4>
+                <h6 class="mb-3"><span class="fw-bold">Email: </span>  magid@gmail.com </h6> 
+                <h6 class="mb-4"><span class="fw-bold">Téléphone: </span> 77 777 77 77</h6> 
+
+                <button type="button" class="btn btnClose" data-bs-dismiss="modal">Fermer</button>
+            </div>
+            
+        </div>
     </div>
 </div>

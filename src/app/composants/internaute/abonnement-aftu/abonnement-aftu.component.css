@@ -94,3 +94,19 @@
 .commentCaMarche i{
     color: var(--base2);
 }
+
+/* Les contacts du réseau  */
+.modalInfoAbonnement{
+    margin: 25vh 0 ;
+    /* border-radius: 12vh; */
+}
+
+
+.contactReseau{
+    color: var(--base1);
+}
+
+.btnClose{
+    color: white;
+    background-color: var(--base1);
+}

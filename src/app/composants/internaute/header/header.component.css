@@ -31,6 +31,29 @@
     color: white;
 }
 
+.active{
+    color: var(--base2) !important;
+    font-weight: bold;
+}
+
+.activeAbonnements{
+    color: var(--base2) !important;
+    font-weight: bold;
+    text-decoration: none;
+    position: relative;
+    top: 1.2vh;
+}
+
+
+.abonnementItem:hover{
+    background-color: var(--base2);
+    color: white !important;
+    border-radius: 1vh;
+}
+/* .active{
+    color: red!important;
+} */
+
 /* .collapse ul li .active{
     color: #F09E4D!important;
 } */

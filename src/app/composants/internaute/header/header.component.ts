@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  status: boolean = false;
+
+  clickEvent(){
+    this.status = true;       
+  }
+
+  clickLink(){
+    this.status = true;
+    alert("bonjour")
+  }
 
 }
