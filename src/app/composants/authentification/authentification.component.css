@@ -1,0 +1,56 @@
+/* Authentification total  */
+.colAuth{
+    background-color: #222222ce;
+    color: white;
+    padding: 3vh;
+}
+
+.colAuth h3{
+    color: var(--base2);
+    font-weight: bold;
+}
+
+.card{
+    margin: 0 auto;
+    border: none;
+    border-radius: 2vh;
+}
+
+.card img{
+    width: 100%;
+}
+
+.logo{
+    max-width: 25vh !important;
+    height: 8vh;
+    margin: 5vh 0;
+}
+
+.card .btnAuth{
+    background-color: var(--base2);
+    color: white;
+    margin-top: 5vh;
+}
+
+.require{
+    color: var(--base1);
+}
+
+/* Connexion  */
+.card .mdpOublier{
+    margin-top: -2vh;
+}
+
+.card .mdpOublier .reinitialiser{
+    color: var(--base1);
+    cursor: pointer;
+}
+
+/* Réinitialisation  */
+.containerReinitialiser{
+    min-height: 80vh;
+}
+
+.containerReinitialiser .card img{
+    max-height: 60vh;
+}

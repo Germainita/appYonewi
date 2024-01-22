@@ -1,0 +1,103 @@
+<app-header></app-header>
+
+<!-- Contenu authentification  -->
+<div class="container">
+    <!-- Connexion  -->
+    <div class="containerConnexion py-5" *ngIf="isConnexion">
+        <div class="card mb-3" style="max-width: 840px;">
+            <div class="row g-0">
+              <div class="col-md-6">
+                <img src="assets/auth1.png" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-6 colAuth rounded-end">
+                <div class="card-body">
+                    <h3 class="card-title text-center">CONNECTEZ VOUS</h3>
+                    <div class="text-center">
+                        <img src="assets/yonewilogo.png" alt="Logo sama-gokh" class="logo">
+                    </div>
+
+                    <form action="">
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Email: <span class="require">*</span></label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ...">
+                        </div>
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Mot de passe: <span class="require">*</span></label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Votre mot de passe ...">
+                        </div>
+                        <p class="mdpOublier">Mot de passe oublié ? <span class="reinitialiser" (click)="showFirstRein()"> Rénitialiser</span></p>
+    
+                        <button class=" btn btnAuth col-12 fw-bold fs-5 d-block" type="submit">Se connecter</button>
+                        
+                    </form>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Réinitialisation  Etape 1-->
+    <div class="containerReinitialiser py-5" *ngIf="isRein1">
+        <div class="card mb-3" style="max-width: 840px;">
+            <div class="row g-0">
+              <div class="col-md-6">
+                <img src="assets/auth1.png" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-6 colAuth rounded-end">
+                <div class="card-body">
+                    <h3 class="card-title text-center">REINITIALISER</h3>
+                    <div class="text-center">
+                        <img src="assets/yonewilogo.png" alt="Logo sama-gokh" class="logo">
+                    </div>
+
+                    <form action="">
+                        <div class="mb-5">
+                            <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Email: <span class="require">*</span></label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ...">
+                        </div>
+                        
+                        <button class=" btn btnAuth col-12 fw-bold fs-5 d-block" type="submit" (click)="showSecondRein()">Envoyer</button>
+                        
+                    </form>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Réinitialisation  Etape 2-->
+    <div class="containerConnexion py-5"  *ngIf="isRein2">
+        <div class="card mb-3" style="max-width: 840px;">
+            <div class="row g-0">
+              <div class="col-md-6">
+                <img src="assets/auth1.png" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-6 colAuth rounded-end">
+                <div class="card-body">
+                    <h3 class="card-title text-center">REINITIALISER</h3>
+                    <div class="text-center">
+                        <img src="assets/yonewilogo.png" alt="Logo sama-gokh" class="logo">
+                    </div>
+
+                    <form action="">
+                        <div class="mb-4">
+                            <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Nouveau mot de passe: <span class="require">*</span></label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre nouveau mot de passe...">
+                        </div>
+                        <div class="mb-5">
+                            <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Confirmation mot de passe: <span class="require">*</span></label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Votre mot de passe à nouveau ...">
+                        </div>
+                        
+                        <button class="btn btnAuth col-12 fw-bold fs-5 d-block" type="submit">Réinitialiser</button>
+                        
+                    </form>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<app-footer></app-footer>

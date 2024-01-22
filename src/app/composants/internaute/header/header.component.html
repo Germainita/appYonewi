@@ -1,7 +1,7 @@
 <!-- Sidebar  -->
 <nav class="navbar sticky-top navbar-expand-lg bg-body shadow-sm">
     <div class="container-fluid px-4">
-        <a class="navbar-brand" href="#" routerLink="accueil"><img src="assets/yonewilogo.png" alt="Logo sama-gokh" class="logo"></a>
+        <a class="navbar-brand" href="#" routerLink="/accueil"><img src="assets/yonewilogo.png" alt="Logo sama-gokh" class="logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -19,9 +19,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"routerLink="/lignes" routerLinkActive="active">Lignes</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#" routerLink="/mesprojets">Abonnements</a>
-                </li> -->
                 <li class="nav-item dropdown">
                     <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" *ngIf="rla.isActive || rla2.isActive" class="activeAbonnements">Abonnements</a>
                     <a class="nav-link " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" *ngIf="!rla.isActive && !rla2.isActive">Abonnements</a>
@@ -32,7 +29,7 @@
                 </li>            
             </ul>
             <div class="profil">
-                <button class="btn btnConnexion">Se connecter</button>
+                <a href="#" class="btn btnConnexion" routerLink="/auth">Se connecter</a>
             </div>
         </div>
     </div>

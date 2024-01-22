@@ -6,6 +6,9 @@ import { ContactComponent } from './composants/internaute/contact/contact.compon
 import { LignesComponent } from './composants/internaute/lignes/lignes.component';
 import { AbonnementAFTUComponent } from './composants/internaute/abonnement-aftu/abonnement-aftu.component';
 import { AbonnementDDDComponent } from './composants/internaute/abonnement-ddd/abonnement-ddd.component';
+import { AuthentificationComponent } from './composants/authentification/authentification.component';
+import { PolitiqueComponent } from './composants/internaute/politique/politique.component';
+import { ConditionsComponent } from './composants/internaute/conditions/conditions.component';
 
 const routes: Routes = [
   // Route par défaut 
@@ -18,6 +21,11 @@ const routes: Routes = [
   {path: "lignes", component: LignesComponent},
   {path: "reseauAftu", component: AbonnementAFTUComponent},
   {path: "reseauDDD", component: AbonnementDDDComponent},
+  {path: "politiques", component: PolitiqueComponent},
+  {path: "conditions", component: ConditionsComponent},
+
+  // L'authentification 
+  {path: "auth", component: AuthentificationComponent}
   
 ];
 

@@ -14,6 +14,7 @@ import { ConditionsComponent } from './composants/internaute/conditions/conditio
 import { AproposComponent } from './composants/internaute/apropos/apropos.component';
 import { AbonnementDDDComponent } from './composants/internaute/abonnement-ddd/abonnement-ddd.component';
 import { AbonnementAFTUComponent } from './composants/internaute/abonnement-aftu/abonnement-aftu.component';
+import { AuthentificationComponent } from './composants/authentification/authentification.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AbonnementAFTUComponent } from './composants/internaute/abonnement-aftu
     ConditionsComponent,
     AproposComponent,
     AbonnementDDDComponent,
-    AbonnementAFTUComponent
+    AbonnementAFTUComponent,
+    AuthentificationComponent
   ],
   imports: [
     BrowserModule,
