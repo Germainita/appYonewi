@@ -1,0 +1,88 @@
+.sidebar{
+    background-color: var(--colorSidebar);
+    padding: 4vh 3vh;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 16.7%;
+    
+}
+
+.sidebar img, .separation{
+    width: 80%;
+}
+
+.separation{
+    /* width: 25vh;  */
+    border: 1px solid white;
+    margin: 6% 4%  ;
+}
+
+.containerLink{
+    height: 75%;
+    overflow: scroll;
+}
+
+/* Pour firefox  */
+.containerLink{
+    scrollbar-color: white white ;
+}
+
+
+/* Pour les navigateurs chrome et edge  */
+.containerLink::-webkit-scrollbar{
+    display: none;
+}
+
+ul li {
+    list-style: none;
+    margin-left: -3vh;
+    line-height: 6vh;
+}
+
+ul li a{
+    text-decoration: none;
+    color: white;
+}
+
+.icone{
+    fill: white;
+}
+
+.btnDeconnect{
+    background-color: var(--base2);
+    color: white;
+}
+
+
+@media screen  and (max-width: 1000px){
+    .sidebar{
+        padding: 2vh;
+    }
+
+
+    .link{
+        display: none;
+        
+    }
+
+    svg{
+        width: 45px;
+        height: 45px;
+    }
+
+    .link:hover{
+        display: block;
+    }
+
+    .sidebar img, .separation{
+        width: 100%;
+    }
+}
+
+@media screen  and (max-width: 700px){
+    .sidebar{
+        padding: 2%;
+    }
+}

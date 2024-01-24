@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,12 @@ import { AproposComponent } from './composants/internaute/apropos/apropos.compon
 import { AbonnementDDDComponent } from './composants/internaute/abonnement-ddd/abonnement-ddd.component';
 import { AbonnementAFTUComponent } from './composants/internaute/abonnement-aftu/abonnement-aftu.component';
 import { AuthentificationComponent } from './composants/authentification/authentification.component';
+import { SidebarComponent } from './composants/adminSystem/sidebar/sidebar.component';
+import { NavbarComponent } from './composants/adminSystem/navbar/navbar.component';
+import { DashbordAdminSystemComponent } from './composants/adminSystem/dashbord-admin-system/dashbord-admin-system.component';
+import { ReseauComponent } from './composants/adminSystem/reseau/reseau.component';
+import { NewsletterComponent } from './composants/adminSystem/newsletter/newsletter.component';
+import { MessageComponent } from './composants/adminSystem/message/message.component';
 
 @NgModule({
   declarations: [
@@ -29,12 +36,19 @@ import { AuthentificationComponent } from './composants/authentification/authent
     AproposComponent,
     AbonnementDDDComponent,
     AbonnementAFTUComponent,
-    AuthentificationComponent
+    AuthentificationComponent,
+    SidebarComponent,
+    NavbarComponent,
+    DashbordAdminSystemComponent,
+    ReseauComponent,
+    NewsletterComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgApexchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,28 @@
+
+.profil img{
+    width: 8vh;
+    height: 8vh;
+    border-radius: 100%;
+}
+
+/* Les statistics  */
+.statistiqueDashbord .card{
+    border: none;
+    border-radius: 0;
+    border-left: 3px solid var(--base1);
+}
+
+.statistiqueDashbord .card .titreChiffre{
+    color: var(--base2);
+    font-weight: bold;
+
+}
+
+.statistiqueDashbord .card .titreText{
+    margin-top: -3vh;
+    font-weight: bold;
+}
+
+.statistiqueDashbord .card .icone{
+    margin-top: 4.5vh;
+}
