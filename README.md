@@ -2,6 +2,15 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.11.
 
+## Description
+Yone Wi est une plateforme qui vous donne des informations sur les lignes des réseaux de transport urbains du Sénégal les plus empruntés à savoir "AFTU" et "Dakar Dem Dikk".
+
+Elle permet à chaque usagers de faire de recherches sur les lignes et leurs itinéraires.
+
+En ce sens, elle fournit des informations claires et précises sur les itinéraires des lignes, leurs sections avec leurs prix et des fonctionnalités conviviales pour les utilisateurs.
+
+Chez Yone Wi nous nous engageons à créer un impact positif sur la mobilité urbaine au Sénégal.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
