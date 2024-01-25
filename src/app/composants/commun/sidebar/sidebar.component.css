@@ -55,6 +55,17 @@ ul li a{
     color: white;
 }
 
+/* Les liens actives  */
+.active{
+    font-weight: bold;
+    color: var(--base2)!important;
+}
+
+.active path{
+    fill: var(--base2)!important;
+}
+
+
 
 @media screen  and (max-width: 1000px){
     .sidebar{

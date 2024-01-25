@@ -19,15 +19,15 @@
                     <form action="">
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Email: <span class="require">*</span></label>
-                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ...">
+                            <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ..." [(ngModel)]="email">
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Mot de passe: <span class="require">*</span></label>
-                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Votre mot de passe ...">
+                            <input type="text" name="password" class="form-control" id="exampleFormControlInput1" placeholder="Votre mot de passe ..." [(ngModel)]="password">
                         </div>
                         <p class="mdpOublier">Mot de passe oublié ? <span class="reinitialiser" (click)="showFirstRein()"> Rénitialiser</span></p>
     
-                        <button class=" btn btnAuth col-12 fw-bold fs-5 d-block" type="submit">Se connecter</button>
+                        <button class=" btn btnAuth col-12 fw-bold fs-5 d-block" type="submit" (click)="login()">Se connecter</button>
                         
                     </form>
                 </div>

@@ -224,7 +224,6 @@ export class ReseauComponent implements OnInit {
   // Les détails du reseau 
   showDetailsReseau(element:any){
     this.reseau = element;
-    alert(this.reseau.nom)
   }
   // chargerInfosReseau(element:any){
   //   this.reseau = element;

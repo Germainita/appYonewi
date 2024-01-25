@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgApexchartsModule } from "ng-apexcharts";
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './composants/internaute/footer/footer.component';
@@ -15,13 +17,20 @@ import { ConditionsComponent } from './composants/internaute/conditions/conditio
 import { AproposComponent } from './composants/internaute/apropos/apropos.component';
 import { AbonnementDDDComponent } from './composants/internaute/abonnement-ddd/abonnement-ddd.component';
 import { AbonnementAFTUComponent } from './composants/internaute/abonnement-aftu/abonnement-aftu.component';
-import { AuthentificationComponent } from './composants/authentification/authentification.component';
-import { SidebarComponent } from './composants/adminSystem/sidebar/sidebar.component';
-import { NavbarComponent } from './composants/adminSystem/navbar/navbar.component';
+import { AuthentificationComponent } from './composants/commun/authentification/authentification.component';
+import { SidebarComponent } from './composants/commun/sidebar/sidebar.component';
+import { NavbarComponent } from './composants/commun/navbar/navbar.component';
 import { DashbordAdminSystemComponent } from './composants/adminSystem/dashbord-admin-system/dashbord-admin-system.component';
 import { ReseauComponent } from './composants/adminSystem/reseau/reseau.component';
 import { NewsletterComponent } from './composants/adminSystem/newsletter/newsletter.component';
 import { MessageComponent } from './composants/adminSystem/message/message.component';
+import { RoleComponent } from './composants/adminSystem/role/role.component';
+import { UtilisateurComponent } from './composants/adminSystem/utilisateur/utilisateur.component';
+import { StatisticsComponent } from './composants/commun/statistics/statistics.component';
+import { DashbordComponent } from './composants/commun/dashbord/dashbord.component';
+import { TarifComponent } from './composants/adminReseau/tarif/tarif.component';
+import { AbonnementComponent } from './composants/adminReseau/abonnement/abonnement.component';
+import { GestionLigneComponent } from './composants/adminReseau/gestion-ligne/gestion-ligne.component';
 
 @NgModule({
   declarations: [
@@ -42,13 +51,21 @@ import { MessageComponent } from './composants/adminSystem/message/message.compo
     DashbordAdminSystemComponent,
     ReseauComponent,
     NewsletterComponent,
-    MessageComponent
+    MessageComponent,
+    RoleComponent,
+    UtilisateurComponent,
+    StatisticsComponent,
+    DashbordComponent,
+    TarifComponent,
+    AbonnementComponent,
+    GestionLigneComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
