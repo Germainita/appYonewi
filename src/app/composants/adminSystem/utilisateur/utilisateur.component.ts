@@ -67,7 +67,7 @@ export class UtilisateurComponent {
   ]
 
   // Le tableau des role 
-  tabRole : Role[] = [
+  tabRole : any[] = [
     {
       id: 1,
       nom: "admin",

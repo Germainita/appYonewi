@@ -26,6 +26,8 @@
                             <input type="text" name="password" class="form-control" id="exampleFormControlInput1" placeholder="Votre mot de passe ..." [(ngModel)]="password">
                         </div>
                         <p class="mdpOublier">Mot de passe oublié ? <span class="reinitialiser" (click)="showFirstRein()"> Rénitialiser</span></p>
+                        <!-- <p class="mt-3  fs-4 px-2" *ngIf="!iscorrectValues">Email ou mot de passe incorrects</p>
+                        <p class="mt-3 text-danger" *ngIf="iscorrectValues"></p> -->
     
                         <button class=" btn btnAuth col-12 fw-bold fs-5 d-block" type="submit" (click)="login()">Se connecter</button>
                         

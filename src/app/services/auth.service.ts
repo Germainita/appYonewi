@@ -13,8 +13,9 @@ export class AuthService {
   // Variable superglobale pour l'authentification 
   isAuthenticated = false;
 
-  login(user:any, onSuccess: Function){
-    return this.http.post(`${url}/login`, user).subscribe((reponse:any) => onSuccess(reponse))
+  login(user:any){
+    return this.http.post(`${url}/login`, user)
+    // return this.http.post(`${url}/login`, user).subscribe((reponse:any) => onSuccess(reponse))
   }
 
   logout() {
