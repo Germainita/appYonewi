@@ -41,11 +41,11 @@ const routes: Routes = [
   {path: "dashbord", component: DashbordComponent, title: "Dashbord", canActivate: [AuthGuard]},
 
   // Pour l'administrateur system 
-  {path: "reseau", component:ReseauComponent, title: "Gestion reseau", canActivate: [AuthGuard]},
-  {path: "role", component:RoleComponent, title: "Gestion role", canActivate: [AuthGuard]},
+  {path: "reseau", component:ReseauComponent, title: "Gestion reseau", canActivate: [AuthGuard]}, //Fait
+  {path: "role", component:RoleComponent, title: "Gestion role", canActivate: [AuthGuard]}, //Fait mais à vérifier
   {path: "utilisateur", component:UtilisateurComponent, title: "Gestion utilisateur", canActivate: [AuthGuard]},
-  {path: "newsletter", component:NewsletterComponent, title: "Gestion newsletter", canActivate: [AuthGuard]},
-  {path: "message", component:MessageComponent, title: "Gestion message", canActivate: [AuthGuard]},
+  {path: "newsletter", component:NewsletterComponent, title: "Gestion newsletter", canActivate: [AuthGuard]}, //Fait
+  {path: "message", component:MessageComponent, title: "Gestion message", canActivate: [AuthGuard]}, //Fait
   
 
   // Pour les administrateurs réseau 

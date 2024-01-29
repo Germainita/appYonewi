@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { error } from 'highcharts';
 import { Ligne } from 'src/app/models/ligne';
-import { Reseau } from 'src/app/models/reseau';
+import { Reseau } from 'src/app/models/reseau.model';
+import { ReseauService } from 'src/app/services/reseau.service';
+import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 
 @Component({
   selector: 'app-reseau',
@@ -114,6 +117,7 @@ export class ReseauComponent implements OnInit {
   isListeReseaux:boolean = true;
   isListeLignes:boolean = false;
   isListeSections:boolean = false;
+  isListeCorbeille:boolean = false;
 
   // Variables pour les réseaux 
   reseau= new Reseau; 
@@ -141,15 +145,22 @@ export class ReseauComponent implements OnInit {
   pageActuelle = 1; // Page actuelle
 
   // Le tableau filtrer peu importe la liste 
-  tabFilter:any[] = [];
+  tabFilter:Reseau[] = [];
 
+  // Déclarations des variables à utiliser avec les services 
+  tabReseauxActifs : Reseau[] = []
+  tabReseauxActifsFilter : Reseau[] = []
+
+  tabReseauxSup : Reseau[] = []
+  tabReseauxSupFilter : Reseau[] = []
 
   // Déclaration des méthodes 
-  constructor(){}
+  constructor(private reseauService: ReseauService){}
 
   ngOnInit(): void {
     this.tabReaseauFilter = this.tabReseau;
-    
+    this.listeReseau();
+    this.listeCorbeille();
   }
 
   // Voir le liste des reseaux 
@@ -157,6 +168,7 @@ export class ReseauComponent implements OnInit {
     this.isListeReseaux = true;
     this.isListeLignes = false;
     this.isListeSections = false;
+    this.isListeCorbeille = false;
   }
 
   // Voir le liste des lignes 
@@ -164,6 +176,7 @@ export class ReseauComponent implements OnInit {
     this.isListeLignes = true;
     this.isListeReseaux = false;
     this.isListeSections = false;
+    this.isListeCorbeille = false;
     this.reseau = element;
     this.tabLigne = this.reseau.lignes;
     this.tabLignesFilter = this.tabLigne;
@@ -174,15 +187,32 @@ export class ReseauComponent implements OnInit {
     this.isListeSections = true;
     this.isListeLignes = false;
     this.isListeReseaux = false;
+    this.isListeCorbeille = false;
     this.ligne = element;
     this.tabSections = element.sections;
     this.tabSectionsFilter = this.tabSections;
   }
 
+  // Voir la corbeille 
+  showListeCorbeille(){
+    this.isListeCorbeille = true;
+    this.isListeReseaux = false;
+    this.isListeLignes = false;
+    this.isListeSections = false;
+  }
+
   // Methode de recherche automatique pour les reseaux
   onSearch(){
     // Recherche se fait selon le nom ou le prenom 
-    this.tabReaseauFilter = this.tabReseau.filter(
+    this.tabReseauxActifsFilter = this.tabReseauxActifs.filter(
+      (elt:any) => (elt?.nom.toLowerCase().includes(this.filterValue.toLowerCase())) 
+    );
+  }
+
+  // Methode de recherche automatique pour les reseaux
+  onSearchCorbeille(){
+    // Recherche se fait selon le nom ou le prenom 
+    this.tabReseauxSupFilter = this.tabReseauxSup.filter(
       (elt:any) => (elt?.nom.toLowerCase().includes(this.filterValue.toLowerCase())) 
     );
   }
@@ -211,6 +241,51 @@ export class ReseauComponent implements OnInit {
     this.isModifier = false;
   }
 
+  // Ajouter un réseau 
+  ajoutReseau(){
+    if(!this.reseau.nom){
+      sweetAlertMessage("error", "", "Le nom est obligatoire")
+    } else{
+      // On vérifie si le réseau n'existe pas déjà 
+      let reseauExiste = this.tabReseauxActifs.find((element) => element.nom == this.reseau.nom);
+      if(reseauExiste){
+        sweetAlertMessage("success", "", "Ce nom est déjà pris");
+      } else {
+        let reseauAdd = {
+          nom: this.reseau.nom
+        }
+        this.reseauService.addReseau(reseauAdd).subscribe(
+          (data:any)=>{
+            console.log(data);
+            sweetAlertMessage("success", "", data.message);
+            this.reseau.nom = "";
+            this.reseau.description = "";
+            this.listeReseau();
+          },
+          (error) =>{
+            console.log(error);
+            
+          }
+        )
+      }
+    }
+  }
+
+  // Liste des réseaux 
+  listeReseau(){
+    this.reseauService.getAllReseaux().subscribe(
+      (data:any) =>{
+        console.log (data)
+        this.tabReseauxActifs = this.tabReseauxActifsFilter = data.reseaux;
+        console.log(this.tabReseauxActifs);
+        console.log(this.tabReseauxActifsFilter.length);
+      },
+      (error) =>{
+        console.log (error)
+      }
+    )
+  }
+
   // showModifReseauForm()
 
   // Voir Formulaire de modification 
@@ -218,7 +293,117 @@ export class ReseauComponent implements OnInit {
     this.isAjout = false;
     this.isModifier = true;
     this.reseau = element;
+  }
 
+  // Modifier un réseau 
+  modifReseau(){
+    sweetMessageConfirm("Vous allez modifier ce réseau", "Oui je modifie").then( (result) =>{
+      if(result.isConfirmed ){
+        let nomReseau = {"nom": this.reseau.nom}
+        this.reseauService.updateReseau(this.reseau.id, nomReseau).subscribe(
+          (data:any) =>{
+            // console.log(data);
+            sweetAlertMessage("success", "", data.message);
+            this.reseau.nom = "";
+          },
+          (err) =>{
+            console.log(err);
+            
+          }
+        )
+      }
+    })
+  }
+
+  // Supprimer un reseau
+  supprimerReseau(reseau:any){
+    sweetMessageConfirm("Vous allez supprimer ce reseau", "Oui, je supprime").then( (result) =>{
+      if(result.isConfirmed ){
+        this.reseauService.deleteReseau(reseau.id).subscribe(
+          (data:any) =>{
+            console.log(data);
+            sweetAlertMessage("success", "", data.message);
+            this.listeReseau();
+            this.listeCorbeille();
+          },
+          (err) => {
+            alert("Error");
+            console.log(err);
+          }
+        )
+      }
+    })
+    
+  }
+
+
+  // Liste des reseaux dans la corbeille 
+  listeCorbeille(){
+    this.reseauService.getReseauxDeleted().subscribe(
+      (data:any)=>{
+        console.log(data);
+        this.tabReseauxSup = this.tabReseauxSupFilter = data.reseaux;      
+      },
+      (error) =>{
+        console.log(error);
+        
+      }
+    )
+  }
+
+  
+  // Restaurer un reseau 
+  restaureReeseau(reseau:any){
+    sweetMessageConfirm("Vous allez restaurer ce réseau", "Oui, je restaure").then( (result) =>{
+      if(result.isConfirmed ){
+        this.reseauService.restaureReseau(reseau.id).subscribe(
+          (data:any) =>{
+            console.log(data);
+            sweetAlertMessage("success", "", data.message);
+            this.listeReseau();
+            this.listeCorbeille();
+          },
+          (err) => {
+            alert("Error");
+            console.log(err);
+          }
+        )
+      }
+    })
+  }
+
+  // Supprimer definitivemenent un reseau 
+  supprimerDefinitif(reseau:any){
+    sweetMessageConfirm("Vous allez supprimer définitivement ce réseau", "Oui, je supprime").then( (result) =>{
+      if(result.isConfirmed ){
+        this.reseauService.deleteDefinitif(reseau.id).subscribe(
+          (data:any) =>{
+            console.log(data);
+            sweetAlertMessage("success", "", data.message);
+            this.listeReseau();
+            this.listeCorbeille();
+          },
+          (err) => {
+            alert("Error");
+            console.log(err);
+          }
+        )
+      }
+    })
+  }
+  
+  // Vider la corbeille 
+  viderCorbeille(){
+    sweetMessageConfirm("Vous allez vider la corbeille", "Oui, je vide").then( (result) =>{
+      if(result.isConfirmed ){
+        this.reseauService.emptyTrash().subscribe(
+          (data:any) =>{
+            sweetAlertMessage("success", "", data.message);
+            this.listeCorbeille();
+          }
+        )
+      }
+    })
   }
 
   // Les détails du reseau 
@@ -236,7 +421,7 @@ export class ReseauComponent implements OnInit {
   // getItemsPage(): any[] {
   //   const indexDebut = (this.pageActuelle - 1) * this.itemsParPage;
   //   const indexFin = indexDebut + this.itemsParPage;
-  //   return this.tabReaseauFilter.slice(indexDebut, indexFin);
+  //   return this.tabReseauxActifsFilter.slice(indexDebut, indexFin);
   // }
 
   // // Méthode pour générer la liste des pages
@@ -252,7 +437,7 @@ export class ReseauComponent implements OnInit {
 
   
   // Pagination pour tous les tableaux de manières automatique
-  getItemsPage(tabFilter:any){
+  getItemsPage(tabFilter:any[]){
     const indexDebut = (this.pageActuelle - 1) * this.itemsParPage;
     const indexFin = indexDebut + this.itemsParPage;
     this.tabFilter = tabFilter;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Reseau } from 'src/app/models/reseau';
-import { Role } from 'src/app/models/role';
+import { Reseau } from 'src/app/models/reseau.model';
+import { Role } from 'src/app/models/role.model';
 import { Utilisateur } from 'src/app/models/utilisateur';
 
 @Component({

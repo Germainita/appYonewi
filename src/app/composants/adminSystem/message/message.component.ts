@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
-import { Message } from 'src/app/models/message';
+import { Component, OnInit } from '@angular/core';
+import { Contact } from 'src/app/models/contact.model';
+import { ContactService } from 'src/app/services/contact.service';
 
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent {
+export class MessageComponent implements OnInit{
   // Déclaration des variables 
-  tabMessage: Message[] = [
+  tabMessage: any[] = [
     {
       id: 1,
       email: "gg@gmail.com",
@@ -40,7 +41,10 @@ export class MessageComponent {
 
   ]
 
-  tabMessageFilter: Message[] = [];
+  tabMessageFilter: any[] = [];
+
+  tabContacts: Contact[] = [];
+  tabContactsFilter: Contact[] = [];
   filterValue: string = "";
 
   // Attribut pour la pagination
@@ -49,34 +53,47 @@ export class MessageComponent {
 
 
   // Déclaration des méhodes 
+  constructor(private contactService: ContactService){}
+
   ngOnInit(): void {
-    this.tabMessageFilter = this.tabMessage
+    // this.tabMessageFilter = this.tabMessage
+    this.listeContacts();
   }
 
   // Methode de recherche automatique pour les reseaux
   onSearch(){
     // Recherche se fait selon le nom ou le prenom 
-    this.tabMessageFilter = this.tabMessage.filter(
+    this.tabContactsFilter = this.tabContacts.filter(
       (elt:any) => (elt?.email.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.sujet.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.message.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.createdAt.toString().toLowerCase().includes(this.filterValue.toLowerCase())) 
     );
   }
 
+  // Methode pour récupérer la liste des messages 
+  listeContacts(){
+    this.contactService.getAllContacts().subscribe(
+      (data:any) =>{
+        console.log(data)
+        this.tabContacts = this.tabContactsFilter = data.contact;
+        console.log(this.tabContacts)
+      }
+    )
+  }
   // Pagination pour tous les tableaux de manières automatique
   getItemsPage(){
     const indexDebut = (this.pageActuelle - 1) * this.itemsParPage;
     const indexFin = indexDebut + this.itemsParPage;
-    return this.tabMessageFilter.slice(indexDebut, indexFin);
+    return this.tabContactsFilter.slice(indexDebut, indexFin);
 
   }
 
   // Méthode pour générer la liste des pages
   get pages(): number[] {
-    const totalPages = Math.ceil(this.tabMessageFilter.length / this.itemsParPage);
+    const totalPages = Math.ceil(this.tabContactsFilter.length / this.itemsParPage);
     return Array(totalPages).fill(0).map((_, index) => index + 1);
   }
 
   // Méthode pour obtenir le nombre total de pages
   get totalPages(): number {
-    return Math.ceil(this.tabMessageFilter.length / this.itemsParPage);
+    return Math.ceil(this.tabContactsFilter.length / this.itemsParPage);
   }
 }

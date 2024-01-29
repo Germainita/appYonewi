@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Role} from 'src/app/models/role';
+import { Role} from 'src/app/models/role.model';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { RoleService } from 'src/app/services/role.service';
 

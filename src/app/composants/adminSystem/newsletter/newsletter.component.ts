@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Newsletter } from 'src/app/models/newsletter';
+import { Newsletter } from 'src/app/models/newsletter.model';
+import { NewsletterService } from 'src/app/services/newsletter.service';
 
 @Component({
   selector: 'app-newsletter',
@@ -8,30 +9,31 @@ import { Newsletter } from 'src/app/models/newsletter';
 })
 export class NewsletterComponent implements OnInit{
   // Déclaration des variables 
-  tabNewsletter: Newsletter[] = [
-    {
-      id: 1,
-      email: "gg@gmail.com",
-      createdAt: "10/11/2023"
-    },
-    {
-      id: 2,
-      email: "gg@gmail.com",
-      createdAt: "11/11/2023"
-    },
-    {
-      id: 3,
-      email: "gg@gmail.com",
-      createdAt: "20/11/2023"
-    },
-    {
-      id: 4,
-      email: "gg@gmail.com",
-      createdAt: "14/11/2023"
-    },
+  // tabNewsletter: any[] = [
+  //   {
+  //     id: 1,
+  //     email: "gg@gmail.com",
+  //     createdAt: "10/11/2023"
+  //   },
+  //   {
+  //     id: 2,
+  //     email: "gg@gmail.com",
+  //     createdAt: "11/11/2023"
+  //   },
+  //   {
+  //     id: 3,
+  //     email: "gg@gmail.com",
+  //     createdAt: "20/11/2023"
+  //   },
+  //   {
+  //     id: 4,
+  //     email: "gg@gmail.com",
+  //     createdAt: "14/11/2023"
+  //   },
 
-  ]
+  // ]
 
+  tabNewsletter: Newsletter[] = []
   tabNewsletterFilter: Newsletter[] = [];
   filterValue: string = "";
 
@@ -41,16 +43,28 @@ export class NewsletterComponent implements OnInit{
 
 
   // Déclaration des méhodes 
+  constructor(private newsletterService: NewsletterService){}
+
   ngOnInit(): void {
-    this.tabNewsletterFilter = this.tabNewsletter
+    this.listeNewsletters();
   }
 
   // Methode de recherche automatique pour les reseaux
   onSearch(){
     // Recherche se fait selon le nom ou le prenom 
     this.tabNewsletterFilter = this.tabNewsletter.filter(
-      (elt:any) => (elt?.email.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.createdAt.toString().toLowerCase().includes(this.filterValue.toLowerCase()))  
+      (elt:any) => (elt?.email.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.created_at.toString().toLowerCase().includes(this.filterValue.toLowerCase()))  
     );
+  }
+
+  // Liste des inscrits à la newsletter 
+  listeNewsletters(){
+    this.newsletterService.getAllUsersNewsletter().subscribe(
+      (data:any) =>{
+        // console.log(data);
+        this.tabNewsletter =this.tabNewsletterFilter = data.subscribers
+      }
+    )
   }
 
   // Pagination pour tous les tableaux de manières automatique

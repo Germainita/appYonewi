@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { url } from "./apiUrl";
-import { Role } from "../models/role";
+import { Role } from "../models/role.model";
 
 @Injectable({
     providedIn: "root"
@@ -34,7 +34,7 @@ export class RoleService {
 
     // Restaurer un role 
     restaureRole(idRole:number){
-        return this.http.put(`${url}/roles/restaure/${idRole}`, "")
+        return this.http.put(`${url}/roles/restaurer/${idRole}`, "")
     }
 
     // Liste des roles dans la corbeille 
