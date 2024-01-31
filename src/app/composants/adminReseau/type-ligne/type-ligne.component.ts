@@ -9,6 +9,9 @@ import { TypeLigneService } from 'src/app/services/typeLigne.service';
   styleUrls: ['./type-ligne.component.css']
 })
 export class TypeLigneComponent implements OnInit {
+  // Toutes les lignes 
+  allTypeLign: TypeLigne[] = [];
+
   // Les lignes actifs 
   tabTypeLigne: TypeLigne[] = [];
   tabTypeLigneFilterActifs: TypeLigne[] = [];
@@ -30,7 +33,7 @@ export class TypeLigneComponent implements OnInit {
   isSup: boolean = false; 
 
   // Attribut pour la pagination
-  itemsParPage = 2; // Nombre d'articles par page
+  itemsParPage = 3; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
 
   // Le tableau filtrer peu importe la liste 
@@ -103,16 +106,11 @@ export class TypeLigneComponent implements OnInit {
 
   // Liste des tous les TypeLignes 
   listeTypeLignes(){
-    this.typeLigneService.getAllTypesLigne().subscribe(
+    this.typeLigneService.getTypesLigneReseau().subscribe(
       (data:any) =>{
         console.log(data);
         this.tabTypeLigne = data.types;
         this.tabTypeLigneFilterActifs = this.tabTypeLigne;
-
-        // On filtre les TypeLignes actifs 
-        // this.tabTypeLignesActif = this.tabTypeLigne.filter((typeLigne:any) => typeLigne.etat == "actif");
-        // console.log(this.tabTypeLignesActif);
-        // this.tabTypeLigneFilterActifs = this.tabTypeLignesActif;  
       }
     )
   }
@@ -133,18 +131,29 @@ export class TypeLigneComponent implements OnInit {
 
   // Ajouter un TypeLigne 
   ajoutTypeLigne(){
+    // On vérifie si les champs sont vides 
+    if (!this.typeLigne.nom){
+      sweetAlertMessage("error", "", "Le nom est obligatoire");
+    }
     // On vérifie si le TypeLigne n'existe pas déjà 
     let typeLigneExist = this.tabTypeLigne.find((typeLigne:any) => typeLigne.nom.toLowerCase() == this.typeLigne.nom.toLowerCase());
-    if (typeLigneExist){
-      sweetAlertMessage("error", "", "Ce type de ligne est déjà enregistré");
-    } else{
+    let typeLigneExist1 = this.tabTypeLignesSup.find((typeLigne:any) => typeLigne.nom.toLowerCase() == this.typeLigne.nom.toLowerCase());
+    if(typeLigneExist){
+      sweetAlertMessage("error", "", "Un type de ligne a dèjà ce nom");
+    }
+    else if (typeLigneExist1) {
+      sweetAlertMessage("error", "", "Un type de ligne a dèjà ce nom dans la corbeille");
+    }
+    // if (typeLigneExist || typeLigneExist1){
+    //   sweetAlertMessage("error", "", "Ce type de ligne est déjà enregistré");
+    // } 
+    else{
       // let nom = {"nom": this.nomTypeLigne}
       this.typeLigneService.addTypeLigne(this.typeLigne).subscribe( 
-        (data) =>{
+        (data:any) =>{
           console.log(data);
-          sweetAlertMessage("success", "", "TypeLigne ajouté avec succes");
+          sweetAlertMessage("success", "", data.message);
           this.listeTypeLignes();
-          // this.nomTypeLigne = ""; // On vide le champs
           this.typeLigne.nom = "";
           this.typeLigne.description = "";
         },
@@ -158,26 +167,26 @@ export class TypeLigneComponent implements OnInit {
   // Modifier TypeLigne 
   modifierTypeLigne(){
     // On vérifie si le TypeLigne n'existe pas déjà 
-    let TypeLigneExist = this.tabTypeLigne.find((typeLigne:any) => typeLigne.nom.toLowerCase() == this.typeLigne.nom.toLowerCase());
-    if (TypeLigneExist){
-      sweetAlertMessage("error", "", "Ce TypeLigne est déjà enregistré");
-    } else{
-      // let nom = {"nom": this.typeLigne.nom} 
+    // let TypeLigneExist = this.tabTypeLigne.find((typeLigne:any) => typeLigne.nom.toLowerCase() == this.typeLigne.nom.toLowerCase());
+    // if (TypeLigneExist){
+    //   sweetAlertMessage("error", "", "Ce TypeLigne est déjà enregistré");
+    // } else{
+    //   // let nom = {"nom": this.typeLigne.nom} 
     
-      this.typeLigneService.updateTypeLigne(this.typeLigne.id, this.typeLigne).subscribe( 
-        (resp) =>{
-          sweetAlertMessage("success", "", "TypeLigne mis à jour avec succes");
-          this.listeTypeLignes();
-          // this.typeLigne.nom = "";
-          this.typeLigne.nom = "";
-          this.typeLigne.description = "";
-        },
-        (err) =>{
-          console.log (err)
+    // }
+    this.typeLigneService.updateTypeLigne(this.typeLigne.id, this.typeLigne).subscribe( 
+      (resp:any) =>{
+        sweetAlertMessage("success", "", resp.message);
+        this.listeTypeLignes();
+        // this.typeLigne.nom = "";
+        this.typeLigne.nom = "";
+        this.typeLigne.description = "";
+      },
+      (err) =>{
+        console.log (err)
 
-        }
-      )
-    }
+      }
+    )
   }
 
   // Supprimer un TypeLigne
@@ -189,6 +198,7 @@ export class TypeLigneComponent implements OnInit {
             console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.listeTypeLignes();
+            this.listeTypeLignesSup();
           },
           (err) => {
             alert("Error");
@@ -278,7 +288,7 @@ export class TypeLigneComponent implements OnInit {
     const indexDebut = (this.pageActuelle - 1) * this.itemsParPage;
     const indexFin = indexDebut + this.itemsParPage;
     this.tabFilter = tabFilter;
-    return tabFilter.slice(indexDebut, indexFin);
+    return tabFilter.reverse().slice(indexDebut, indexFin);
 
   }
 

@@ -50,11 +50,12 @@ const routes: Routes = [
   
 
   // Pour les administrateurs réseau 
-  {path: "gestionTarifs", component:TarifComponent, title: "Gestion tarifs", canActivate: [AuthGuard]},
-  // {path: "gestionTypeLigne", component:TypeLigneComponent, title: "Gestion type ligne", canActivate: [AuthGuard]},
-  {path: "gestionTypeLigne", component:TypeLigneComponent, title: "Gestion type ligne"},
+  // {path: "gestionTarifs", component:TarifComponent, title: "Gestion tarifs", canActivate: [AuthGuard]},
+  {path: "gestionTarifs", component:TarifComponent, title: "Gestion tarifs"}, // En cours
+  {path: "gestionTypeLigne", component:TypeLigneComponent, title: "Gestion type ligne", canActivate: [AuthGuard]}, //Fait
   {path: "gestionLigne", component:GestionLigneComponent, title: "Gestion lignes", canActivate: [AuthGuard]},
-  {path: "gestionAbonnemenet", component:AbonnementComponent, title: "Gestion abonnement", canActivate: [AuthGuard]},
+  // {path: "gestionAbonnemenet", component:AbonnementComponent, title: "Gestion abonnement", canActivate: [AuthGuard]}, //Fait
+  {path: "gestionAbonnemenet", component:AbonnementComponent, title: "Gestion abonnement"}, // En cours
 ];
 
 @NgModule({
