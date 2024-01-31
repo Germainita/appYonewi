@@ -260,8 +260,15 @@ restaureRole(role:any){
 supprimerDefinitif(role:any){
   sweetMessageConfirm("Vous allez supprimer définitivement ce role", "Oui, je supprime").then( (result) =>{
     if(result.isConfirmed ){
-      let response: any;
-      alert(role.id)
+      this.roleService.deleteDefinitif(role.id).subscribe(
+        (data:any) =>{
+          sweetAlertMessage("success", "", data.message);
+          this.listeRolesSup();
+        },
+        (err) =>{
+          console.log(err);
+        }
+      )
       // this.roleService.restaureRole(role.id).subscribe(
       //   (data) =>{
       //     console.log(data);

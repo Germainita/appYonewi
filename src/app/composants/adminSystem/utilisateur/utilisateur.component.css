@@ -75,3 +75,18 @@ thead tr th{
     background-color: white;
     border: none;
 }
+
+.modalConfirm{
+    margin: 24vh 0;
+}
+
+.modalConfirm i{
+    font-size: 12vh;
+    color: #facea8;
+}
+
+.modalConfirm .btnAnnuler{
+    background-color: #636c74;
+    color: white;
+    border: none;
+}

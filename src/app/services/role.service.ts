@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { url } from "./apiUrl";
-import { Role } from "../models/role.model";
 
 @Injectable({
     providedIn: "root"
@@ -40,6 +39,11 @@ export class RoleService {
     // Liste des roles dans la corbeille 
     getRolesDeleted(){
         return this.http.get(`${url}/roles/deleted`); 
+    }
+
+    // Supprimer définitivement un rolr 
+    deleteDefinitif(idRole:any){
+        return this.http.put(`${url}/roles/delete/${idRole}`, "")
     }
 
     // Vider la corbeille 

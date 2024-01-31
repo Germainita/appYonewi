@@ -10,35 +10,39 @@ export class UserService {
 
     constructor(private http:HttpClient) {}
 
-    // Obtenir la liste des utilisateur (Amin reseaux)
+    // Obtenir la liste des utilisateur (Admin reseaux)
     getAllUsers(){
         return this.http.get<any[]>(`${url}/users`);
     }
 
-    // Ajouter un administrateur utilisateur (Amin reseaux)
+    // Ajouter un administrateur utilisateur (Admin reseaux)
     addAdminReseau(user:any){
         return this.http.post(`${url}/users`, user)
     }
 
-    // Modifier un utilisateur (Amin reseaux)
+    // Modifier un utilisateur (Admin reseaux)
     updateAdminReseau(idUser: number, user:any){
-        return this.http.put(`${url}/users/${idUser}`, user)
+        return this.http.post(`${url}/users/${idUser}`, user)
     }
 
-    // Supprimer un utilisateur (Amin reseaux)
-    deleteAdminReseau(idUser:number){
-        return this.http.delete(`${url}/users/${idUser}`)
+    // Supprimer un utilisateur (Admin reseaux)
+    deleteAdminReseau(idUser:number, motif:any){
+        return this.http.patch(`${url}/users/${idUser}`, motif)
     }
 
     // Bloquér ou débloquer un adAdminReseau 
-    bloqueAdminReseau(idReseau:number){
-        return this.http.put(`${url}/users/etat/${idReseau}`, "")
+    blockAdminReseau(idUser:number, motif:any){
+        return this.http.patch(`${url}/users/etat/${idUser}`, motif)
     }
 
-    // Restaurer un utilisateur (Amin reseaux)
-    debloqueAdminReseau(idReseau:number){
-        return this.http.put(`${url}/users/etat/${idReseau}`, "")
+    // Restaurer un utilisateur (Admin reseaux)
+    unblockAdminReseau(idUser:number){
+        return this.http.patch(`${url}/users/etat/${idUser}`, "")
     }
 
+    // Liste des utilisateurs bloqués 
+    getAllUsersBlocked(){
+        return this.http.get(`${url}/users/blocked`);
+    }
 
 }
