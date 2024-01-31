@@ -6,7 +6,7 @@ import { url } from "./apiUrl";
     providedIn: "root"
 })
 
-class TypeLigneService {
+export class TypeLigneService {
     constructor(private http:HttpClient) {}
 
     // Obtenir la liste des typeLigne 

@@ -19,6 +19,7 @@ import { TarifComponent } from './composants/adminReseau/tarif/tarif.component';
 import { AbonnementComponent } from './composants/adminReseau/abonnement/abonnement.component';
 import { GestionLigneComponent } from './composants/adminReseau/gestion-ligne/gestion-ligne.component';
 import { AuthGuard } from './services/guard';
+import { TypeLigneComponent } from './composants/adminReseau/type-ligne/type-ligne.component';
 
 const routes: Routes = [
   // Route par défaut 
@@ -42,7 +43,7 @@ const routes: Routes = [
 
   // Pour l'administrateur system 
   {path: "reseau", component:ReseauComponent, title: "Gestion reseau", canActivate: [AuthGuard]}, //Fait
-  {path: "role", component:RoleComponent, title: "Gestion role", canActivate: [AuthGuard]}, //Fait mais à vérifier
+  {path: "role", component:RoleComponent, title: "Gestion role", canActivate: [AuthGuard]}, //Fait 
   {path: "utilisateur", component:UtilisateurComponent, title: "Gestion utilisateur", canActivate: [AuthGuard]}, //Fait
   {path: "newsletter", component:NewsletterComponent, title: "Gestion newsletter", canActivate: [AuthGuard]}, //Fait
   {path: "message", component:MessageComponent, title: "Gestion message", canActivate: [AuthGuard]}, //Fait
@@ -50,6 +51,8 @@ const routes: Routes = [
 
   // Pour les administrateurs réseau 
   {path: "gestionTarifs", component:TarifComponent, title: "Gestion tarifs", canActivate: [AuthGuard]},
+  // {path: "gestionTypeLigne", component:TypeLigneComponent, title: "Gestion type ligne", canActivate: [AuthGuard]},
+  {path: "gestionTypeLigne", component:TypeLigneComponent, title: "Gestion type ligne"},
   {path: "gestionLigne", component:GestionLigneComponent, title: "Gestion lignes", canActivate: [AuthGuard]},
   {path: "gestionAbonnemenet", component:AbonnementComponent, title: "Gestion abonnement", canActivate: [AuthGuard]},
 ];
