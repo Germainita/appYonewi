@@ -24,5 +24,7 @@ export class AuthService {
 
     // On vide le localStorage 
     localStorage.setItem("userConnect", JSON.stringify(""));
+
+    localStorage.setItem("isUserConnected", JSON.stringify(false));
   }
 }

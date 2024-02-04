@@ -28,14 +28,15 @@
         <form class="row g-3 ">
             <!-- départ  -->
             <div class="col-auto input-group-lg mb-3">
-                <input type="text" id="depart" class="form-control" placeholder="Depart...." >
+                <input type="text" id="depart" name="depart" class="form-control" placeholder="Depart...." [(ngModel)]="departInput">
             </div>
 
             <div class="col-auto input-group-lg mb-3">
-                <input type="text" id="arrivee" class="form-control" placeholder="Arrivée...." >
+                <input type="text" id="arrivee" name="arrivee" class="form-control" placeholder="Arrivée...." [(ngModel)]="arriveeInput">
             </div>
             <div class="col-auto">
-              <button type="submit" class="btn btn-lg btnRechercher fw-bold mb-3">Rechercher</button>
+              <button type="submit" class="btn btn-lg btnRechercher fw-bold mb-3 me-3" (click)="onSearchItineraire()">Rechercher</button>
+              <button  class="btn btn-lg btnAnnuler fw-bold mb-3" (click)="annulerSearch()" *ngIf="isSerach">Annuler</button>
             </div>            
         </form>
     </div>
@@ -50,7 +51,7 @@
             <div class="col-sm-4">
               <div class="input-group">
                 <!-- <input type="text" name="search" class="form-control" [(ngModel)]="filterValue" (input)="onSearch()"> -->
-                <input type="text" name="search" class="form-control" placeholder="Rechercher une ligne">
+                <input type="text" name="search" class="form-control" placeholder="Rechercher une ligne" [(ngModel)]="filterValue" (input)="onSearch()">
                 <button class="iconesearch input-group-text"><i class="bi bi-search"></i></button>
               </div>
             </div>  
@@ -58,11 +59,12 @@
 
         <!-- Liste des lignes du réseau  -->
         <div class="ligne row ">
-            <div class="col-md-4 mb-3">
-                <div class="card text-center p-3 rounded-4">
-                    <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">1</span></p>
+
+            <div class="col-md-4 mb-5" *ngFor="let ligneAftu of tabLigneAftuFilter">
+                <div class="card text-center p-3 rounded-4 card-ligne">
+                    <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">{{ligneAftu.nom}}</span></p>
                     <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
-                    <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
+                    <h4 class="itineraireLigne mb-4">{{ligneAftu.lieuDepart}} - {{ligneAftu.lieuArrivee}}</h4>
 
                     <!-- Liste des sections  -->
                     <div class="">
@@ -70,118 +72,32 @@
 
                         <div class="sectionsConatiner container mb-3">
                             <!-- section 1  -->
-                            <div class="row mb-3">
-                                <div class="col-4">Terminus HLM Grand Yoff </div>
-                                <div class="col-4">Scat Urbam</div>
-                                <div class="col-4">150 FCFA</div>
+                            <div class="row mb-3" *ngFor="let section of ligneAftu.sections">
+                                <div class="col-4">{{section.depart}} </div>
+                                <div class="col-4">{{section.arrivee}}</div>
+                                <div class="col-4">{{section.prix}}</div>
                             </div>
                             <!-- section 2  -->
-                            <div class="row mb-3">
+                            <!-- <div class="row mb-3">
                                 <div class="col-4">Terminus HLM Grand Yoff </div>
                                 <div class="col-4">Scat Urbam</div>
                                 <div class="col-4">150 FCFA</div>
-                            </div>
+                            </div> -->
                             <!-- section 3  -->
-                            <div class="row mb-3">
+                            <!-- <div class="row mb-3">
                                 <div class="col-4">Terminus HLM Grand Yoff </div>
                                 <div class="col-4">Scat Urbam</div>
                                 <div class="col-4">150 FCFA</div>
-                            </div>
+                            </div> -->
                             <!-- section 4  -->
-                            <div class="row mb-3">
+                            <!-- <div class="row mb-3">
                                 <div class="col-4">Terminus HLM Grand Yoff </div>
                                 <div class="col-4">Scat Urbam</div>
                                 <div class="col-4">150 FCFA</div>
-                            </div>
+                            </div> -->
                         </div>
 
-                        <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <div class="card text-center p-3 rounded-4">
-                    <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">1</span></p>
-                    <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
-                    <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
-
-                    <!-- Liste des sections  -->
-                    <div class="">
-                        <h5 class="sections fw-bold mb-3">Sections:</h5>
-
-                        <div class="sectionsConatiner container mb-3">
-                            <!-- section 1  -->
-                            <div class="row mb-3">
-                                <div class="col-4">Terminus HLM Grand Yoff </div>
-                                <div class="col-4">Scat Urbam</div>
-                                <div class="col-4">150 FCFA</div>
-                            </div>
-                            <!-- section 2  -->
-                            <div class="row mb-3">
-                                <div class="col-4">Terminus HLM Grand Yoff </div>
-                                <div class="col-4">Scat Urbam</div>
-                                <div class="col-4">150 FCFA</div>
-                            </div>
-                            <!-- section 3  -->
-                            <div class="row mb-3">
-                                <div class="col-4">Terminus HLM Grand Yoff </div>
-                                <div class="col-4">Scat Urbam</div>
-                                <div class="col-4">150 FCFA</div>
-                            </div>
-                            <!-- section 4  -->
-                            <div class="row mb-3">
-                                <div class="col-4">Terminus HLM Grand Yoff </div>
-                                <div class="col-4">Scat Urbam</div>
-                                <div class="col-4">150 FCFA</div>
-                            </div>
-                        </div>
-
-                        <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
-
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-4 mb-3">
-                <div class="card text-center p-3 rounded-4">
-                    <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">1</span></p>
-                    <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
-                    <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
-
-                    <!-- Liste des sections  -->
-                    <div class="">
-                        <h5 class="sections fw-bold mb-3">Sections:</h5>
-
-                        <div class="sectionsConatiner container mb-3">
-                            <!-- section 1  -->
-                            <div class="row mb-3">
-                                <div class="col-4">Terminus HLM Grand Yoff </div>
-                                <div class="col-4">Scat Urbam</div>
-                                <div class="col-4">150 FCFA</div>
-                            </div>
-                            <!-- section 2  -->
-                            <div class="row mb-3">
-                                <div class="col-4">Terminus HLM Grand Yoff </div>
-                                <div class="col-4">Scat Urbam</div>
-                                <div class="col-4">150 FCFA</div>
-                            </div>
-                            <!-- section 3  -->
-                            <div class="row mb-3">
-                                <div class="col-4">Terminus HLM Grand Yoff </div>
-                                <div class="col-4">Scat Urbam</div>
-                                <div class="col-4">150 FCFA</div>
-                            </div>
-                            <!-- section 4  -->
-                            <div class="row mb-3">
-                                <div class="col-4">Terminus HLM Grand Yoff </div>
-                                <div class="col-4">Scat Urbam</div>
-                                <div class="col-4">150 FCFA</div>
-                            </div>
-                        </div>
-
-                        <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Voir itinéraire</button>
+                        <button class="btn btnItineraire px-4 fw-bold mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="showItineraire(ligneAftu)">Voir itinéraire</button>
 
                     </div>
 
@@ -647,13 +563,19 @@
         <div class="modal-content text-center">
             
             <div class="modal-body">
-                <h4 class="modal-title fs-5 titre mb-4" id="staticBackdropLabel">Ligne numéro 1</h4>
+                <h3 class="modal-title fs-5 titre mb-4" id="staticBackdropLabel">Ligne {{ligneObject.nom}}</h3>
                 <h6 class="fw-bold">Itinéraire complet:</h6> 
                 
-                <p class="mb-5">
-                    <span></span>
-                    HLM Grand Yoff (Face Autoroute) => Scat Urbam => Liberté 6 => Derklé => Liberté 4 => Rond Point Jet d'eau => Bourguiba => Grand Dakar => Fass Médina => Sham => Avenue Blaise Diagne => Terminus Lat Dio
-                </p>         
+                <p class="mb-5 d-bloc">
+                    <span *ngFor="let itineraire of ligneObject.itineraires let index=index" >
+                        <span *ngIf="index < ligneObject.itineraires.length - 1"> {{itineraire}}  =></span>
+                        
+                        <span  *ngIf="index == ligneObject.itineraires.length - 1">{{itineraire}}</span>
+                    </span>
+                    <!-- <span> =></span> -->
+                    <!-- HLM Grand Yoff (Face Autoroute) => Scat Urbam => Liberté 6 => Derklé => Liberté 4 => Rond Point Jet d'eau => Bourguiba => Grand Dakar => Fass Médina => Sham => Avenue Blaise Diagne => Terminus Lat Dio -->
+                </p>  
+                     
                 <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>
             </div>
             

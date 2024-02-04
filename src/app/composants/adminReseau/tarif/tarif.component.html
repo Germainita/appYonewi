@@ -19,13 +19,13 @@
                 <!-- <button class="btn px-2 me-3" *ngIf="isActifs" (click)="showCorbeille()">Voir corbeille</button> -->
 
                 <!-- Les boutons de la corbeille  -->
-                <button class="btn px-4 me-3" *ngIf="isConfig && !isTarifEntreSection && !isTarifSection" (click)="showTarifActifs()">Voir la liste</button>
+                <button class="btn px-4 me-3" *ngIf="isConfig" (click)="showTarifActifs()">Voir la liste</button>
                 <button class="btn px-4 me-3" *ngIf="isActifs" [disabled]="isTarifEntreSection && isTarifSection" [class.deseable]="isTarifEntreSection && isTarifSection" (click)="showConfigTarif()">Configurer les prix</button>
                 <!-- <button class="btn px-2 me-3" *ngIf="isSup"(click)="viderCorbeille( )">Vider corbeille</button> -->
             </div>
 
             <!-- Configurer les tarifs  -->
-            <div class="configTarif" *ngIf="isConfig && !isTarifEntreSection && !isTarifSection">
+            <div class="configTarif" *ngIf="isConfig">
                 <div class="row px-5">
                     <!-- Configurer le prix des sections  -->                     
                     <div class="col-md-6 px-4">

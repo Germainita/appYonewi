@@ -85,7 +85,7 @@
 
 /* Les section  */
 .sectionsConatiner{
-    max-height: 35vh;
+    height: 35vh;
     overflow-y: scroll;
     /* scrollbar-size: none; */
 }
@@ -121,4 +121,10 @@
 .menuFiltre .filtreActive{
     background-color: var(--base1);
     color: white;
+}
+
+.btnAnnuler{
+    color: var(--base1);
+    border: 1px solid var(--base1);
+    background-color: white;
 }

@@ -12,7 +12,7 @@ import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAl
 })
 export class ReseauComponent implements OnInit {
   // Déclaration des variables 
-  tabReseau: Reseau [] = [
+  tabReseau: any [] = [
     {
       id: 1, 
       nom:"Dakar Dem Dikk",

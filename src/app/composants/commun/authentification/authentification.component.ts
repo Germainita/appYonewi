@@ -25,7 +25,15 @@ export class AuthentificationComponent implements OnInit {
   // Injection des services ath et route 
   constructor(private authService: AuthService, private route: Router ){}
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    if(!localStorage.getItem("userConnect")){
+      localStorage.setItem("userConnect", JSON.stringify(""))
+    }
+
+    if(!localStorage.getItem("isUserConnected")){
+      localStorage.setItem("isUserConnected", JSON.stringify(false))
+    }
+  }
 
   // Methodes pour voir le formulaire de connexion 
   showConnexion(){
@@ -121,6 +129,8 @@ export class AuthentificationComponent implements OnInit {
             
             this.route.navigate(['/dashbord']); // Redirection vers le dashbord concerné 
             this.authService.isAuthenticated = true; // Définit la variable isAuthicated à true pour la guard
+
+            localStorage.setItem("isUserConnected", JSON.stringify(true));
 
             // On stocke les info de la requete dans notre localstorage
             localStorage.setItem("userConnect", JSON.stringify(response));
