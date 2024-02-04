@@ -146,6 +146,9 @@ export class RoleComponent implements OnInit{
         this.tabRolesActif = this.tabRole.filter((role:any) => role.etat == "actif");
         // console.log(this.tabRolesActif);
         this.tabRoleFilterActifs = this.tabRolesActif;  
+      },
+      (err:any) =>{
+        this.tabRolesActif = [];
       }
     )
   }
@@ -161,6 +164,7 @@ export class RoleComponent implements OnInit{
       },
       (err) =>{
         console.log(err);
+        this.tabRolesSup = [];
       }
     )
   }
@@ -201,6 +205,7 @@ export class RoleComponent implements OnInit{
         sweetAlertMessage("success", "", "Role mis à jour avec succes");
         this.listeRoles();
         this.role.nom = "";
+        this.showAjoutRole();
       },
       (err) =>{
         console.log (err)

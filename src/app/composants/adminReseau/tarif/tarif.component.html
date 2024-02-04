@@ -130,8 +130,8 @@
                 <p class="mb-3"><span class="fw-bold">Prix (FCFA): </span>{{tarif.prix}}</p> 
                 <p class="mb-3"><span class="fw-bold">Crée par: </span>{{tarif.created_by}}</p> 
                 <p class="mb-3"><span class="fw-bold">Date de création: </span>{{tarif.created_at}}</p> 
-                <p class="mb-3"><span class="fw-bold">Modifié par: </span>{{tarif.updated_by}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de dernière modification: </span>{{tarif.updated_at}}</p> 
+                <p class="mb-3" *ngIf="tarif.created_at != tarif.updated_at"><span class="fw-bold">Modifié par: </span>{{tarif.updated_by}}</p> 
+                <p class="mb-3" *ngIf="tarif.created_at != tarif.updated_at"><span class="fw-bold">Date de dernière modification: </span>{{tarif.updated_at}}</p> 
                 
                         
                 <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>

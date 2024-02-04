@@ -81,3 +81,7 @@ thead tr th{
     text-decoration: underline var(--base2);
     
 }
+
+.centerDiv{
+    margin: 0 auto;
+}

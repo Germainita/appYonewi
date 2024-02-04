@@ -22,7 +22,7 @@
             <!-- Les utilisateurs actifs  -->
             <div class="containerUsersActifs" *ngIf="isUsersActifs">
                 <div class="row px-4">
-                    <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
+                    <div class="card px-4 py-2 pt-4 shadow-sm rounded-4" *ngIf="tabUtilisateur.length">
                         <!-- Recherhcer une ligne  -->
                         <div class="row sectionEspace search mb-3">
                             <div class="col-md-7">
@@ -110,12 +110,13 @@
                             </div>
                         </div>
                     </div>
+                    <h3 class="text-center" *ngIf="!tabUtilisateur.length">Aucun utilisateur enregistré pour le moment</h3>
                 </div>
             </div>
 
             <!-- Les utilisateurs bloqués  -->
             <div class="containerUsersBloqués" *ngIf="isUsersBloqued">
-                <div class="row px-4">
+                <div class="row px-4" *ngIf="tabUtilisateurBlocked.length">
                     <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
                         <!-- Recherhcer une ligne  -->
                         <div class="row sectionEspace search mb-3">
@@ -199,6 +200,7 @@
                         </div>
                     </div>
                 </div>
+                <h3 class="text-center" *ngIf="!tabUtilisateurBlocked.length">Aucun utilisateur bloqué pour le moment</h3>
             </div>
             
         </div>
@@ -338,10 +340,10 @@
                 <p class="mb-3"><span class="fw-bold">Email: </span>{{utilisateur.email}}</p> 
                 <p class="mb-3"><span class="fw-bold">Telephone: </span>{{utilisateur.telephone}}</p> 
                 <p class="mb-3"><span class="fw-bold">Etat: </span>Compte {{utilisateur.etat}}</p> 
-                <p class="mb-3"><span class="fw-bold">Crée par: </span>{{utilisateur.created_at}}</p> 
+                <!-- <p class="mb-3"><span class="fw-bold">Crée par: </span>{{utilisateur.created_at}}</p>  -->
                 <p class="mb-3"><span class="fw-bold">Date de création: </span>{{utilisateur.created_at}}</p> 
-                <p class="mb-3"><span class="fw-bold">Modifié par: </span>{{utilisateur.updated_at}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de dernière modification: </span>{{utilisateur.updated_by}}</p> 
+                <!-- <p class="mb-3"><span class="fw-bold">Modifié par: </span>{{utilisateur.updated_at}}</p>  -->
+                <p class="mb-3" *ngIf="utilisateur.created_at != utilisateur.updated_at"><span class="fw-bold">Date de dernière modification: </span>{{utilisateur.updated_by}}</p> 
                 
                         
                 <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>

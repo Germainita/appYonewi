@@ -75,3 +75,7 @@ thead tr th{
     background-color: white;
     border: none;
 }
+
+.centerDiv{
+    margin: 0 auto;
+}

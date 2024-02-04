@@ -7,7 +7,6 @@ import { LigneService } from 'src/app/services/ligne.service';
 import { ReseauService } from 'src/app/services/reseau.service';
 import { SectionService } from 'src/app/services/section.service';
 import { TarifService } from 'src/app/services/tarif.service';
-import { TypeLigneService } from 'src/app/services/typeLigne.service';
 
 @Component({
   selector: 'app-lignes',
@@ -77,7 +76,6 @@ export class LignesComponent implements OnInit{
   constructor(
     private reseauService: ReseauService,
     private ligneService: LigneService, 
-    private typeLigneService: TypeLigneService, 
     private sectionService: SectionService,
     private tarifService: TarifService, 
   ){}

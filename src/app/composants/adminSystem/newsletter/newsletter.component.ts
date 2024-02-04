@@ -63,6 +63,9 @@ export class NewsletterComponent implements OnInit{
       (data:any) =>{
         // console.log(data);
         this.tabNewsletter =this.tabNewsletterFilter = data.subscribers
+      },
+      (err:any)=>{
+        this.tabNewsletter = [];
       }
     )
   }

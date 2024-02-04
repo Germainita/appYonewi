@@ -206,6 +206,7 @@ export class AbonnementComponent {
               sweetAlertMessage("success", "", data.message);
               this.listeAbonnement();
               this.viderChamps();
+              this.showAjout();
             }
           },
           (err) =>{

@@ -13,7 +13,7 @@
         <!-- Liste des sections d'une ligne  -->
         <div class="containerMessage container">
             <div class="row px-4">
-                <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
+                <div class="card px-4 py-2 pt-4 shadow-sm rounded-4" *ngIf="tabContacts.length">
                     <!-- Recherhcer une ligne  -->
                     <div class="row sectionEspace search mb-3">
                         <div class="col-md-7">
@@ -69,6 +69,7 @@
                     </div>
                 </div>
             </div>
+            <h3 class="text-center" *ngIf="!tabContacts.length">Aucun message reçu</h3>
         </div>
     </div>
 

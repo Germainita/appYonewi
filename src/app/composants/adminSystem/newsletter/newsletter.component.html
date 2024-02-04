@@ -13,7 +13,7 @@
         <!-- Liste des sections d'une ligne  -->
         <div class="containerNewsletter container">
             <div class="row px-4">
-                <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
+                <div class="card px-4 py-2 pt-4 shadow-sm rounded-4" *ngIf="tabNewsletter.length">
                     <!-- Recherhcer une ligne  -->
                     <div class="row sectionEspace search mb-3">
                         <div class="col-md-7">
@@ -65,6 +65,7 @@
                     </div>
                 </div>
             </div>
+            <h3 class="text-center" *ngIf="!tabNewsletter.length">Aucun inscrit à la newsletter</h3>
         </div>
     </div>
 

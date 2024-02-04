@@ -111,6 +111,7 @@ export class TypeLigneComponent implements OnInit {
         console.log(data);
         this.tabTypeLigne = data.types;
         this.tabTypeLigneFilterActifs = this.tabTypeLigne;
+
       }
     )
   }
@@ -125,6 +126,7 @@ export class TypeLigneComponent implements OnInit {
       },
       (err) =>{
         console.log(err);
+        this.tabTypeLignesSup = [];
       }
     )
   }
@@ -181,6 +183,7 @@ export class TypeLigneComponent implements OnInit {
         // this.typeLigne.nom = "";
         this.typeLigne.nom = "";
         this.typeLigne.description = "";
+        this.showAjoutTypeLigne();
       },
       (err) =>{
         console.log (err)

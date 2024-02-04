@@ -3,7 +3,7 @@ export class Role {
     nom!: string;
     etat!: string;
     created_at!:Date;
-    createdBy!:string;
+    created_by!:string;
     updated_at!:Date;
-    updatedBy!:string;
+    updated_by!:string;
 }

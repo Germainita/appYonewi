@@ -133,6 +133,7 @@ export class UtilisateurComponent {
       },
       (error) =>{
         console.log(error);
+        this.tabUtilisateur = [];
       }
     )
   }
@@ -146,6 +147,7 @@ export class UtilisateurComponent {
       },
       (error) =>{
         console.log(error);
+        this.tabUtilisateurBlocked = [];
       }
     )
   }

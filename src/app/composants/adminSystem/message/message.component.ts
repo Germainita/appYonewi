@@ -75,6 +75,9 @@ export class MessageComponent implements OnInit{
         console.log(data)
         this.tabContacts = this.tabContactsFilter = data.contact;
         console.log(this.tabContacts)
+      }, 
+      (err:any)=>{
+        this.tabContacts = [];
       }
     )
   }

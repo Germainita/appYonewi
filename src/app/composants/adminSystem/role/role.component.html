@@ -26,7 +26,7 @@
                 <div class="row px-5">
                     <!-- Liste des roles actifs  -->
                     <div class="col-md-8 px-4">
-                        <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
+                        <div class="card px-4 py-2 pt-4 shadow-sm rounded-4" *ngIf="tabRolesActif.length">
                             <!-- Recherhcer une ligne  -->
                             <div class="row sectionEspace search mb-3">
                                 <div class="col-md-7">
@@ -96,6 +96,8 @@
                                 </div>
                             </div>
                         </div>
+                        <h3 class="text-center" *ngIf="!tabRolesActif.length">Aucun role enregistré pour le moment</h3>
+
                     </div>
     
                     <!-- Ajouter et modifier un réseau  -->
@@ -145,7 +147,7 @@
             <div class="row px-5">
                 <!-- Liste des roles supprimé  -->
                 <div class="col-md-12 px-4">
-                    <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
+                    <div class="card px-4 py-2 pt-4 shadow-sm rounded-4" *ngIf="tabRolesSup.length">
                         <!-- Recherhcer un role  -->
                         <div class="row sectionEspace search mb-3">
                             <div class="col-md-7">
@@ -214,6 +216,7 @@
                         </div>
                     </div>
                 </div>
+                <h3 class="text-center" *ngIf="!tabRolesSup.length">Aucun role dans la corbeille</h3>
             </div>
         </div>
 
@@ -229,10 +232,10 @@
             <div class="modal-body">
                 <h4 class="modal-title fs-5 titre mb-4" id="staticBackdropLabel">Détails du rôle</h4>
                 <p class="mb-3"><span class="fw-bold">Nom: </span>{{role.nom}}</p> 
-                <p class="mb-3"><span class="fw-bold">Crée par: </span>{{role.created_at}}</p> 
+                <!-- <p class="mb-3"><span class="fw-bold">Crée par: </span>{{role.created_at}}</p>  -->
                 <p class="mb-3"><span class="fw-bold">Date de création: </span>{{role.created_at}}</p> 
-                <p class="mb-3"><span class="fw-bold">Modifié par: </span>{{role.created_at}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de dernière modification: </span>{{role.created_at}}</p> 
+                <!-- <p class="mb-3"><span class="fw-bold">Modifié par: </span>{{role.created_at}}</p>  -->
+                <p class="mb-3" *ngIf="role.created_at != role.updated_at"><span class="fw-bold" >Date de dernière modification: </span>{{role.updated_at}}</p> 
                 
                         
                 <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>

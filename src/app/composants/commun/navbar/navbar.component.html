@@ -2,7 +2,7 @@
 <div class="navbar mb-5 px-5 shadow-sm sticky-top bg-body">
     <div>
         <h5 *ngIf="isAdminSystem">Administrateur de yone Wi</h5>
-        <h5 *ngIf="isAdminReseau">Administrateur réseau</h5>
+        <h5 *ngIf="isAdminReseau">Administrateur du réseau {{reseauUser |  titlecase}}</h5>
     </div>
     <div class="profil">
         <!-- <img src="assets/yonewilogo.png" alt=""> -->

@@ -35,7 +35,7 @@
                 <div class="row px-5">
                     <!-- Liste des réseaux  -->
                     <div class="col-md-8 px-4">
-                        <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
+                        <div class="card px-4 py-2 pt-4 shadow-sm rounded-4" *ngIf="tabReseauxActifs.length">
                             <!-- Recherhcer une ligne  -->
                             <div class="row sectionEspace ligneReseauSearch mb-3">
                                 <div class="col-md-7">
@@ -109,9 +109,10 @@
                             </div>
                         </div>
                     </div>
+                    <h3 class="text-center" *ngIf="!tabReseauxActifs.length">Aucun réseau n'a été enregistré</h3>
     
                     <!-- Ajouter et modifier un réseau  -->
-                    <div class="col-md-4 px-4">
+                    <div class="col-md-4 px-4" [class.centerDiv]="!tabReseauxActifs.length">
                         <!-- Ajouter un réseau  -->                    
                         <div class="card cardAjout px-3 py-4 pt-3 shadow-sm" *ngIf="isAjout">
                             <h3 class="titre text-center fw-bold  mb-4">Ajouter un réseaux</h3>
@@ -161,7 +162,7 @@
 
             <!-- .liste des réseaux supprimés-->
             <div class="listReseaux" *ngIf="isListeCorbeille">
-                <div class="row px-5">
+                <div class="row px-5" *ngIf="tabReseauxSup.length">
                     <!-- Liste des réseaux  -->
                     <div class="col-md-12 px-4">
                         <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
@@ -240,6 +241,7 @@
     
                     
                 </div>
+                <h3 class="text-center" *ngIf="!tabReseauxSup.length">Il n'ya pas d'elements dans la corbeille</h3>
             </div>
 
 
@@ -381,10 +383,10 @@
             <div class="modal-body">
                 <h4 class="modal-title fs-5 titre mb-4" id="staticBackdropLabel">Détails reseaux {{reseau.nom}}</h4>
                 <!-- <p class="mb-3">{{reseau.lignes.length}} Lignes</p>  -->
-                <p class="mb-3"><span class="fw-bold">Crée par: </span>{{reseau.description}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de création: </span>{{reseau.description}}</p> 
-                <p class="mb-3"><span class="fw-bold">Modifié par: </span>{{reseau.description}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de dernière modification: </span>{{reseau.description}}</p> 
+                <!-- <p class="mb-3"><span class="fw-bold">Crée par: </span>{{reseau.description}}</p>  -->
+                <p class="mb-3"><span class="fw-bold">Date de création: </span>{{reseau.created_at}}</p> 
+                <!-- <p class="mb-3"><span class="fw-bold">Modifié par: </span>{{reseau.description}}</p>  -->
+                <p class="mb-3" *ngIf="reseau.created_at != reseau.updated_at"><span class="fw-bold" >Date de dernière modification: </span>{{reseau.updated_at}}</p> 
                 
                         
                 <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>

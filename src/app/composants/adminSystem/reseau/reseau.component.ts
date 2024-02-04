@@ -281,7 +281,8 @@ export class ReseauComponent implements OnInit {
         console.log(this.tabReseauxActifsFilter.length);
       },
       (error) =>{
-        console.log (error)
+        console.log (error);
+        this.tabReseauxActifs = []
       }
     )
   }
@@ -305,6 +306,7 @@ export class ReseauComponent implements OnInit {
             // console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.reseau.nom = "";
+            this.showAjoutReseau();
           },
           (err) =>{
             console.log(err);
@@ -346,7 +348,7 @@ export class ReseauComponent implements OnInit {
       },
       (error) =>{
         console.log(error);
-        
+        this.tabReseauxSup = [];
       }
     )
   }

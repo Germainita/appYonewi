@@ -28,10 +28,10 @@
                 <div class="row px-5">
                     <!-- Liste des types de ligne actifs  -->
                     <div class="col-md-8 px-4">
-                        <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
+                        <div class="card px-4 py-2 pt-4 shadow-sm rounded-4" *ngIf="tabTypeLigne.length">
                             <!-- Recherhcer un type de ligne  -->
                             <div class="row sectionEspace search mb-3">
-                                <div class="col-md-7">
+                                <div class="col-md-7" >
                                     <h3 class="fw-bold">Les types de ligne du réseau</h3>
                                 </div>
                                 <div class="col-md-5">
@@ -99,10 +99,11 @@
                             </div>
                         </div>
                     </div>
+                    <h3 class="text-center" *ngIf="!tabTypeLigne.length">Aucun type de ligne enregistré pour le moment</h3>
     
                     <!-- Ajouter et modifier un type de ligne  -->
     
-                    <div class="col-md-4 px-4">
+                    <div class="col-md-4 px-4" [class.centerDiv]="!tabTypeLigne.length">
                         <!-- Ajouter un type de ligne  -->                    
                         <div class="card cardAjout px-3 py-4 pt-3 shadow-sm" *ngIf="isAjout">
                             <h3 class="titre text-center fw-bold  mb-5">Ajouter un type de ligne</h3>
@@ -144,12 +145,13 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             
 
            <!-- .liste des types lignes supprimé -->
            <div class="listRole" *ngIf="isSup">
-                <div class="row px-5">
+                <div class="row px-5" *ngIf="tabTypeLignesSup.length">
                     <!-- Liste des types lignes supprimé  -->
                     <div class="col-md-12 px-4">
                         <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
@@ -222,6 +224,7 @@
                         </div>
                     </div>
                 </div>
+                <h3 class="text-center" *ngIf="!tabTypeLignesSup.length">Aucun élément dans la corbeille</h3>
             </div>
         </div>
     </div>
@@ -237,8 +240,8 @@
                 <p class="mb-3"><span class="fw-bold">Nom: </span>{{typeLigne.nom}}</p> 
                 <p class="mb-3"><span class="fw-bold">Crée par: </span>{{typeLigne.created_by}}</p> 
                 <p class="mb-3"><span class="fw-bold">Date de création: </span>{{typeLigne.created_at}}</p> 
-                <p class="mb-3"><span class="fw-bold">Modifié par: </span>{{typeLigne.updated_by}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de dernière modification: </span>{{typeLigne.updated_at}}</p> 
+                <p class="mb-3" *ngIf="typeLigne.created_at !=typeLigne.updated_at"><span class="fw-bold">Modifié par: </span>{{typeLigne.updated_by}}</p> 
+                <p class="mb-3" *ngIf="typeLigne.created_at !=typeLigne.updated_at"><span class="fw-bold">Date de dernière modification: </span>{{typeLigne.updated_at}}</p> 
                 
                         
                 <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>

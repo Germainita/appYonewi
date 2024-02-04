@@ -90,3 +90,7 @@ thead tr th{
     color: white;
     border: none;
 }
+
+.centerDiv{
+    margin: 0 auto;
+}

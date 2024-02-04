@@ -49,3 +49,6 @@ thead tr th{
     border: none;
 }
 
+.centerDiv{
+    margin: 0 auto;
+}
