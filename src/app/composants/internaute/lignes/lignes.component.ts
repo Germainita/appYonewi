@@ -7,6 +7,7 @@ import { LigneService } from 'src/app/services/ligne.service';
 import { ReseauService } from 'src/app/services/reseau.service';
 import { SectionService } from 'src/app/services/section.service';
 import { TarifService } from 'src/app/services/tarif.service';
+import { TypeLigneService } from 'src/app/services/typeLigne.service';
 
 @Component({
   selector: 'app-lignes',
@@ -47,18 +48,21 @@ export class LignesComponent implements OnInit{
 
   // Les tarifs 
   tabTarif: Tarif[] = [];
-  tarif_id ?: number;
-  prixSection ?: number;
-  prixEntreSection ?: number;
+  tarif_id :number = 0;
+  prixSection :number = 0;
+  prixEntreSection :number = 0;
 
-  prixSectionAftu ?: number;
-  prixEntreSectionAftu ?: number;
+  prixSectionAftu :number = 0;
+  prixEntreSectionAftu :number = 0;
 
-  prixSectionDemDikk ?: number;
-  prixEntreSectionDemDikk ?: number;
+  prixSectionDemDikk :number = 0;
+  prixEntreSectionDemDikk :number = 0;
 
 
   tabTypeLigne: TypeLigne[] = [];
+  idUrbaine: number = 0;
+  idBanlieu: number = 0;
+  idDiamniadio: number = 0;
 
   // Le tableau filtrer peu importe la liste 
   tabFilter:any[] = [];
@@ -66,10 +70,12 @@ export class LignesComponent implements OnInit{
   filterValueDemDikk: string = "";
 
   // Attribut pour la pagination
-  itemsParPage = 5; // Nombre d'articles par page
+  itemsParPage = 3; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
 
   messageInfo: string = "";
+
+  isAll: boolean = true;
 
   
 // Déclaration des méthodes 
@@ -78,14 +84,15 @@ export class LignesComponent implements OnInit{
     private ligneService: LigneService, 
     private sectionService: SectionService,
     private tarifService: TarifService, 
+    private typeLigneService: TypeLigneService,
   ){}
 
   ngOnInit(): void {
-    
     this.listeReseau();
     this.listetarif();
     this.listeSections();
     this.listeLigne();
+    this.listeTypeLigne();
     // this.listeSectionLigneAftu();
     
     if (!localStorage.getItem("lignesAftu")){
@@ -177,13 +184,16 @@ export class LignesComponent implements OnInit{
     )
   }
 
+  
+  
   // les sections 
   // Liste des sections
   listeSections(){
     this.sectionService.getAllSection().subscribe(
       (data:any) =>{
         console.log(data);
-        this.tabSection = data.sections;       
+        this.tabSection = data.sections;    
+        this.isAll = false;   
       }
     )
   }
@@ -207,7 +217,10 @@ export class LignesComponent implements OnInit{
 
         // Les infos du réseau de Dakar Dem Dikk 
         this.tabLigneDemDikk = this.tabLigneDemDikkFilter = this.tabLigneFilterActifs.filter((element:any)=> element.reseau_id == this.idDemDikk);
-        // console.log("Liste des lignes du reseau LigneDemDikk ",this.tabLigneDemDikk);
+        console.log("Liste des lignes du reseau LigneDemDikk ",this.tabLigneDemDikk);
+
+        
+        
         
         // Algorithme pour avoir les différentes section d'une ligne avec le prix pour aftu
         for(let i = 0; i<this.tabAftu.length; i++){
@@ -233,7 +246,7 @@ export class LignesComponent implements OnInit{
           // console.log("Le tableau des sections test", tabSectionLigne);  
           // On stocke l'itinéraire dans le tableau des itinéraires de la ligne 
           this.tabAftu[i].itineraires = tabSectionLigne;   
-          console.log(this.tabAftu[i]);
+          // console.log(this.tabAftu[i]);
                            
 
           // On a le tableau, on peut maintenant faire l'algo avec les prix 
@@ -242,42 +255,40 @@ export class LignesComponent implements OnInit{
           this.tabAftu[i].sections = this.tabLigneAftuFilter[i].sections = this.calculPrixSection(tabSectionLigne, this.prixSectionAftu, this.prixEntreSectionAftu);
         }
         
-        console.log("Les lignes de AFTU avec prix ", this.tabAftu);
-        localStorage.setItem("lignesAftu", JSON.stringify(this.tabAftu));  
-        // this.tabLigneFilterActifs = this.tabLigne;
-
-        // this.listeSectionLigneAftu();
-
-
-        // Algorithme pour avoir les différentes section d'une ligne avec le prix pour aftu
-
-        // for(let i = 0; i<this.tabLigne.length; i++){
-        //   let tabSectionLigne:any[]=[];
-        //   // On stocke d'abord le point de départ de la ligne comme premier élément du tableau pour la ligne;
-        //   tabSectionLigne.push(this.tabLigne[i].lieuDepart);
+        // Algorithme pour avoir les différentes section d'une ligne avec le prix pour Demdikk
+        for(let i = 0; i<this.tabLigneDemDikk.length; i++){
+          let tabSectionLigne:any[]=[];
+          // On stocke d'abord le point de départ de la ligne comme premier élément du tableau pour la ligne;
+          tabSectionLigne.push(this.tabLigneDemDikk[i].lieuDepart);
 
 
-        //   // Si des sections on été enregistré, on récupère les section de la ligne
-        //   let tabSection: SectionModel[] = [];
-        //   tabSection = this.tabSection.filter((section:any) => section.ligne_id == this.tabLigne[i].id);
-        //   if(tabSection){
-        //     // On prend les debut des sections sauf le premier qui est déjà enregistré
-        //     for(let y = 1; y < tabSection.length; y++){
-        //       tabSection[y].num = `${y+1}`;
-        //       console.log(tabSection[y].Depart);
+          // Si des sections on été enregistré, on récupère les section de la ligne
+          let tabSection: SectionModel[] = [];
+          tabSection = this.tabSection.filter((section:any) => section.ligne_id == this.tabLigneDemDikk[i].id);
+          if(tabSection){
+            // On prend les debut des sections sauf le premier qui est déjà enregistré
+            for(let y = 1; y < tabSection.length; y++){
+              tabSection[y].num = `${y+1}`;
+              // console.log(tabSection[y].Depart);
               
-        //       tabSectionLigne.push(tabSection[y].Depart)
-        //     }
-        //   }
-        //   tabSectionLigne.push(this.tabLigne[i].lieuArrivee); // Stocke en dernier le lieu d'arrivé de la ligne;
+              tabSectionLigne.push(tabSection[y].Depart)
+            }
+          }
+          tabSectionLigne.push(this.tabLigneDemDikk[i].lieuArrivee); // Stocke en dernier le lieu d'arrivé de la ligne;
 
-        //   console.log("Le tableau des sections test", tabSectionLigne); 
+          // console.log("Le tableau des sections test", tabSectionLigne);  
+          // On stocke l'itinéraire dans le tableau des itinéraires de la ligne 
+          this.tabLigneDemDikk[i].itineraires = tabSectionLigne;   
+          // console.log(this.tabLigneDemDikk[i]);
+                           
 
-        //   // On a le tableau, on peut maintenant faire l'algo avec les prix 
-        //   // let tabSectionPrix = this.calculPrixSection(tabSectionLigne);
-        //   // console.log(tabSectionPrix);   
-        //   this.tabLigne[i].sections = this.calculPrixSection(tabSectionLigne);
-        // }
+          // On a le tableau, on peut maintenant faire l'algo avec les prix 
+          // let tabSectionPrix = this.calculPrixSection(tabSectionLigne);
+          // console.log(tabSectionPrix);   
+          this.tabLigneDemDikk[i].sections = this.tabLigneDemDikkFilter[i].sections = this.calculPrixSection(tabSectionLigne, this.prixSectionDemDikk, this.prixEntreSectionDemDikk);
+        }
+        
+
         
         if(!this.tabLigne.length){
           console.log(this.tabLigne)
@@ -285,6 +296,63 @@ export class LignesComponent implements OnInit{
         }
       }
     )
+  }
+
+  // Les types de lignes 
+  listeTypeLigne(){
+    this.typeLigneService.getAllTypesLigne().subscribe(
+      (data:any) =>{
+        console.log(data);
+        this.tabTypeLigne = data.types;  
+        this.isAll = true;      
+
+        // // On trouve l'identiifant du type banlieue 
+        // let typeBanlieu = data.types.find((element:any) => element.nom.toLowerCase() === "banlieue" && element.reseau_id === this.idDemDikk);
+        // console.log("Le type banlieue trouvé", typeBanlieu);
+        // if(typeBanlieu){
+        //   this.idBanlieu = typeBanlieu.id
+        // }
+        // // On trouve l'identiifant du type urbaine 
+        // let typeUrbaine = data.types.find((element:any) => element.nom.toLowerCase() === "urbaine" && element.reseau_id === this.idDemDikk);
+        // console.log("Le type urbaine trouvé", typeUrbaine);
+        // if(typeBanlieu){
+        //   this.idUrbaine = typeUrbaine.id
+        // }
+        // // On trouve l'identiifant du type diamniadio 
+        // let typeDiamniadio = data.types.find((element:any) => element.nom.toLowerCase() === "diamniadio" && element.reseau_id === this.idDemDikk);
+        // console.log("Le type diamniadio trouvé", typeDiamniadio);
+        // if(typeDiamniadio){
+        //   this.idDiamniadio = typeDiamniadio.id
+        // }
+      }
+    )
+  }
+
+  // Voir les lignes du type filtré 
+  showLigneFilter(typeLigne:any, index:number){
+    this.isAll = false;
+    console.log(typeLigne);
+    this.tabLigneDemDikkFilter = this.tabLigneDemDikk.filter((ligne:Ligne)=> ligne.type_id == typeLigne.id);
+    console.log("Les lignes du filtre ", this.tabLigneDemDikkFilter);
+    for(let i=0; i<=this.tabTypeLigne.length; i++){
+      if (i != index){
+        this.tabTypeLigne[i].isActif = false;
+      } else{
+
+        typeLigne.isActif = true;
+      }
+    }
+    
+  }
+
+  showAllLigne(){
+    this.isAll = true;    
+    this.tabLigneDemDikkFilter = this.tabLigneDemDikk;
+    // alert(this.tabLigneDemDikkFilter.length);
+    console.log(this.tabLigneDemDikkFilter);
+    for(let i=0; i<=this.tabTypeLigne.length; i++){
+      this.tabTypeLigne[i].isActif = false;
+    }
   }
 
   
@@ -347,6 +415,10 @@ export class LignesComponent implements OnInit{
   onSearch(){
     this.tabLigneAftuFilter = this.searchSections(this.tabAftu, this.filterValue);
     this.tabLigneDemDikkFilter = this.searchSections(this.tabLigneDemDikk, this.filterValueDemDikk);
+    this.isAll = true;    
+    for(let i=0; i<=this.tabTypeLigne.length; i++){
+      this.tabTypeLigne[i].isActif = false;
+    }
   }
   
 
@@ -364,9 +436,9 @@ export class LignesComponent implements OnInit{
   // Rechercher l'itinéraire suivant la date de depart et d'arrivee 
   onSearchItineraire(){
     // this.tabLigneAftuFilter = this.searchSections(this.tabAftu, this.filterValue);
+    this.isSerach = true;
     this.tabLigneAftuFilter = this.searchItineraire(this.tabAftu, this.departInput, this.arriveeInput);
     this.tabLigneDemDikkFilter = this.searchItineraire(this.tabLigneDemDikk, this.departInput, this.arriveeInput);
-    this.isSerach = true;
   }
   annulerSearch(){
     this.isSerach = false;
@@ -377,10 +449,10 @@ export class LignesComponent implements OnInit{
   }
   
   searchItineraire(tab: any[], lieuDepart: string, lieuArrivee: string): any[] {
-    return this.tabLigne.map(objet => {
+    return tab.map((objet:any) => {
       return {
         ...objet,
-        sections: objet.sections.filter(section => section.depart.toLowerCase() === lieuDepart.toLowerCase() && section.arrivee.toLowerCase() === lieuArrivee.toLowerCase())
+        sections: objet.sections.filter((section:any) => section.depart.toLowerCase() === lieuDepart.toLowerCase() && section.arrivee.toLowerCase() === lieuArrivee.toLowerCase())
       };
     });
 

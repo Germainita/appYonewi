@@ -87,9 +87,9 @@
                                     </tr>
                                 </thead>
     
-                                <tbody *ngFor="let tarif of tabTarif">
+                                <tbody *ngFor="let tarif of tabTarif let index=index">
                                     <tr>
-                                        <td>{{tarif.id}}</td>
+                                        <td>{{index+1}}</td>
                                         <td>{{tarif.prix}}</td>
                                         <td>{{tarif.type}}</td>
                                         <td>

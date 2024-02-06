@@ -3,6 +3,7 @@ import { Abonnement } from 'src/app/models/abonnement.model';
 import { Contact } from 'src/app/models/contact.model';
 import { Ligne } from 'src/app/models/ligne.model';
 import { Reseau } from 'src/app/models/reseau.model';
+import { Tarif } from 'src/app/models/tarif.model';
 import { TypeLigne } from 'src/app/models/typeLigne.model';
 import { User } from 'src/app/models/user.model';
 import { AbonnementService } from 'src/app/services/abonnement.service';
@@ -28,7 +29,7 @@ export class StatisticsComponent implements OnInit{
   // Statistiques pour admin reseau 
   tabLigne: Ligne[] = [];
   // tabTypeLigne: TypeLigne[] = [];
-  tabTypeTarif: TypeLigne[] = [];
+  tabTypeTarif: Tarif[] = [];
   tabAbonnement: Abonnement[] = [];
 
   // Pour admin systeme 
@@ -84,7 +85,7 @@ export class StatisticsComponent implements OnInit{
   listeAbonnement(){
     this.abonnementService.getAllAbonnementReseau().subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         this.tabAbonnement = data.abonnements;
       }
     )
@@ -103,7 +104,7 @@ export class StatisticsComponent implements OnInit{
   listetarif(){
     this.tarifService.getAllTarifReseau().subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         this.tabTypeTarif = data.tarifs;        
       }
     )
@@ -115,11 +116,11 @@ export class StatisticsComponent implements OnInit{
   listeUsers(){
     this.userService.getAllUsers().subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         this.tabUtilisateur = data.users;
       },
       (error) =>{
-        console.log(error);
+        // console.log(error);
         this.tabUtilisateur = [];
       }
     )

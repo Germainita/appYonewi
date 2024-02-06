@@ -110,7 +110,7 @@
 /* Menu filtre des projets  */
 .menuFiltre{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 .menuFiltre .btn{
     width: 100%;
@@ -123,8 +123,31 @@
     color: white;
 }
 
+.menuFiltre .filtreInactive{
+    background-color: white;
+    color: black;
+}
+
 .btnAnnuler{
     color: var(--base1);
     border: 1px solid var(--base1);
     background-color: white;
+}
+
+/* pagination  */
+.pageActuelle{
+    color: var(--base2);
+    font-weight: bold;
+}
+
+
+.btnColor{
+    color: var(--base1);
+    border: 1px solid var(--base1);
+    background-color: white;
+}
+
+.page{
+    background-color: white;
+    border: none;
 }

@@ -29,29 +29,31 @@
         <h3 class="titre text-center mb-4">Offres d'abonnements</h3>
         <!-- Les types d'abonnement  -->
         <div class="row">
-            <!-- Basic  -->
-            <div class="col-lg-4 px-5">
+            <!-- La liste des abonnements  -->
+            <div class="col-lg-4 px-5 mb-3" *ngFor="let abonnement of tabAbonnementsAftu let index=index">
                 <div class="px-4">
-                    <div class="sup bgactive"></div>
+                    <div class="sup" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}"></div>    
+                        
+                    <!-- <div class="sup bgactive"></div> -->
                 </div>
                 <div class="card abonnement text-center py-5 border-0">
-                    <h3 class="mb-5 fs-1 fw-bold textactive">Basic</h3>
-                    <h1 class="mb-5 fw-bold textactive">10 000 FCFA</h1>
-                    <p class="mb-3">2 Semaines</p>
-                    <p class="mb-3">Transport urbain</p>
-                    <p class="mb-5">Toutes les lignes</p>
+                    <h3 class="mb-5 fs-1 fw-bold" [ngClass]="{textactive: !(index%2), textinactive: (index%2)}">{{abonnement.type}}</h3>
+                    <h1 class="mb-5 fw-bold" [ngClass]="{textactive: !(index%2), textinactive: (index%2)}">{{abonnement.prix}} FCFA</h1>
+                    <p class="mb-3">{{abonnement.duree}}</p>
+                    <p class="mb-3">Toutes les lignes</p>
+                    <p class="mb-5">{{abonnement.description}}</p>
     
                     <div class="text-center">
-                        <a href="" class="btn bgactive px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement">Je m'abonne</a>        
+                        <a href="" class="btn px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}">Je m'abonne</a>        
                     </div>
                 </div>
                 <div class="px-4">
-                    <div class="inf bgactive"></div>
+                    <div class="inf" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}"></div>
                 </div>
             </div>
 
             <!-- Standard  -->
-            <div class="col-lg-4 px-5">
+            <!-- <div class="col-lg-4 px-5 mb-3">
                 <div class="px-4">
                     <div class="sup bginactive"></div>
                 </div>
@@ -69,10 +71,10 @@
                 <div class="px-4">
                     <div class="inf bginactive"></div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Premiun  -->
-            <div class="col-lg-4 px-5">
+            <!-- <div class="col-lg-4 px-5 mb-3">
                 <div class="px-4">
                     <div class="sup bgactive"></div>
                 </div>
@@ -90,7 +92,7 @@
                 <div class="px-4">
                     <div class="inf bgactive"></div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

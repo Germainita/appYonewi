@@ -72,8 +72,10 @@ export class GestionLigneComponent {
 
   tabTarif: Tarif[] = [];
   tarif_id ?: number;
-  prixSection ?: number;
-  prixEntreSection ?: number;
+  prixSection : number = 0;
+  prixEntreSection : number = 0;
+
+  lastidLigne: number = 0;
   // taridAugment_id ?: number;
 
   // Le tableau pour ajouter les sections
@@ -178,7 +180,8 @@ export class GestionLigneComponent {
     this.isAjoutLigne = true;
     this.isAjoutSection = false;
     this.isFinalisation = false;
-    this.tabAjoutSections = []
+    this.tabAjoutSections = [];
+    // this.viderChamps();
   }
 
   // Voir l'ajout d'une section 
@@ -222,12 +225,6 @@ export class GestionLigneComponent {
     this.isAjoutLigne = false;
     this.isAjoutSection = false;
     this.isFinalisation = true;
-
-    // Le début de La ligne suivante prend la fin de la ligne d'avant
-    for (let i =1; i < this.tabAjoutSections.length; i++ ){
-      this.tabAjoutSections[i].debut = this.tabAjoutSections[i-1].fin;
-    }
-    console.log(this.tabAjoutSections);
   }
 
 
@@ -476,50 +473,89 @@ export class GestionLigneComponent {
     this.nombreLigne = "";
   }
 
-  // ligneAjouter:any;
-  // Ajout de la ligne 
-  ajoutLigne(){
-    let lastLigne = this.tabLigne[this.tabLigne.length - 1].id; 
-    alert (lastLigne);
+  // Ajouter un Ligne à vérifier 
+  ajouterEtape1(){
+    // On vérifie si les champs sont vides 
+    if (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart || !this.ligne.type_id){
+      sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
+    } else{
+      // On vérifie si le Ligne n'existe pas déjà 
+      let LigneExist = this.tabLigne.find((ligne:any) => ligne.nom.toLowerCase() == this.ligne.nom.toLowerCase());
+      let LigneExist1 = this.tabLignesSup.find((ligne:any) => ligne.nom.toLowerCase() == this.ligne.nom.toLowerCase());
+      if(LigneExist){
+        sweetAlertMessage("error", "", "Ce nom existe déjà ");
+      }
+      else if (LigneExist1) {
+        sweetAlertMessage("error", "", "Ce type est déjà dans la corbeille. Vueillez le restaure");
+      } 
+      else{
+        this.showAjoutSection();
+      }
+    }
+  }
+
+  // Ajout section vérification 
+  ajouterEtape2(){
+    // Le début de La ligne suivante prend la fin de la ligne d'avant
+    for (let i =1; i < this.tabAjoutSections.length; i++ ){
+      this.tabAjoutSections[i].debut = this.tabAjoutSections[i-1].fin;
+    }
+    console.log(this.tabAjoutSections);
     // On vérifie d'abord si les sections de la ligne ne sont pas vide 
     let sectionVide = this.tabAjoutSections.find((element:any) => element.debut == "" || element.fin == "" );
+    let sectionIdentique = this.tabAjoutSections.find((element:any) => element.debut == element.fin);
     if(sectionVide){
       sweetAlertMessage("error", "", "Les données ne peuvent pas etre vide");
-    } else if (this.tabAjoutSections[0].debut != this.ligne.lieuDepart){
-      sweetAlertMessage("error", "", "Le point de depart de la ligne et le debut de la premiere section doivent etre identique");
+    } else if( sectionIdentique){
+    sweetAlertMessage("error", "", "Le début et la fin d'une section ne peuvent etre identique");
     } else if (this.tabAjoutSections[this.tabAjoutSections.length-1].fin != this.ligne.lieuArrivee){
       sweetAlertMessage("error", "", "Le point d'arrivée de la ligne et la fin de la dernière section doivent etre identique");
-    }else{
-      // On peut maintenant ajouter la ligne 
-      // let newLigne: any;
-      this.ligneService.addLigne(this.ligne).subscribe(
-        (resp:any) =>{
-          console.log(resp);
-          sweetAlertMessage("success", "", resp.message);
-          this.listeLigne();
-          // this.ligneAjouter = resp.ligne;
-          // console.log(this.ligneAjouter);
-          this.viderChamps();
-        },
-        (err:any)=>{
-          console.log(err);
-          sweetAlertMessage("error", "", err.error.message);
-        }
-      );
+    } 
+    else{
+    this.showFinalisation();
+    }
+  }
 
-      // on ajoute les sections
-      let lastLigne = this.tabLigne[this.tabLigne.length - 1].id; 
+  // Ajout de la ligne 
+  ajoutLigne(){
+    if(this.tabLigne.length){
+      this.lastidLigne = this.tabLigne[this.tabLigne.length - 1].id; 
+    } else if(this.tabLignesSup.length){
+      this.lastidLigne = this.tabLignesSup[this.tabLignesSup.length - 1].id; 
+    }
+    else{
+      this.lastidLigne = 0;
+    }
 
-      for(let i = 0; i <this.tabAjoutSections.length; i++){
-        let section = {
-          depart: this.tabAjoutSections[i].debut,
-          arrivee: this.tabAjoutSections[i].fin,
-          tarif_id: this.tarif_id,
-          ligne_id: lastLigne + 1,
-        }
-        console.log(section);
-        this.ajoutSection(section);
+    // On peut maintenant ajouter la ligne 
+    // let newLigne: any;
+    this.ligneService.addLigne(this.ligne).subscribe(
+      (resp:any) =>{
+        console.log(resp);
+        sweetAlertMessage("success", "", resp.message);
+        this.listeLigne();
+        // this.ligneAjouter = resp.ligne;
+        // console.log(this.ligneAjouter);
+        this.viderChamps();
+      },
+      (err:any)=>{
+        console.log(err);
+        sweetAlertMessage("error", "", err.error.message);
       }
+    );
+
+    // on ajoute les sections
+    // let lastLigne = this.tabLigne[this.tabLigne.length - 1].id; 
+
+    for(let i = 0; i <this.tabAjoutSections.length; i++){
+      let section = {
+        depart: this.tabAjoutSections[i].debut,
+        arrivee: this.tabAjoutSections[i].fin,
+        tarif_id: this.tarif_id,
+        ligne_id: this.lastidLigne + 1,
+      }
+      console.log(section);
+      this.ajoutSection(section);
     }
   }
 
@@ -537,42 +573,7 @@ export class GestionLigneComponent {
     )
   }
 
-  // Ajouter un Ligne à vérifier 
-  ajouter(){
-    // On vérifie si les champs sont vides 
-    if (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart || !this.ligne.type_id){
-      sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
-    } else{
-      // On vérifie si le Ligne n'existe pas déjà 
-      let LigneExist = this.tabLigne.find((ligne:any) => ligne.nom.toLowerCase() == this.ligne.nom.toLowerCase());
-      let LigneExist1 = this.tabLignesSup.find((ligne:any) => ligne.nom.toLowerCase() == this.ligne.nom.toLowerCase());
-      if(LigneExist){
-        sweetAlertMessage("error", "", "le type de l'Ligne doit être unique");
-      }
-      else if (LigneExist1) {
-        sweetAlertMessage("error", "", "Ce type est déjà dans la corbeille. Vueillez le restaure");
-      } 
-      else{
-        // console.log(this.Ligne.duree);
-        this.ligneService.addLigne(this.ligne).subscribe( 
-          (data:any) =>{
-            // console.log(data);
-            // console.log(data.success);
-            if(data.success == false) {
-              sweetAlertMessage("error", "", "Le prix doit etre suppérieur à 1000");
-            } else if(data.message) {
-              sweetAlertMessage("success", "", data.message);
-              this.listeLigne();
-              this.viderChamps();
-            }
-          },
-          (err) =>{
-            console.log(`Erreur lors de l'ajout ${err}`);
-          }
-        )
-      }
-    }
-  }
+  
 
   // Modifier Ligne 
   modifier(){ 
@@ -686,6 +687,18 @@ export class GestionLigneComponent {
     this.tabLigneFilterSup = this.tabLignesSup.filter(
       (elt:any) => (elt?.nom.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.lieuArrivee.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.lieuDepart.toLowerCase().includes(this.filterValue.toLowerCase()))   
     );
+  }
+
+  // Le nom du type de ligne 
+  getTypeLigneName(idTypeLigne:any) : string{
+    let nom: string ="";
+    let typeLigne = this.tabTypeLigne.find((type:any) => type.id == parseInt(idTypeLigne));
+    if(typeLigne){
+      nom = typeLigne.nom;
+    } else {
+      nom = "Aucun";
+    }
+    return nom;
   }
 
   // Pagination pour tous les tableaux de manières automatique

@@ -16,12 +16,13 @@
                 <!-- Les boutons pour la liste des lignes  -->
                 <button class="btn px-2 me-3" *ngIf="isLignes && isActifs" (click)="showAjout()">Ajouter une Ligne</button>
                 <button class="btn px-2 me-3" *ngIf="isLignes && isActifs" (click)="showCorbeille()">Voir corbeille</button>
+
+                <!-- Boutons pour les lignes supprimée ou pendant l'ajout  de la ligne  -->
+                <button class="btn px-2 me-3" *ngIf=" isLignes && (isSup || isAjout)" (click)="showLigneActifs()">Voir les lignes</button>
                 
                 <!-- Les boutons de la corbeille des lignes -->
                 <button class="btn px-2 me-3" *ngIf="isLignes && isSup" [disabled]="!tabLignesSup.length" [class.deseable]="!tabLignesSup.length" (click)="viderCorbeille( )">Vider corbeille</button>
                 
-                <!-- Boutons pour les lignes supprimée ou pendant l'ajout  de la ligne  -->
-                <button class="btn px-2 me-3" *ngIf=" isLignes && (isSup || isAjout)" (click)="showLigneActifs()">Voir les lignes</button>
                 
                 <!-- Les boutons pour la liste des sections  -->
                 <button class="btn px-2 me-3" *ngIf="isSections" (click)="showLignes()">Voir les lignes</button>
@@ -178,7 +179,8 @@
                                         <input type="number" class="form-control" name="nombreLigne" id="inputNombreLigne" [(ngModel)]="nombreLigne">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <button class="btn px-4 col-md-6" (click)="showAjoutSection()"> Ajouter les sections</button>
+                                        <button class="btn px-4 col-md-6" (click)="ajouterEtape1()"> Ajouter les sections</button>
+                                        <!-- <button class="btn px-4 col-md-6" (click)="showAjoutSection()"> Ajouter les sections</button> -->
                                     </div>
                                 </div>
                                 
@@ -218,7 +220,7 @@
                                 <div class="text-end mb-3">
                                     <!-- <button class="btn px-4 col-md-4" (click)="ajoutLigne();"> Ajouter les sections</button> -->
                                     <button class="btn btnColor px-4 me-3" (click)="showAjoutLigne();">Retour</button>
-                                    <button class="btn px-4 me-3" (click)="showFinalisation();"> Valider l'ajout</button>
+                                    <button class="btn px-4 me-3" (click)="ajouterEtape2();"> Valider l'ajout</button>
                                 </div>
                                 
     
@@ -440,6 +442,7 @@
                 <p class="mb-3"><span class="fw-bold">Numéro de la ligne: </span>{{ligne.nom}}</p> 
                 <p class="mb-3"><span class="fw-bold">Lieu de depart: </span>{{ligne.lieuDepart}}</p> 
                 <p class="mb-3"><span class="fw-bold">Lieu d'arrivée: </span>{{ligne.lieuArrivee}}</p> 
+                <p class="mb-3"><span class="fw-bold">Type de ligne: </span>{{getTypeLigneName(ligne.type_id)}}</p> 
                 <!-- <p class="mb-3"><span class="fw-bold">Description: </span>{{ligne.description}}</p>  -->
                 <p class="mb-3"><span class="fw-bold">Crée par: </span>{{ligne.created_by}}</p> 
                 <p class="mb-3"><span class="fw-bold">Date de création: </span>{{ligne.created_at}}</p> 
