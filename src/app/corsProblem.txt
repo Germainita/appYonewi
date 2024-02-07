@@ -1,0 +1,2 @@
+// "changeOrigin": true  Mettre la valeur à true si on doit acceder à un backend qui n'est pas en local
+Pour vous aider à déterminer si votre proxy fonctionne comme prévu, définissez l'option logLevel. Par exemple:

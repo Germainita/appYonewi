@@ -55,10 +55,11 @@
                     <form action="">
                         <div class="mb-5">
                             <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Email: <span class="require">*</span></label>
-                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ...">
+                            <input type="email" class="form-control" name="email" id="exampleFormControlInput1" placeholder="Votre adresse email ..." [(ngModel)]="email">
+                            <p class="textIncorrect">{{verifMessageEmail}}</p>
                         </div>
                         
-                        <button class=" btn btnAuth col-12 fw-bold fs-5 d-block" type="submit" (click)="showSecondRein()">Envoyer</button>
+                        <button class=" btn btnAuth col-12 fw-bold fs-5 d-block" (click)="resetPassword()">Envoyer</button>
                         
                     </form>
                 </div>

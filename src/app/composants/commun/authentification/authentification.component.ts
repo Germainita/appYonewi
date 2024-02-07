@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { error } from 'highcharts';
 import { AuthService } from 'src/app/services/auth.service';
+import { sweetAlertMessage } from 'src/app/services/sweetAlert/alert.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,6 +19,9 @@ export class AuthentificationComponent implements OnInit {
   // Variable pour les inputs 
   email: string = "";
   password: string = "";
+
+  verifMessageEmail: string = "";
+  verifEmail: boolean = false;
 
   // iscorrectValues:boolean = true; // Si les identifiants sont incorrects
 
@@ -81,37 +85,6 @@ export class AuthentificationComponent implements OnInit {
         password: this.password
       };
 
-      // On fait appel à la méthode login du service 
-      // this.authService.login(user, (response:any) =>{
-      //   console.log(response);
-
-      //   if (response.statut){
-      //     // On stocke les info de la requete dans notre localstorage
-      //     localStorage.setItem("userConnect", JSON.stringify(response));
-  
-      //     Swal.fire({
-      //       position: 'center',
-      //       icon: 'success',
-      //       title: response.message,
-      //       showConfirmButton: true,
-      //     }).then((result) =>{
-      //       if(result.isConfirmed){
-      //         this.route.navigate(['/dashbord']);
-      //         this.authService.isAuthenticated = true;
-      //         console.log (this.authService.isAuthenticated);
-      //       }
-      //     });
-      //   } else{
-      //     Swal.fire({
-      //       position: 'center',
-      //       icon: 'error',
-      //       title: response.error.email,
-      //       showConfirmButton: true,
-      //     });
-      //   }
-
-      // }) 
-
       let response:any
       this.authService.login(user).subscribe(
         (rep) =>{
@@ -134,6 +107,8 @@ export class AuthentificationComponent implements OnInit {
 
             // On stocke les info de la requete dans notre localstorage
             localStorage.setItem("userConnect", JSON.stringify(response));
+            this.email = "";
+            this.password  = "";
 
             // this.iscorrectValues = true; //Les données fournies sont correctes
 
@@ -159,6 +134,42 @@ export class AuthentificationComponent implements OnInit {
             showConfirmButton: true,
           })
         })
+    }
+  }
+
+  verifiEmailFunction(){
+    this.verifEmail = false;
+    if(!this.email){
+      this.verifMessageEmail = "L'email est obligatoire"
+    }else if (this.email.endsWith("@") || (!this.email.includes("."))){
+      this.verifMessageEmail = "Le format de l'email est incorrect"
+    } else{
+      this.verifMessageEmail = "";
+      this.verifEmail = true;
+    }
+    return this.verifEmail;
+  }
+
+  // Réinitialiser le mot de passe 
+  resetPassword(){
+    console.log(this.email);
+    let isEmail = this.verifiEmailFunction()
+    if (isEmail){
+      let emailObjet = {
+        email: this.email
+      }
+      this.authService.askResetPassword(emailObjet).subscribe(
+        (data:any)=>{
+          console.log(data);
+          sweetAlertMessage("success", "", data.message);
+        },
+        (err:any)=>{
+          console.log("Erreur",err);
+          if(err.error.errors){
+            this.verifMessageEmail = err.error.errors.email;
+          }
+        }
+      )
     }
   }
 }

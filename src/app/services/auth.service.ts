@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url } from './apiUrl';
 import { Router } from '@angular/router';
@@ -26,5 +26,10 @@ export class AuthService {
     localStorage.setItem("userConnect", JSON.stringify(""));
 
     localStorage.setItem("isUserConnected", JSON.stringify(false));
+  }
+
+  // Réinitialiser mot de passe 
+  askResetPassword(email:any){
+    return this.http.post(`${url}/forget-password`, email);
   }
 }

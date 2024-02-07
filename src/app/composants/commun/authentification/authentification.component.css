@@ -53,5 +53,9 @@
 }
 
 .containerReinitialiser .card img{
-    max-height: 60vh;
+    max-height: 100%;
+}
+
+.textIncorrect{
+    color: var(--base1);
 }
