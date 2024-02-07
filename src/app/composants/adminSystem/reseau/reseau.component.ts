@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { error } from 'highcharts';
-import { Ligne } from 'src/app/models/ligne';
+import { Ligne } from 'src/app/models/ligne.model';
 import { Reseau } from 'src/app/models/reseau.model';
+import { SectionModel } from 'src/app/models/section.model';
+import { Tarif } from 'src/app/models/tarif.model';
+import { LigneService } from 'src/app/services/ligne.service';
 import { ReseauService } from 'src/app/services/reseau.service';
+import { SectionService } from 'src/app/services/section.service';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
+import { TarifService } from 'src/app/services/tarif.service';
 
 @Component({
   selector: 'app-reseau',
@@ -133,11 +138,16 @@ export class ReseauComponent implements OnInit {
   ligne = new Ligne;
 
   // Variables pour les sections 
-  tabSections: any[];
+  tabSections: SectionModel[] = [];
   tabSectionsFilter: any;
+
+  prixSection : number = 0;
+  prixEntreSection : number = 0;
 
   // Variable pour récupérer la saisie de la recherche 
   filterValue: string = "";
+
+  reseau_id: number = 0;
 
 
   // Attribut pour la pagination
@@ -155,10 +165,18 @@ export class ReseauComponent implements OnInit {
   tabReseauxSupFilter : Reseau[] = []
 
   // Déclaration des méthodes 
-  constructor(private reseauService: ReseauService){}
+  constructor(
+    private reseauService: ReseauService, 
+    private ligneService: LigneService,
+    private sectionService: SectionService,
+    private tarifService: TarifService,
+  ){}
 
   ngOnInit(): void {
     this.tabReaseauFilter = this.tabReseau;
+    this.listeSections();
+    this.getTarifPrix(1);
+    this.listeLigne();
     this.listeReseau();
     this.listeCorbeille();
   }
@@ -169,6 +187,97 @@ export class ReseauComponent implements OnInit {
     this.isListeLignes = false;
     this.isListeSections = false;
     this.isListeCorbeille = false;
+  }
+
+  getTarifPrix(reseau_id:any){
+    this.tarifService.getAllTarif().subscribe(
+      (data:any)=>{
+        console.log(data);
+
+        // On trouve le tarif du réseau 
+        let tabTarif = data.tarifs.filter((tarif:any) => tarif.reseau_id == reseau_id);
+        console.log(tabTarif);
+        // On trouve le prix du tarif des section 
+        let tarifSection = tabTarif.find((tarif:any) => tarif.type == "tarif section");
+        if(tarifSection){
+          this.prixSection = tarifSection.prix
+        }
+
+        // On trouve le prix du tarif entre section 
+        let tarifEntreSection = tabTarif.find((tarif:Tarif) => tarif.type == "tarif entre section");
+        if(tarifEntreSection){
+          this.prixEntreSection = tarifEntreSection.prix;
+        }
+        console.log("Prix des section: ", this.prixSection);
+        console.log("Prix entre section: ", this.prixEntreSection);
+      }
+    )
+  }
+  // Liste des sections
+  listeSections(){
+    this.sectionService.getAllSection().subscribe(
+      (data:any) =>{
+        // console.log(data);
+        this.tabSections = data.sections;     
+        console.log("Liste des sections",this.tabSections);
+      }
+    )
+  }
+
+  // Liste des lignes 
+  listeLigne(){
+    this.ligneService.getAllLigne().subscribe(
+      (data:any) =>{
+        this.tabLigne = data.lignes;
+        console.log(this.tabSections);
+        // Pour les sections enregistrés par l'administrateur réseau 
+        for(let i = 0; i<this.tabLigne.length; i++){
+          let tabSection = this.tabSections.filter((section:SectionModel) => parseInt(section.ligne_id) == this.tabLigne[i].id);
+          console.log( "tabSection: ", tabSection)
+          this.tabLigne[i].sections = tabSection;
+          if(tabSection){
+            for(let y = 0; y < tabSection.length; y++){
+              tabSection[y].num = (y + 1).toString();
+              tabSection[y].prix = this.prixSection;
+            }   
+            
+            // console.log(tabSection);         
+          }
+          // On enregistre la dernière section qui est le debut et la fin de la ligne 
+          if(tabSection.length) {
+            let lastSection = new SectionModel;
+            lastSection.Depart = this.tabLigne[i].lieuDepart;
+            lastSection.Arrivee = this.tabLigne[i].lieuArrivee;
+            lastSection.created_at = this.tabLigne[i].created_at;
+            lastSection.created_by = this.tabLigne[i].created_by;
+            lastSection.updated_at = this.tabLigne[i].updated_at;
+            lastSection.updated_by = this.tabLigne[i].updated_by;
+            lastSection.num = (tabSection.length + 1).toString();
+            lastSection.prix = this.prixSection + ((tabSection.length - 1 )* this.prixEntreSection);
+
+            // On ajoute la derniere section dans le tableau 
+            tabSection.push(lastSection);
+          }
+
+          // this.tabLigne[i].sections = tabSection;
+
+          console.log(this.tabLigne[i].sections );
+        }
+      }
+    )
+    
+    // this.ligneService.getAllLignegReseau().subscribe(
+    //   (data:any) =>{
+    //     console.log(data);
+
+    //     this.tabLigne = data.lignes;
+        
+
+        
+
+        
+    //   }
+    // )
   }
 
   // Voir le liste des lignes 
@@ -221,7 +330,7 @@ export class ReseauComponent implements OnInit {
   onSearchLignes(){
     // Recherche se fait selon le nom ou le prenom 
     this.tabLignesFilter = this.tabLigne.filter(
-      (elt:any) => (elt?.depart.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.numLigne.toString().toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.arrivee.toLowerCase().includes(this.filterValue.toLowerCase())) 
+      (elt:any) => (elt?.lieuDepart.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.lieuArrivee.toLowerCase().includes(this.filterValue.toLowerCase())) 
     );
   }
 
@@ -229,7 +338,7 @@ export class ReseauComponent implements OnInit {
   onSearchSections(){
     // Recherche se fait selon le nom ou le prenom 
     this.tabSectionsFilter = this.tabSections.filter(
-      (elt:any) => (elt?.debut.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.fin.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.prix.toString().toLowerCase().includes(this.filterValue.toLowerCase()))
+      (elt:any) => (elt?.Depart.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.Arrivee.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.prix.toString().toLowerCase().includes(this.filterValue.toLowerCase()))
     );
   }
 
@@ -277,8 +386,10 @@ export class ReseauComponent implements OnInit {
       (data:any) =>{
         console.log (data)
         this.tabReseauxActifs = this.tabReseauxActifsFilter = data.reseaux;
+        for (let i= 0; i< this.tabReseauxActifs.length; i++){
+          this.tabReseauxActifs[i].lignes =  this.tabLigne.filter((ligne:Ligne) => ligne.reseau_id == this.tabReseauxActifs[i].id)
+        }
         console.log(this.tabReseauxActifs);
-        console.log(this.tabReseauxActifsFilter.length);
       },
       (error) =>{
         console.log (error);

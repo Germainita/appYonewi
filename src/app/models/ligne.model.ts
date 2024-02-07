@@ -6,6 +6,7 @@ export class Ligne {
     lieuDepart!: string;
     lieuArrivee!: string;
     type_id!: string;
+    reseau_id!: number;
     etat!: string;
     created_at!:Date;
     created_by!:string;

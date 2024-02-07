@@ -1,4 +1,4 @@
-import { Ligne } from "./ligne";
+import { Ligne } from "./ligne.model";
 
 // import { Ligne } from "./ligne.model";
 
@@ -7,7 +7,7 @@ export class Reseau{
     nom: string = "";
     lignes: Ligne[] = [];
     description: string ="";
-    teleelephone!: string;
+    telephone!: string;
     email!: string;
     created_at!:Date;
     created_by!:string;

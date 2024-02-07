@@ -4,3 +4,29 @@
     height: 8vh;
     border-radius: 100%;
 }
+
+.titre {
+    color: var(--base2);
+}
+
+.reseau{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.reseau:hover{
+    color: var(--base2);
+    text-decoration: underline var(--base2);
+}
+
+.btn{
+    background-color: var(--base1);
+    color: white;
+    font-weight: bold;
+}
+
+.btnAnnuler{
+    background-color: white;
+    color: var(--base1);
+    border: 1px solid var(--base1);
+}

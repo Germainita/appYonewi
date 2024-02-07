@@ -25,6 +25,11 @@ export class ReseauService {
         return this.http.put(`${url}/reseaus/${idReseau}`, reseau)
     }
 
+    // Modifier les détails d'un réseau par l'admin réseau 
+    updateDetailsReseau(reseau:any){
+        return this.http.patch(`${url}/reseau/details/`, reseau)
+    }
+
     // Supprimer un Reseau 
     deleteReseau(idReseau:number){
         return this.http.delete(`${url}/reseaus/${idReseau}`)

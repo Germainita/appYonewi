@@ -8,7 +8,18 @@ import { url } from "./apiUrl";
 
 export class AbonnementService {
     constructor(private http:HttpClient) {}
+    // Souscrire à un abonnement
+    redirectWhatsapp(phoneNumber: string) {
+        const whatsappLink = `https://wa.me/${phoneNumber}`;
+        // Redirige l'utilisateur vers WhatsApp
+        // window.location.href  = whatsappLink ;
+        return whatsappLink;
 
+    } 
+    // bonnements/subscribe/{abonnement}
+    souscrireAbonnement(idAbonnement:any){
+        return this.http.get(`${url}/abonnements/subscribe/${idAbonnement}`);
+    }
     // Obtenir la liste des abonnments 
     getAllAbonnement(){
         return this.http.get(`${url}/abonnements`);

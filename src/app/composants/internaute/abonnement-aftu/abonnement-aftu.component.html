@@ -44,7 +44,7 @@
                     <p class="mb-5">{{abonnement.description}}</p>
     
                     <div class="text-center">
-                        <a href="" class="btn px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}">Je m'abonne</a>        
+                        <a href="" class="btn px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}" (click)="redirectToWhatsapp()">Je m'abonne</a>        
                     </div>
                 </div>
                 <div class="px-4">
@@ -107,7 +107,7 @@
             </div>
     
             <div class="col-lg-6 py-5">
-                <p class="fs-4 mb-5">Abonnez vous aux lignes du réseau Dakar Dem Dikk en toute sécurité et profitez aux maximum du plaisir de se déplacer à tout moment.</p>
+                <p class="fs-4 mb-5">Abonnez vous aux lignes du réseau AFTU en toute sécurité et profitez aux maximum du plaisir de se déplacer à tout moment.</p>
                 <div class="px-5">
                     <h4 class="mb-5 d-flex">
                         <i class="bi bi-1-circle fs-1 me-4 mt-2"></i>
@@ -139,8 +139,8 @@
             
             <div class="modal-body text-center">
                 <h4 class="modal-title fs-5 contactReseau fw-bold mb-4" id="abonnementLabel">Contactez le réseau AFTU</h4>
-                <h6 class="mb-3"><span class="fw-bold">Email: </span>  magid@gmail.com </h6> 
-                <h6 class="mb-4"><span class="fw-bold">Téléphone: </span> 77 777 77 77</h6> 
+                <h6 class="mb-3 contactEmail"><span class="fw-bold">Email: </span> <a [href]="emailTo">{{reseauAftu.email}}</a> </h6> 
+                <h6 class="mb-4 contactEmail"><span class="fw-bold">Téléphone: </span> <a [href]="watsappTO" target="_blank"> {{reseauAftu.telephone}}</a></h6> 
 
                 <button type="button" class="btn btnClose" data-bs-dismiss="modal">Fermer</button>
             </div>

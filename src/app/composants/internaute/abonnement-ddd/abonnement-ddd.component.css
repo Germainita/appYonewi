@@ -110,3 +110,17 @@
     color: white;
     background-color: var(--base1);
 }
+
+.contactEmail a{
+    color: black;
+}
+
+.abonnementTel{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.contactEmail a:hover, .abonnementTel{
+    color: var(--base2);
+    text-decoration: underline var(--base2);
+}

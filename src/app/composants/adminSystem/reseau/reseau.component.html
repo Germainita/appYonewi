@@ -64,8 +64,8 @@
                                 <tbody *ngFor="let reseau of getItemsPage(tabReseauxActifsFilter) let index=index">
                                     <tr>
                                         <td>{{index+1}}</td>
-                                        <td>{{reseau.nom}}</td>
-                                        <td>0</td>
+                                        <td>{{reseau.nom |  titlecase}}</td>
+                                        <td class="reseau" (click)="showListeLignes(reseau)">{{reseau.lignes.length}}</td>
                                         <!-- <td><span class="nbreLignes" (click)="showListeLignes(reseau)">{{reseau.lignes.length}}</span></td> -->
                                         <!-- <td>{{reseau.email}}</td>
                                         <td>{{reseau.telephone}}</td> -->
@@ -253,7 +253,7 @@
                         <!-- Recherhcer une ligne  -->
                         <div class="row sectionEspace ligneReseauSearch mb-3">
                             <div class="col-md-7">
-                                <h3 class="fw-bold">Les lignes du réseau {{reseau.nom}}</h3>
+                                <h3 class="fw-bold">Les lignes du réseau {{reseau.nom |  titlecase}}</h3>
                             </div>
                             <div class="col-md-5">
                                 <div class="input-group">
@@ -275,11 +275,11 @@
                                 </tr>
                             </thead>
 
-                            <tbody *ngFor="let ligne of getItemsPage(tabLignesFilter)">
+                            <tbody *ngFor="let ligne of getItemsPage(tabLignesFilter) let index=index">
                                 <tr>
-                                    <td>{{ligne.numLigne}}</td>
-                                    <td>{{ligne.depart}}</td>
-                                    <td>{{ligne.arrivee}}</td>
+                                    <td>{{index+1}}</td>
+                                    <td>{{ligne.lieuDepart}}</td>
+                                    <td>{{ligne.lieuArrivee}}</td>
                                     <td> 
                                         <span class="me-4">{{ligne.sections.length}}</span>
                                         <button class="btnAction px-2 py-1 rounded-2 me-4" title="Voir les sections" (click)="showListeSections(ligne); ">
@@ -316,11 +316,11 @@
             <div class="sectionsLigneReseau" *ngIf="isListeSections">
                 <div class="row px-5">
                     <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
-                        <h3 class="fw-bold mb-3">Réseau {{reseau.nom}}</h3>
+                        <h3 class="fw-bold mb-3">Réseau {{reseau.nom |  titlecase}}</h3>
                         <!-- Recherhcer une ligne  -->
                         <div class="row sectionEspace ligneReseauSearch mb-3">
                             <div class="col-md-7">
-                                <h4><span class="fw-bold">Ligne</span> {{ligne.depart}} - {{ligne.arrivee}}</h4>
+                                <h4><span class="fw-bold">Ligne</span> {{ligne.lieuDepart}} - {{ligne.lieuArrivee}}</h4>
                             </div>
                             <div class="col-md-5">
                                 <div class="input-group">
@@ -342,11 +342,11 @@
                                 </tr>
                             </thead>
 
-                            <tbody *ngFor="let section of getItemsPage(tabSectionsFilter)">
+                            <tbody *ngFor="let section of getItemsPage(tabSectionsFilter) let index = index">
                                 <tr>
-                                    <td>{{section.numSection}}</td>
-                                    <td>{{section.debut}}</td>
-                                    <td>{{section.fin}}</td>
+                                    <td>{{index + 1}}</td>
+                                    <td>{{section.Depart}}</td>
+                                    <td>{{section.Arrivee}}</td>
                                     <td>{{section.prix}}</td>
                                 </tr>
                             </tbody>

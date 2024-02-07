@@ -53,3 +53,11 @@ thead tr th{
 .centerDiv{
     margin: 0 auto;
 }
+
+.contactEmail a{
+    color: black;
+}
+.contactEmail a:hover, .abonnementTel{
+    color: var(--base2);
+    text-decoration: underline var(--base2);
+}

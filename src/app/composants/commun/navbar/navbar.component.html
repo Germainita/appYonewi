@@ -2,10 +2,94 @@
 <div class="navbar mb-5 px-5 shadow-sm sticky-top bg-body">
     <div>
         <h5 *ngIf="isAdminSystem">Administrateur de yone Wi</h5>
-        <h5 *ngIf="isAdminReseau">Administrateur du réseau {{reseauUser |  titlecase}}</h5>
+        <h5 *ngIf="isAdminReseau && reseauFound">Administrateur du réseau <span class="reseau" data-bs-toggle="modal" data-bs-target="#detailsReseau">{{reseauFound.nom |  titlecase}}</span></h5>
     </div>
     <div class="profil">
         <!-- <img src="assets/yonewilogo.png" alt=""> -->
         <img src="https://img.freepik.com/photos-gratuite/bouchent-portrait-belle-femme-fleurs_23-2149150987.jpg?size=626&ext=jpg&ga=GA1.1.1865161314.1704357552&semt=ais" alt="">        
+    </div>
+</div>
+
+
+<!-- Modal détails d'un réseau  -->
+<div class="modal fade modalItineraire" id="detailsReseau" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center">
+            
+            <div class="modal-body">
+                <h4 class="modal-title fw-bold titre text-center mb-4">Information du réseau</h4>
+                <p class="mb-3" *ngIf="reseauFound"><span class="fw-bold">Nom du réseau: </span>{{reseauFound.nom |  titlecase}}</p> 
+                <p class="mb-3" *ngIf="reseauFound"><span class="fw-bold">Administrateur: </span>{{userConnect.user.prenom}} {{userConnect.user.nom}}</p> 
+                <p class="mb-3" *ngIf="reseauFound && reseauFound.description"><span class="fw-bold">Description: </span>{{reseauFound.description}}</p> 
+                <p class="mb-3" *ngIf="reseauFound && reseauFound.telephone"><span class="fw-bold">Telephone du réseau: </span>{{reseauFound.telephone}}</p> 
+                <p class="mb-3" *ngIf="reseauFound && reseauFound.email"><span class="fw-bold">Email du réseau: </span>{{reseauFound.email}}</p> 
+                
+                <!-- Modifier les infos du réseau  -->
+                <p class="mb-3 reseau" *ngIf="reseauFound && !reseauFound.description" data-bs-toggle="modal" data-bs-target="#modifDescReseau">Ajouter une description</p> 
+                <p class="mb-3 reseau" *ngIf="reseauFound && reseauFound.description" data-bs-toggle="modal" data-bs-target="#modifDescReseau" (click)="chargerInfos()">Modifier la description</p> 
+                <p class="mb-3 reseau" *ngIf="reseauFound && !reseauFound.email && !reseauFound.telephone" data-bs-toggle="modal" data-bs-target="#modifContactReseau">Ajouter un numéro ou un email à contacter</p>            
+                <p class="mb-5 reseau" *ngIf="reseauFound && (reseauFound.email || reseauFound.telephone)" data-bs-toggle="modal" data-bs-target="#modifContactReseau" (click)="chargerInfos()">Modifier les contacts du réseau</p>            
+                        
+                <button type="button" class="mt-2 btn btnItineraire" data-bs-dismiss="modal">Fermer</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour modifier la description  -->
+<div class="modal fade" id="modifDescReseau" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="modal-title fw-bold titre text-center" id="exampleModalLabel">Modifier le déscription duréseau</h4>
+                <form action="">
+                    <div class="mb-3">
+                        <label for="nameInput" class="form-label">Description: <span class="require">*</span></label>
+                        <textarea  class="form-control" name="description" id="" cols="3" rows="5" [(ngModel)]="description" *ngIf="reseauFound"></textarea>
+                        <!-- <input type="text" name="name" class="form-control" id="nameInput" [(ngModel)] = "utilisateur.nom"> -->
+                    </div> 
+
+                    <div class="text-end">
+                        <button type="button" class="btn me-4" (click)="modifDescReseau()" *ngIf="!isDescUpdate">Modifier</button>
+                        <button type="button" class="btn me-4" data-bs-toggle="modal" data-bs-target="#detailsReseau" (click)="modifDescReseau()" *ngIf="isDescUpdate">Modifier</button>
+                        <button type="button" class="btn btnAnnuler" data-bs-toggle="modal" data-bs-target="#detailsReseau" (click)="viderChamps()">Annuler</button>
+                    </div>
+                </form>
+
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour modifier les coordonnées du réseau  -->
+<div class="modal fade" id="modifContactReseau" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="modal-title fw-bold titre text-center" id="exampleModalLabel">Modifier les contacts du réseau</h4>
+                <form action="">
+                    <div class="mb-3">
+                        <label for="telephone" class="form-label">Telephone: <span class="require">*</span></label>
+                        <input type="text" name="telephone" class="form-control" id="telephone" [(ngModel)]="telephone" *ngIf="reseauFound">
+                    </div>
+                    <div class="mb-5">
+                        <label for="emailInput" class="form-label">Email: <span class="require">*</span></label>
+                        <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)]="email" *ngIf="reseauFound">
+                    </div>
+
+                    <div class="text-end">
+                        <button type="button" class="btn me-4" (click)="mdofifierContact()" *ngIf="!isContactUpdate">Modifier</button>
+                        <button type="button" class="btn me-4" data-bs-toggle="modal" data-bs-target="#detailsReseau" (click)="mdofifierContact()" *ngIf="isContactUpdate">Modifier</button>
+                        <button type="button" class="btn btnAnnuler" data-bs-toggle="modal" data-bs-target="#detailsReseau" (click)="viderChamps()">Annuler</button>
+                    </div>
+                </form>
+
+                
+                
+            </div>
+        </div>
     </div>
 </div>

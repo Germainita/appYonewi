@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Abonnement } from 'src/app/models/abonnement.model';
+import { Reseau } from 'src/app/models/reseau.model';
 import { AbonnementService } from 'src/app/services/abonnement.service';
 import { ReseauService } from 'src/app/services/reseau.service';
 
@@ -12,6 +13,9 @@ export class AbonnementDDDComponent {
   // Déclarations des variables 
   tabAbonnementsDemDikk: Abonnement[] = []
   reseau_id_DemDikk: number = 0;
+  reseauDemDikk = new Reseau;
+  emailTo: string = "";
+  watsappTO: any;
 
   // Déclaration des Méthodes 
   constructor(
@@ -24,9 +28,10 @@ export class AbonnementDDDComponent {
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
         // console.log(data);
-        let reseauDemDikk = data.reseaux.find((reseau:any)=> reseau.nom.toLowerCase() == "dakar dem dikk");
-        if(reseauDemDikk){
-          this.reseau_id_DemDikk = reseauDemDikk.id;
+        this.reseauDemDikk = data.reseaux.find((reseau:any)=> reseau.nom.toLowerCase() == "dakar dem dikk");
+        this.emailTo = `mailto:${this.reseauDemDikk.email}`;
+        if(this.reseauDemDikk){
+          this.reseau_id_DemDikk = this.reseauDemDikk.id;
           // On récupère la liste des abonnement de DemDikk 
           this.abonnementService.getAllAbonnement().subscribe(
             (data:any) =>{
@@ -42,5 +47,10 @@ export class AbonnementDDDComponent {
       }
     )
 
+  }
+
+  redirectToWhatsapp(): void {
+    const phoneNumber = `+221${this.reseauDemDikk.telephone}`; 
+    this.watsappTO = this.abonnementService.redirectWhatsapp(phoneNumber);
   }
 }

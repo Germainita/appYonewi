@@ -41,7 +41,7 @@
                     <p class="mb-5">{{abonnement.description}}</p>
     
                     <div class="text-center">
-                        <a href="" class="btn px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}">Je m'abonne</a>        
+                        <a href="" class="btn px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}" (click)="redirectToWhatsapp()">Je m'abonne</a>        
                     </div>
                 </div>
                 <div class="px-4">
@@ -49,47 +49,6 @@
                 </div>
             </div>
 
-            <!-- Standard  -->
-            <!-- <div class="col-lg-4 px-5">
-                <div class="px-4">
-                    <div class="sup bginactive"></div>
-                </div>
-                <div class="card abonnement text-center py-5 border-0">
-                    <h3 class="mb-5 fs-1 fw-bold textinactive">Standard</h3>
-                    <h1 class="mb-5 fw-bold textinactive">25 000 FCFA</h1>
-                    <p class="mb-3">1 Mois</p>
-                    <p class="mb-3">Transport urbain</p>
-                    <p class="mb-5">Toutes les lignes</p>
-    
-                    <div class="text-center">
-                        <a href="" class="btn bginactive px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement">Je m'abonne</a>        
-                    </div>
-                </div>
-                <div class="px-4">
-                    <div class="inf bginactive"></div>
-                </div>
-            </div> -->
-
-            <!-- Premiun  -->
-            <!-- <div class="col-lg-4 px-5">
-                <div class="px-4">
-                    <div class="sup bgactive"></div>
-                </div>
-                <div class="card abonnement text-center py-5 border-0">
-                    <h3 class="mb-5 fs-1 fw-bold textactive">Premium</h3>
-                    <h1 class="mb-5 fw-bold textactive">40 000 FCFA</h1>
-                    <p class="mb-3">2 Mois</p>
-                    <p class="mb-3">Transport urbain</p>
-                    <p class="mb-5">Toutes les lignes</p>
-    
-                    <div class="text-center">
-                        <a href="" class="btn bgactive px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement">Je m'abonne</a>        
-                    </div>
-                </div>
-                <div class="px-4">
-                    <div class="inf bgactive"></div>
-                </div>
-            </div> -->
         </div>
     </div>
 </div>
@@ -135,8 +94,9 @@
             
             <div class="modal-body text-center">
                 <h4 class="modal-title fs-5 contactReseau fw-bold mb-4" id="abonnementLabel">Contactez le réseau Dakar Dem Dikk</h4>
-                <h6 class="mb-3"><span class="fw-bold">Email: </span>  magid@gmail.com </h6> 
-                <h6 class="mb-4"><span class="fw-bold">Téléphone: </span> 77 777 77 77</h6> 
+                <h6 class="mb-3 contactEmail"><span class="fw-bold">Email: </span> <a href="mailto:{{reseauDemDikk.email}}">{{reseauDemDikk.email}}</a> </h6> 
+                <h6 class="mb-4 contactEmail"><span class="fw-bold">Téléphone: </span> <a [href]="watsappTO" target="_blank"> {{reseauDemDikk.telephone}}</a></h6> 
+                <!-- <h6 class="mb-4"><span class="fw-bold">Téléphone: </span>{{reseauDemDikk.telephone}}</h6>  -->
 
                 <button type="button" class="btn btnClose" data-bs-dismiss="modal">Fermer</button>
             </div>

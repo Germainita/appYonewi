@@ -85,3 +85,13 @@ thead tr th{
 .centerDiv{
     margin: 0 auto;
 }
+
+.reseau{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.reseau:hover{
+    color: var(--base2);
+    text-decoration: underline var(--base2);
+}

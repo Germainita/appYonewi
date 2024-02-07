@@ -43,7 +43,7 @@
                         <tbody *ngFor="let message of getItemsPage()">
                             <tr>
                                 <td>{{message.id}}</td>
-                                <td>{{message.email}}</td>
+                                <td class="contactEmail"> <a href="mailto:{{message.email}}">{{message.email}}</a></td>
                                 <td>{{message.sujet}}</td>
                                 <td>{{message.contenu}}</td>
                                 <td>{{message.created_at}}</td>
