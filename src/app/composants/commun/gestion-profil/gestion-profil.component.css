@@ -1,0 +1,54 @@
+.dashbord{
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+
+.infoProfil{
+    margin: 0 auto;
+    width: 65%;
+}
+.profil{
+    /* border: 2px solid var(--base2); */
+    border-radius: 2vh;
+    box-shadow: 0px 2px 3px var(--base2);
+}
+.profil i{
+    color: var(--base2);
+    font-size: 4vh;
+}
+
+.containerProfil .card {
+    /* padding: 0 2vh; */
+    border: none;
+}
+.profil img{
+    width: 35vh;
+    height: 35vh;
+    border-radius: 100%;
+    margin-top: -3vh;
+    margin-left: -1vh;
+}
+
+.btn{
+    background-color: var(--base1);
+    color: white;
+    font-weight: bold;
+}
+
+.changeMdp{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.changeMdp:hover{
+    text-decoration: underline var(--base2);
+    color: var(--base2);
+}
+
+/* Média queries  */
+@media screen and (max-width: 1000px){
+    .infoProfil{
+        margin: 0 auto;
+        width: 100%;
+    }
+}

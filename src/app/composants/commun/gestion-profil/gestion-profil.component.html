@@ -1,0 +1,145 @@
+<div class="dashbord">
+    <div class="section sidebar">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <div class="section">
+        <!-- Le navbar  -->
+        <app-navbar></app-navbar>
+        <!-- Contenu dashbord  -->
+        <div class="container containerReseau mb-5">
+        <main class="container">
+            <!-- Les infos du profil  -->
+            <div class="containerProfil px-5" *ngIf="isInfo">
+                <h3 class="text-center fw-bold mb-5">Informations du profil</h3>
+                <div class="row px-4 infoProfil">
+                    <!-- Image de la personne  -->
+                    <div class="col-md-5 profil">
+                        <div class="card py-3">
+                            <div class="card-body">
+                                <div class="text-end"><i class="bi bi-pencil-square" (click)="showModifProfil()"></i></div>
+                                <div class="text-center">
+                                    <img src="https://img.freepik.com/photos-gratuite/bouchent-portrait-belle-femme-fleurs_23-2149150987.jpg?size=626&ext=jpg&ga=GA1.1.1865161314.1704357552&semt=ais" alt=""> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 infosUser">
+                        <div class="card py-3">
+                            <div class="card-body">
+                              <p class="card-text mb-3"><span class="fw-bold">Nom:</span> {{userConnect.nom}}</p>
+                              <p class="card-text mb-3"><span class="fw-bold">Prenom: </span>{{userConnect.prenom}}</p>
+                              <p class="card-text mb-3"><span class="fw-bold">Email:</span> {{userConnect.email}}</p>
+                              <p class="card-text mb-3"><span class="fw-bold">Adresse:</span> {{userConnect.adresse}}</p>
+                              <p class="card-text mb-3"><span class="fw-bold">Telephone:</span> {{userConnect.telephone}}</p>
+                              <p class="card-text mb-3" *ngIf="reseauName"><span class="fw-bold">Role:</span> Administrateur réseau </p>
+                              <p class="card-text" *ngIf="infosUser.type == 'admin'"><span class="fw-bold">Role:</span> Administrateur du système </p>
+                              <p class="card-text" *ngIf="reseauName"><span class="fw-bold">Reseau:</span> {{reseauName | titlecase}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modification du profil  -->
+            <div class="containerProfil modifProfil px-5" *ngIf="isModifProfil">
+                <h3 class="text-center fw-bold mb-5">Modification du profil</h3>
+                <div class="row px-4 infoProfil mt-4">
+                    <!-- Image de la personne  -->
+                    <div class="col-md-5 profil">
+                        <div class="card py-3">
+                            <div class="card-body">
+                                <img src="https://img.freepik.com/photos-gratuite/bouchent-portrait-belle-femme-fleurs_23-2149150987.jpg?size=626&ext=jpg&ga=GA1.1.1865161314.1704357552&semt=ais" alt="" class="mb-3">
+                                <div class="modifierImage  text-center mb-3">
+                                    <label for="fileInput" class="changeMdp">Modifier l'image</label>
+                                    <input type="file" name="image" id="fileInput" style="display: none;" accept="image/*" [(ngModel)]="userConnect.image">
+                                </div>
+    
+                                <p class="card-text text-center fw-bold">{{userConnect.prenom}} {{userConnect.nom}}</p>
+                                <p class="card-text text-center" *ngIf="reseauName">Administrateur réseau {{reseauName | titlecase}}</p>
+                                <p class="card-text text-center" *ngIf="infosUser.type == 'admin'">Administrateur du système </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 modifUser">
+                        <div class="card py-3 px-4 border">
+                            <form action="">
+                                <div class="mb-3">
+                                    <label for="emailInput" class="form-label">Adresse email: <span class="require">*</span></label>
+                                    <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)]="emailModif">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="telephone" class="form-label">Telephone: <span class="require">*</span></label>
+                                    <input type="text" name="telephone" class="form-control" id="telephone" [(ngModel)]="telephonModif">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="adresseInput" class="form-label">Adresse: <span class="require">*</span></label>
+                                    <input type="text" name="adresse" class="form-control" id="adresseInput" [(ngModel)]="userConnect.adresse">
+                                </div>
+            
+                                <div class="mb-3">
+                                    <button type="button" class="btn px-3" (click)="modiferProfil()" >Modifier</button>
+                                </div>
+                            </form>
+                            <p class="changeMdp" (click)="showModifMdp()">Changer votre mot de passe</p>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Changer le mot de passe -->
+            <div class="containerProfil modifMdpProfil px-5" *ngIf="isModifMdp">
+                <h3 class="text-center fw-bold mb-5">Modification du mot de passe</h3>
+                <div class="row px-4 infoProfil">
+                    <!-- Image de la personne  -->
+                    <div class="col-md-5 profil">
+                        <div class="card py-3">
+                            <div class="card-body">
+                                <div class="text-center mb-3">
+                                    <img src="https://img.freepik.com/photos-gratuite/bouchent-portrait-belle-femme-fleurs_23-2149150987.jpg?size=626&ext=jpg&ga=GA1.1.1865161314.1704357552&semt=ais" alt=""> 
+                                </div>
+                                <p class="card-text text-center fw-bold">{{userConnect.prenom}} {{userConnect.nom}}</p>
+                                <p class="card-text text-center" *ngIf="reseauName">Administrateur réseau {{reseauName | titlecase}}</p>
+                                <p class="card-text text-center" *ngIf="infosUser.type == 'admin'">Administrateur du système </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 modifUser">
+                        <div class="card py-3 px-4 border">
+                            <form action="">
+                                <div class="mb-3">
+                                    <label for="passwordInput" class="form-label">Ancien mot de passe: <span class="require">*</span></label>
+                                    <input type="password" name="password" class="form-control" id="passwordInput" [(ngModel)]="password">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="passwordNewInput" class="form-label">Nouveau mot de passe: <span class="require">*</span></label>
+                                    <input type="passwordNew" name="passwordNew" class="form-control" id="passwordNewInput" [(ngModel)]="passwordNew">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="passwordConf" class="form-label">Confirmation de mot de passe: <span class="require">*</span></label>
+                                    <input type="text" name="passwordConf" class="form-control" id="passwordConf" [(ngModel)]="passwordConf">
+                                </div>
+            
+                                <div class="mb-3">
+                                    <button type="button" class="btn px-3" >Modifier</button>
+                                </div>
+                            </form>                           
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </main>
+        </div>
+    </div>
+</div>
+
+<!-- Utilisation d'une icône et d'un lien simulé -->
+<script>
+    // Ajoutez un gestionnaire d'événements au lien simulé pour déclencher le clic sur le champ d'entrée réel
+    document.querySelector('label[for="fileInput"]').addEventListener('click', function() {
+      document.getElementById('fileInput').click();
+    });
+</script>

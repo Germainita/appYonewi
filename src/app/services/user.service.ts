@@ -45,4 +45,9 @@ export class UserService {
         return this.http.get(`${url}/users/blocked`);
     }
 
+    // Le profil de l'utilisateur connecté 
+    getUserProfil(){
+        return this.http.get<any[]>(`${url}/profile`);
+    }
+
 }

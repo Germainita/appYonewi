@@ -20,6 +20,7 @@ import { AbonnementComponent } from './composants/adminReseau/abonnement/abonnem
 import { GestionLigneComponent } from './composants/adminReseau/gestion-ligne/gestion-ligne.component';
 import { AuthGuard } from './services/guard';
 import { TypeLigneComponent } from './composants/adminReseau/type-ligne/type-ligne.component';
+import { GestionProfilComponent } from './composants/commun/gestion-profil/gestion-profil.component';
 
 const routes: Routes = [
   // Route par défaut 
@@ -37,6 +38,10 @@ const routes: Routes = [
 
   // L'authentification 
   {path: "auth", component: AuthentificationComponent},
+
+  // Pour la gestion de profil 
+  // {path:"profil", component: GestionProfilComponent, title:"Profil",canActivate: [AuthGuard]},
+  {path:"profil", component: GestionProfilComponent, title:"Profil"},
 
   // Pour les admins 
   {path: "dashbord", component: DashbordComponent, title: "Dashbord", canActivate: [AuthGuard]},

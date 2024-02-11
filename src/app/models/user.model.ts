@@ -27,4 +27,5 @@ export class UserModif {
     reseau_id!: number;
     password!: string;
     email!: string;
+    image!: string;
 }

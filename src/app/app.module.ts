@@ -34,6 +34,7 @@ import { GestionLigneComponent } from './composants/adminReseau/gestion-ligne/ge
 import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptors/interceptor';
 import { TypeLigneComponent } from './composants/adminReseau/type-ligne/type-ligne.component';
+import { GestionProfilComponent } from './composants/commun/gestion-profil/gestion-profil.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { TypeLigneComponent } from './composants/adminReseau/type-ligne/type-lig
     TarifComponent,
     AbonnementComponent,
     GestionLigneComponent,
-    TypeLigneComponent
+    TypeLigneComponent,
+    GestionProfilComponent
   ],
   imports: [
     BrowserModule,
