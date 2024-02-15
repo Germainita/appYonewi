@@ -25,9 +25,11 @@ export class GestionLigneComponent {
 
   // Les Sections actifs 
   tabSection: SectionModel[] = [];
+  tabSectionsLigne: SectionModel[] = [];
   tabSectionFilterActifs: SectionModel[] = [];
 
   tabSectionLigneActifs: SectionModel[] = [];
+  tabSectionLigneFilter: SectionModel[] = [];
   tabSectionLigneSup: SectionModel[] = [];
 
   // Tableau des Sections supprimés
@@ -123,7 +125,8 @@ export class GestionLigneComponent {
 
     this.ligne = ligne;
 
-    this.tabSectionLigneActifs = ligne.sections;
+    this.tabSectionLigneActifs = this.tabSectionLigneFilter = ligne.sections;
+    console.log(this.tabSectionLigneActifs)
 
     // On récupère les sections actifs de la ligne
     // this.tabSectionLigneActifs = this.tabSection.filter((section:any) => section.ligne_id == ligne.id);
@@ -171,6 +174,7 @@ export class GestionLigneComponent {
     this.isAjout = true;
     this.isActifs = false;
     this.isSup = false;
+    this.viderChamps();
     // this.tabAjoutSections = [];
   }
 
@@ -181,8 +185,9 @@ export class GestionLigneComponent {
     this.isAjoutSection = false;
     this.isFinalisation = false;
     this.tabAjoutSections = [];
-    // this.viderChamps();
   }
+  
+ 
 
   // Voir l'ajout d'une section 
   showAjoutSection(){ 
@@ -242,14 +247,21 @@ export class GestionLigneComponent {
   }
 
   // showModifLigneForm()
-
   // Voir Formulaire de modification 
   showModif(element:any){
+    alert(element.id)
     this.isAjout = false;
     this.isModifier = true;
     this.ligne = element;
+    
+    // On récupère les sections de la ligne 
+    this.tabSectionsLigne= this.tabSection.filter((section:any) => section.ligne_id == this.ligne.id);
+    console.log(this.tabSectionsLigne);
   }
 
+  setFin(index:any){
+    return `Fin ${index}`
+  }
 
   // Les détails du Ligne 
   showDetails(element:any){
@@ -277,20 +289,20 @@ export class GestionLigneComponent {
             // console.log(tabSection);         
           }
           // On enregistre la dernière section qui est le debut et la fin de la ligne 
-          if(tabSection.length) {
-            let lastSection = new SectionModel;
-            lastSection.Depart = this.tabLigne[i].lieuDepart;
-            lastSection.Arrivee = this.tabLigne[i].lieuArrivee;
-            lastSection.created_at = this.tabLigne[i].created_at;
-            lastSection.created_by = this.tabLigne[i].created_by;
-            lastSection.updated_at = this.tabLigne[i].updated_at;
-            lastSection.updated_by = this.tabLigne[i].updated_by;
-            lastSection.num = (tabSection.length + 1).toString();
-            lastSection.prix = this.prixSection + ((tabSection.length - 1 )* this.prixEntreSection);
+          // if(tabSection.length) {
+          //   let lastSection = new SectionModel;
+          //   lastSection.depart = this.tabLigne[i].lieuDepart;
+          //   lastSection.arrivee = this.tabLigne[i].lieuArrivee;
+          //   lastSection.created_at = this.tabLigne[i].created_at;
+          //   lastSection.created_by = this.tabLigne[i].created_by;
+          //   lastSection.updated_at = this.tabLigne[i].updated_at;
+          //   lastSection.updated_by = this.tabLigne[i].updated_by;
+          //   lastSection.num = (tabSection.length + 1).toString();
+          //   lastSection.prix = this.prixSection + ((tabSection.length - 1 )* this.prixEntreSection);
 
-            // On ajoute la derniere section dans le tableau 
-            tabSection.push(lastSection);
-          }
+          //   // On ajoute la derniere section dans le tableau 
+          //   tabSection.push(lastSection);
+          // }
 
           // this.tabLigne[i].sections = tabSection;
 
@@ -312,13 +324,13 @@ export class GestionLigneComponent {
         //     // On prend les debut des sections sauf le premier qui est déjà enregistré
         //     for(let y = 1; y < tabSection.length; y++){
         //       tabSection[y].num = `${y+1}`;
-        //       console.log(tabSection[y].Depart);
+        //       console.log(tabSection[y].depart);
               
-        //       tabSectionTest.push(tabSection[y].Depart)
+        //       tabSectionTest.push(tabSection[y].depart)
         //     }
         //     tabSectionTest.push(this.tabLigne[i].lieuArrivee); // Stocke en dernier le lieu d'arrivé de la ligne;
 
-        //     // console.log(tabSection[tabSection.length - 1].Arrivee);  
+        //     // console.log(tabSection[tabSection.length - 1].arrivee);  
         //     // tabSectionTest.push(tabSection[tabSection.length-1].fin)   
         //     console.log("Le tableau des sections test", tabSectionTest); 
         //     // On a le tableau, on peut maintenant faire l'algo avec les prix 
@@ -395,8 +407,8 @@ export class GestionLigneComponent {
           // On enregistre la dernière section qui est le debut et la fin de la ligne 
           if(tabSection.length > 1) {
             let lastSection = new SectionModel;
-            lastSection.Depart = this.tabLignesSup[i].lieuDepart;
-            lastSection.Arrivee = this.tabLignesSup[i].lieuArrivee;
+            lastSection.depart = this.tabLignesSup[i].lieuDepart;
+            lastSection.arrivee = this.tabLignesSup[i].lieuArrivee;
             lastSection.created_at = this.tabLignesSup[i].created_at;
             lastSection.created_by = this.tabLignesSup[i].created_by;
             lastSection.updated_at = this.tabLignesSup[i].updated_at;
@@ -475,23 +487,21 @@ export class GestionLigneComponent {
 
   // Ajouter un Ligne à vérifier 
   ajouterEtape1(){
-    // On vérifie si les champs sont vides 
-    if (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart || !this.ligne.type_id){
+    // On vérifie si 
+    let ligneExist = this.tabLigne.find((ligne:any) => ligne.nom.toLowerCase() === this.ligne.nom.toLowerCase());
+    let ligneExist1 = this.tabLignesSup.find((ligne:any) => ligne.nom.toLowerCase() == this.ligne.nom.toLowerCase());
+
+    // les champs sont vides 
+    if (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart){
       sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
-    } else{
-      // On vérifie si le Ligne n'existe pas déjà 
-      let LigneExist = this.tabLigne.find((ligne:any) => ligne.nom.toLowerCase() == this.ligne.nom.toLowerCase());
-      let LigneExist1 = this.tabLignesSup.find((ligne:any) => ligne.nom.toLowerCase() == this.ligne.nom.toLowerCase());
-      if(LigneExist){
-        sweetAlertMessage("error", "", "Ce nom existe déjà ");
-      }
-      else if (LigneExist1) {
-        sweetAlertMessage("error", "", "Ce type est déjà dans la corbeille. Vueillez le restaure");
-      } 
-      else{
-        this.showAjoutSection();
-      }
     }
+    else if (ligneExist1) {
+      sweetAlertMessage("error", "", "Ce type est déjà dans la corbeille. Vueillez le restaure");
+    } 
+    else{
+      this.showAjoutSection();
+    }
+    
   }
 
   // Ajout section vérification 
@@ -500,6 +510,7 @@ export class GestionLigneComponent {
     for (let i =1; i < this.tabAjoutSections.length; i++ ){
       this.tabAjoutSections[i].debut = this.tabAjoutSections[i-1].fin;
     }
+    this.tabAjoutSections[this.tabAjoutSections.length-1].fin = this.ligne.lieuArrivee;
     console.log(this.tabAjoutSections);
     // On vérifie d'abord si les sections de la ligne ne sont pas vide 
     let sectionVide = this.tabAjoutSections.find((element:any) => element.debut == "" || element.fin == "" );
@@ -575,27 +586,107 @@ export class GestionLigneComponent {
 
   
 
-  // Modifier Ligne 
-  modifier(){ 
-    if  (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart || !this.ligne.type_id){
+  isLigneUpdated: boolean = false;
+  // Modifier une Ligne et ses section
+  modifierLigne(){ 
+    if  (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart){
       sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
-    } else{    
-      this.ligneService.updateLigne(this.ligne.id, this.ligne).subscribe( 
-        (data:any) =>{
-          if(data.success == false) {
-            sweetAlertMessage("error", "", "Le prix doit etre suppérieur à 1000");
-          } else if(data.message) {
-            sweetAlertMessage("success", "", data.message);
-            this.listeLigne();
-            this.viderChamps();
-          }
-        },
-        (err) =>{
-          console.log (err)
+    } else{
+      sweetMessageConfirm("Vous allez modifier cette Ligne", "Oui, je modifie").then( (result) =>{
+        if(result.isConfirmed ){
 
+          // On modifie la ligne 
+          console.log(this.ligne);
+          this.ligneService.updateLigne(this.ligne.id, this.ligne).subscribe(
+            (data:any) =>{
+              console.log(data);
+              // Les sections de la ligne 
+              this.tabSectionsLigne[0].depart = this.ligne.lieuDepart; //Debut de la premiere section = lieu de depart de la ligne
+              this.tabSectionsLigne[this.tabSectionsLigne.length-1].arrivee = this.ligne.lieuArrivee; // Fin de la derniere section = lieu d'arrivée de la ligne
+    
+              // Le début de La ligne suivante prend la fin de la ligne d'avant
+              for (let i =1; i < this.tabSectionsLigne.length; i++ ){
+                this.tabSectionsLigne[i].depart = this.tabSectionsLigne[i-1].arrivee;
+              }
+              sweetAlertMessage("success", "", data.message);
+              this.listeLigne();
+              this.listeLigneSup();
+            },
+            (err) => {
+              alert("Error");
+              console.log(err);
+            }
+          )
+
+          // On modifie les sections 
+          for(let i = 0; i <this.tabSectionsLigne.length; i++){
+            let section = {
+              depart: this.tabSectionsLigne[i].depart,
+              arrivee: this.tabSectionsLigne[i].arrivee,
+              tarif_id: this.tabSectionsLigne[i].tarif_id,
+              ligne_id: this.tabSectionsLigne[i].ligne_id,
+            }
+            console.log(section);
+            // On met à jour la sectiion 
+            this.updateSectionFonction(this.tabSectionsLigne[i].id, section);
+            sweetAlertMessage("success", "", "Les sections de la ligne ont été mis à jour");
+          }
         }
-      )
+      })   
     }
+  }
+
+  // Charger les infos de la section 
+  sectionObject:any;
+  indexObject:any;
+  messageUpdated:string= "";
+
+  // Charger les informations d'une section d'une ligne 
+  infosSection(section:any, index:any){
+    this.sectionObject = section;
+    this.indexObject = index;
+  }
+  // Modifier une section d'une ligne c'est bon 
+  modifSection(){
+    let section = {
+      depart: this.sectionObject.depart,
+      arrivee: this.sectionObject.arrivee,
+      ligne_id: this.sectionObject.ligne_id,
+      tarif_id: this.sectionObject.tarif_id
+    }
+    this.updateSectionFonction(this.sectionObject.id, section);
+
+    let sectionsLigne = this.ligne.sections;
+    if (this.indexObject < sectionsLigne.length-1){
+      sectionsLigne[this.indexObject + 1].depart = this.sectionObject.arrivee;
+      console.log(sectionsLigne[this.indexObject + 1]);
+
+      let section = {
+        depart: sectionsLigne[this.indexObject + 1].depart,
+        arrivee: sectionsLigne[this.indexObject + 1].arrivee,
+        ligne_id: sectionsLigne[this.indexObject + 1].ligne_id,
+        tarif_id: sectionsLigne[this.indexObject + 1].tarif_id
+      }
+
+      this.updateSectionFonction(sectionsLigne[this.indexObject + 1].id, section);
+    }
+
+    sweetAlertMessage("sucess", "", "La section a bien été modifiée");
+    console.log(sectionsLigne);
+
+    console.log("Les sections modifiées");
+  }
+
+  // Methode qui fait appel au service pour la modification d'une section 
+  updateSectionFonction(id:any, section:any){
+    this.sectionService.updateSection(id, section).subscribe(
+      (data:any) =>{
+        console.log(data);
+      },
+      (err:any)=>{
+          console.log(err);
+      }
+    )
   }
 
   // Supprimer un Ligne
@@ -719,5 +810,26 @@ export class GestionLigneComponent {
   // Méthode pour obtenir le nombre total de pages
   get totalPages(): number {
     return Math.ceil(this.tabFilter.length / this.itemsParPage);
+  }
+
+
+  // Pagination pour tous les tableaux des sections
+  getItemsPageSection(){
+    const indexDebut = (this.pageActuelle - 1) * this.itemsParPage;
+    const indexFin = indexDebut + this.itemsParPage;
+    // this.tabSectionLigneFilter = tabSectionLigneFilter;
+    return this.tabSectionLigneFilter.slice(indexDebut, indexFin);
+
+  }
+
+  // Méthode pour générer la liste des pages
+  get pagesSections(): number[] {
+    const totalPages = Math.ceil(this.tabSectionLigneFilter.length / this.itemsParPage);
+    return Array(totalPages).fill(0).map((_, index) => index + 1);
+  }
+
+  // Méthode pour obtenir le nombre total de pages
+  get totalPagesSection(): number {
+    return Math.ceil(this.tabSectionLigneFilter.length / this.itemsParPage);
   }
 }

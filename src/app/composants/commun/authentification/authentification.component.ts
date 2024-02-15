@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { error } from 'highcharts';
 import { AuthService } from 'src/app/services/auth.service';
 import { sweetAlertMessage } from 'src/app/services/sweetAlert/alert.service';
+import { verifiEmailFunction } from 'src/app/validation/validation';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,6 +17,7 @@ export class AuthentificationComponent implements OnInit {
   isRein1: boolean = false;
   isRein2: boolean = false;
 
+
   // Variable pour les inputs 
   email: string = "";
   password: string = "";
@@ -23,19 +25,34 @@ export class AuthentificationComponent implements OnInit {
   verifMessageEmail: string = "";
   verifEmail: boolean = false;
 
+  verifMessagePassword: string = "";
+  verifPassword: boolean = false;
+
   // iscorrectValues:boolean = true; // Si les identifiants sont incorrects
 
   // Déclaration des méthode 
   // Injection des services ath et route 
   constructor(private authService: AuthService, private route: Router ){}
 
+
   ngOnInit(): void { 
     if(!localStorage.getItem("userConnect")){
       localStorage.setItem("userConnect", JSON.stringify(""))
     }
 
+    // Connexion global à enlever 
     if(!localStorage.getItem("isUserConnected")){
       localStorage.setItem("isUserConnected", JSON.stringify(false))
+    }
+
+    // La connexion de l'admin system 
+    if(!localStorage.getItem("isAdminSystemConnected")){
+      localStorage.setItem("isAdminSystemConnected", JSON.stringify(false))
+    }
+    
+    // La connexion de l'admin Reseau 
+    if(!localStorage.getItem("isAdminReseauConnected")){
+      localStorage.setItem("isAdminReseauConnected", JSON.stringify(false))
     }
   }
 
@@ -105,6 +122,15 @@ export class AuthentificationComponent implements OnInit {
 
             localStorage.setItem("isUserConnected", JSON.stringify(true));
 
+    
+            if(response.type == "admin"){ //Si l'administrateur system est en ligne on désactive l'admin réseau
+              localStorage.setItem("isAdminSystemConnected", JSON.stringify(true));
+              localStorage.setItem("isAdminReseauConnected", JSON.stringify(false));
+            } else if(response.type == "utilisateur"){ //Si l'administrateur reseau est en ligne on désactive l'admin sytem
+              localStorage.setItem("isAdminReseauConnected", JSON.stringify(true));
+              localStorage.setItem("isAdminSystemConnected", JSON.stringify(false));
+            }
+
             // On stocke les info de la requete dans notre localstorage
             localStorage.setItem("userConnect", JSON.stringify(response));
             this.email = "";
@@ -137,24 +163,44 @@ export class AuthentificationComponent implements OnInit {
     }
   }
 
+  // Vérification de l'email 
+  verifEmailFunctionTest(){
+    verifiEmailFunction(this.email, this.verifEmail, this.verifMessageEmail);
+  }
+
   verifiEmailFunction(){
-    this.verifEmail = false;
+    this.verifEmail = this.validateEmail(this.email);
     if(!this.email){
       this.verifMessageEmail = "L'email est obligatoire"
-    }else if (this.email.endsWith("@") || (!this.email.includes("."))){
-      this.verifMessageEmail = "Le format de l'email est incorrect"
+    }else if(!this.verifEmail){
+      this.verifMessageEmail = "Le format de l'email est incorrect";
     } else{
-      this.verifMessageEmail = "";
-      this.verifEmail = true;
+        this.verifMessageEmail = "";
+        this.verifEmail = true;
+      }
+  }
+
+  validateEmail(email: string): boolean {
+    const emailRegex=/^[A-Za-z]+[A-Za-z0-9\._%+-]+@[A-Za-z0-9\.-]+\.[A-Za-z]{2,}$/;
+    return emailRegex.test(email);
+  }
+
+  verifPasswordFunction(){
+    this.verifPassword = false;
+    if(!this.password){
+      this.verifMessagePassword = "Le mot de passe est obligatoire"
+    } else{
+      this.verifMessagePassword = "";
+      this.verifPassword = true;
     }
-    return this.verifEmail;
+    return this.verifPassword;
   }
 
   // Réinitialiser le mot de passe 
   resetPassword(){
     console.log(this.email);
-    let isEmail = this.verifiEmailFunction()
-    if (isEmail){
+    verifiEmailFunction(this.email, this.verifEmail, this.verifMessageEmail);
+    if (this.verifEmail){
       let emailObjet = {
         email: this.email
       }

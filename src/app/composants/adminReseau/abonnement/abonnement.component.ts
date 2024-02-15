@@ -173,7 +173,7 @@ export class AbonnementComponent {
           this.abonnementService.addAbonnement(this.abonnement).subscribe( 
             (data:any) =>{
               // console.log(data);
-              // console.log(data.success);
+              console.log(data.success);
               if(data.success == false) {
                 sweetAlertMessage("error", "", "Le prix doit etre suppérieur à 1000");
               } else if(data.message) {
@@ -182,7 +182,9 @@ export class AbonnementComponent {
                 this.viderChamps();
               }
             },
-            (err) =>{
+            (err:any) =>{
+              console.log(err);
+              sweetAlertMessage("error", "", "Le prix doit etre suppérieur à 1000");
               console.log(`Erreur lors de l'ajout ${err}`);
             }
           )

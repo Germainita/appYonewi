@@ -18,7 +18,7 @@ import { MessageComponent } from './composants/adminSystem/message/message.compo
 import { TarifComponent } from './composants/adminReseau/tarif/tarif.component';
 import { AbonnementComponent } from './composants/adminReseau/abonnement/abonnement.component';
 import { GestionLigneComponent } from './composants/adminReseau/gestion-ligne/gestion-ligne.component';
-import { AuthGuard } from './services/guard';
+import { AuthGuard, AuthGuardAdminReseau, AuthGuardAdminSystem } from './services/guard';
 import { TypeLigneComponent } from './composants/adminReseau/type-ligne/type-ligne.component';
 import { GestionProfilComponent } from './composants/commun/gestion-profil/gestion-profil.component';
 
@@ -47,20 +47,18 @@ const routes: Routes = [
   {path: "dashbord", component: DashbordComponent, title: "Dashbord", canActivate: [AuthGuard]},
 
   // Pour l'administrateur system 
-  {path: "reseau", component:ReseauComponent, title: "Gestion reseau", canActivate: [AuthGuard]}, //Fait
-  {path: "role", component:RoleComponent, title: "Gestion role", canActivate: [AuthGuard]}, //Fait 
-  {path: "utilisateur", component:UtilisateurComponent, title: "Gestion utilisateur", canActivate: [AuthGuard]}, //Fait
-  {path: "newsletter", component:NewsletterComponent, title: "Gestion newsletter", canActivate: [AuthGuard]}, //Fait
-  {path: "message", component:MessageComponent, title: "Gestion message", canActivate: [AuthGuard]}, //Fait
+  {path: "reseau", component:ReseauComponent, title: "Gestion reseau", canActivate: [AuthGuardAdminSystem]}, //Fait
+  {path: "role", component:RoleComponent, title: "Gestion role", canActivate: [AuthGuardAdminSystem]}, //Fait 
+  {path: "utilisateur", component:UtilisateurComponent, title: "Gestion utilisateur", canActivate: [AuthGuardAdminSystem]}, //Fait
+  {path: "newsletter", component:NewsletterComponent, title: "Gestion newsletter", canActivate: [AuthGuardAdminSystem]}, //Fait
+  {path: "message", component:MessageComponent, title: "Gestion message", canActivate: [AuthGuardAdminSystem]}, //Fait
   
 
   // Pour les administrateurs réseau 
-  // {path: "gestionTarifs", component:TarifComponent, title: "Gestion tarifs", canActivate: [AuthGuard]},
-  {path: "gestionTarifs", component:TarifComponent, title: "Gestion tarifs"}, // En cours
-  {path: "gestionTypeLigne", component:TypeLigneComponent, title: "Gestion type ligne", canActivate: [AuthGuard]}, //Fait
-  {path: "gestionLigne", component:GestionLigneComponent, title: "Gestion lignes", canActivate: [AuthGuard]},
-  // {path: "gestionAbonnemenet", component:AbonnementComponent, title: "Gestion abonnement", canActivate: [AuthGuard]}, //Fait
-  {path: "gestionAbonnemenet", component:AbonnementComponent, title: "Gestion abonnement"}, // En cours
+  {path: "gestionTarifs", component:TarifComponent, title: "Gestion tarifs", canActivate: [AuthGuardAdminReseau]}, //Fait
+  {path: "gestionTypeLigne", component:TypeLigneComponent, title: "Gestion type ligne", canActivate: [AuthGuardAdminReseau]}, //Fait
+  {path: "gestionLigne", component:GestionLigneComponent, title: "Gestion lignes", canActivate: [AuthGuardAdminReseau]},
+  {path: "gestionAbonnemenet", component:AbonnementComponent, title: "Gestion abonnement", canActivate: [AuthGuardAdminReseau]}, //Fait
 ];
 
 @NgModule({

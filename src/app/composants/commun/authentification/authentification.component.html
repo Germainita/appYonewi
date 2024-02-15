@@ -19,7 +19,8 @@
                     <form action="">
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Email: <span class="require">*</span></label>
-                            <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ..." [(ngModel)]="email">
+                            <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ..." [(ngModel)]="email" (input)="verifiEmailFunction()">
+                            <p class="textIncorrect">{{verifMessageEmail}}</p>
                         </div>
                         <div class="mb-4">
                             <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Mot de passe: <span class="require">*</span></label>

@@ -30,8 +30,8 @@
 
             </div>
 
+            <!-- liste des types lignes actifs -->
             <div class="gestionLigne" *ngIf="isLignes">
-                <!-- liste des types lignes actifs -->
                 <div class="listeLigne" *ngIf="isActifs ">
                     <div class="row px-5" *ngIf="tabLigne.length">
                         <!-- Liste des lignes actifs  -->
@@ -80,7 +80,8 @@
                                                         <path d="M12.4993 9.375C13.3282 9.375 14.123 9.70424 14.7091 10.2903C15.2951 10.8763 15.6243 11.6712 15.6243 12.5C15.6243 13.3288 15.2951 14.1237 14.7091 14.7097C14.123 15.2958 13.3282 15.625 12.4993 15.625C11.6705 15.625 10.8757 15.2958 10.2896 14.7097C9.70359 14.1237 9.37435 13.3288 9.37435 12.5C9.37435 11.6712 9.70359 10.8763 10.2896 10.2903C10.8757 9.70424 11.6705 9.375 12.4993 9.375ZM12.4993 4.6875C17.7077 4.6875 22.1556 7.92708 23.9577 12.5C22.1556 17.0729 17.7077 20.3125 12.4993 20.3125C7.29102 20.3125 2.8431 17.0729 1.04102 12.5C2.8431 7.92708 7.29102 4.6875 12.4993 4.6875ZM3.31185 12.5C4.15378 14.2191 5.46113 15.6674 7.08526 16.6805C8.7094 17.6935 10.5852 18.2305 12.4993 18.2305C14.4135 18.2305 16.2893 17.6935 17.9134 16.6805C19.5376 15.6674 20.8449 14.2191 21.6868 12.5C20.8449 10.7809 19.5376 9.33255 17.9134 8.31953C16.2893 7.3065 14.4135 6.76946 12.4993 6.76946C10.5852 6.76946 8.7094 7.3065 7.08526 8.31953C5.46113 9.33255 4.15378 10.7809 3.31185 12.5Z" fill="#F2743B"/>
                                                     </svg>
                                                 </button>
-                                                <button class="btnAction px-2 py-1 rounded-2 me-4" title="Modifier" (click)="showModif(ligne)">
+                                                <button class="btnAction px-2 py-1 rounded-2 me-4" title="Modifier" data-bs-toggle="modal" data-bs-target="#modifierLigne" (click)="showModif(ligne)">
+                                                <!-- <button class="btnAction px-2 py-1 rounded-2 me-4" title="Modifier" (click)="showModif(ligne)"> -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                                                         <path d="M22.4556 3.74126L21.2577 2.54334C21.1133 2.39721 20.9414 2.28118 20.7518 2.202C20.5623 2.12281 20.3589 2.08203 20.1535 2.08203C19.9481 2.08203 19.7447 2.12281 19.5552 2.202C19.3656 2.28118 19.1937 2.39721 19.0493 2.54334L13.541 8.05272V11.4579H16.9473L22.4556 5.9496C22.6017 5.80523 22.7178 5.6333 22.7969 5.44376C22.8761 5.25422 22.9169 5.05085 22.9169 4.84543C22.9169 4.64001 22.8761 4.43664 22.7969 4.2471C22.7178 4.05756 22.6017 3.88562 22.4556 3.74126ZM16.2275 9.84335H15.1546V8.77043L18.7493 5.1798L19.8223 6.25272L16.2275 9.84335Z" fill="#F2743B"/>
                                                         <path d="M19.7917 19.7917H5.20833V5.20833H11.4583V3.125H5.20833C4.65631 3.12665 4.12736 3.34667 3.73702 3.73702C3.34667 4.12736 3.12665 4.65631 3.125 5.20833V19.7917C3.12665 20.3437 3.34667 20.8726 3.73702 21.263C4.12736 21.6533 4.65631 21.8734 5.20833 21.875H19.7917C20.3437 21.8734 20.8726 21.6533 21.263 21.263C21.6533 20.8726 21.8734 20.3437 21.875 19.7917V13.5417H19.7917V19.7917Z" fill="#F2743B"/>
@@ -164,8 +165,8 @@
 
                                 <div class="row g-4">
                                     <div class="col-md-6 mb-3">
-                                        <label for="inputLieuDepart" class="form-label">Point de depart / arrivé: <span class="require">*</span></label>
-                                        <input type="text" name="depart" class="form-control" id="inputLieuDepart" [(ngModel)]="ligne.lieuDepart">
+                                        <label for="inputlieuDepart" class="form-label">Point de depart / arrivé: <span class="require">*</span></label>
+                                        <input type="text" name="depart" class="form-control" id="inputlieuDepart" [(ngModel)]="ligne.lieuDepart">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="inputlieuArrivee" class="form-label">Point de arrivé / départ: <span class="require">*</span></label>
@@ -213,7 +214,8 @@
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="inputFinSection" class="form-label">Fin section: <span class="require">*</span></label>
-                                        <input type="text" name="fin" class="form-control" id="inputFinSection" [(ngModel)]="section.fin">
+                                        <input type="text" [name]="setFin(index)" class="form-control" id="inputFinSection" [(ngModel)]="section.fin" *ngIf="index < (tabAjoutSections.length-1)">
+                                        <input type="text" [name]="setFin(index)" class="form-control" id="inputFinSection" [value]="ligne.lieuArrivee" disabled  *ngIf="index == (tabAjoutSections.length-1)">
                                     </div>
                                 </div>
 
@@ -229,7 +231,7 @@
                                 </div> -->
                             </form>
 
-                            <!-- Valisatiion  -->
+                            <!-- Validatiion  -->
                             <div class="valdation" *ngIf="isFinalisation">
                                 <p class="mb-3"><span class="fw-bold">Numéro de la ligne: </span> {{ligne.nom}}</p>
                                 <p class="mb-3"><span class="fw-bold">Lieu de départ: </span> {{ligne.lieuDepart}}</p>
@@ -244,10 +246,10 @@
                                     <span class="fw-bold">Section {{tabAjoutSections.length + 1}} </span> <br>
                                     <span class="fw-bold">Debut: </span> {{ligne.lieuDepart}}  
                                     <span class="fw-bold">Fin: </span>  {{ligne.lieuArrivee}}
-                                 </p>
+                                </p>
 
                                 <div class="text-start mb-3">
-                                    <button class="btn btnColor px-4 me-3" (click)="showAjoutLigne();">Retour</button>
+                                    <button class="btn btnColor px-4 me-3" (click)="showAjoutSection();">Retour</button>
                                     <button class="btn px-4 me-3" (click)="ajoutLigne();"> Valider l'ajout</button>
                                 </div>
                             </div>
@@ -368,50 +370,52 @@
                             </div>
 
                             <!-- Le tableau des sections actifs de la ligne -->
-                            <table class="table table-responsive mb-4">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">N° Section</th>
-                                        <th scope="col">Début section</th>
-                                        <th scope="col">Fin section</th>
-                                        <th scope="col">Prix trajet (FCFA)</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-            
-                                <tbody *ngFor="let section of getItemsPage(tabSectionLigneActifs)">
-                                    <tr>
-                                        <td>{{section.num}}</td>
-                                        <td>{{section.Depart}}</td>
-                                        <td>{{section.Arrivee}}</td>
-                                        <td>{{section.prix}}</td>
-                                        <td>
-                                            <button class="btnAction px-2 py-1 rounded-2 me-4" title="Details" data-bs-toggle="modal" data-bs-target="#detailsLigne" (click)="showDetails(section)" >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                                                    <path d="M12.4993 9.375C13.3282 9.375 14.123 9.70424 14.7091 10.2903C15.2951 10.8763 15.6243 11.6712 15.6243 12.5C15.6243 13.3288 15.2951 14.1237 14.7091 14.7097C14.123 15.2958 13.3282 15.625 12.4993 15.625C11.6705 15.625 10.8757 15.2958 10.2896 14.7097C9.70359 14.1237 9.37435 13.3288 9.37435 12.5C9.37435 11.6712 9.70359 10.8763 10.2896 10.2903C10.8757 9.70424 11.6705 9.375 12.4993 9.375ZM12.4993 4.6875C17.7077 4.6875 22.1556 7.92708 23.9577 12.5C22.1556 17.0729 17.7077 20.3125 12.4993 20.3125C7.29102 20.3125 2.8431 17.0729 1.04102 12.5C2.8431 7.92708 7.29102 4.6875 12.4993 4.6875ZM3.31185 12.5C4.15378 14.2191 5.46113 15.6674 7.08526 16.6805C8.7094 17.6935 10.5852 18.2305 12.4993 18.2305C14.4135 18.2305 16.2893 17.6935 17.9134 16.6805C19.5376 15.6674 20.8449 14.2191 21.6868 12.5C20.8449 10.7809 19.5376 9.33255 17.9134 8.31953C16.2893 7.3065 14.4135 6.76946 12.4993 6.76946C10.5852 6.76946 8.7094 7.3065 7.08526 8.31953C5.46113 9.33255 4.15378 10.7809 3.31185 12.5Z" fill="#F2743B"/>
-                                                </svg>
-                                            </button>
-                                            <button class="btnAction px-2 py-1 rounded-2 me-4" title="Modifier">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                                                    <path d="M22.4556 3.74126L21.2577 2.54334C21.1133 2.39721 20.9414 2.28118 20.7518 2.202C20.5623 2.12281 20.3589 2.08203 20.1535 2.08203C19.9481 2.08203 19.7447 2.12281 19.5552 2.202C19.3656 2.28118 19.1937 2.39721 19.0493 2.54334L13.541 8.05272V11.4579H16.9473L22.4556 5.9496C22.6017 5.80523 22.7178 5.6333 22.7969 5.44376C22.8761 5.25422 22.9169 5.05085 22.9169 4.84543C22.9169 4.64001 22.8761 4.43664 22.7969 4.2471C22.7178 4.05756 22.6017 3.88562 22.4556 3.74126ZM16.2275 9.84335H15.1546V8.77043L18.7493 5.1798L19.8223 6.25272L16.2275 9.84335Z" fill="#F2743B"/>
-                                                    <path d="M19.7917 19.7917H5.20833V5.20833H11.4583V3.125H5.20833C4.65631 3.12665 4.12736 3.34667 3.73702 3.73702C3.34667 4.12736 3.12665 4.65631 3.125 5.20833V19.7917C3.12665 20.3437 3.34667 20.8726 3.73702 21.263C4.12736 21.6533 4.65631 21.8734 5.20833 21.875H19.7917C20.3437 21.8734 20.8726 21.6533 21.263 21.263C21.6533 20.8726 21.8734 20.3437 21.875 19.7917V13.5417H19.7917V19.7917Z" fill="#F2743B"/>
-                                                </svg>
-                                            </button>
-                                            <button class="btnAction px-2 py-1 rounded-2 me-4" title="Supprimer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                                                    <path d="M21.0938 4.6875H17.5781V3.51562C17.5781 2.79042 17.29 2.09492 16.7772 1.58213C16.2645 1.06934 15.569 0.78125 14.8438 0.78125H10.1562C9.43105 0.78125 8.73555 1.06934 8.22275 1.58213C7.70996 2.09492 7.42188 2.79042 7.42188 3.51562V4.6875H3.90625C3.59545 4.6875 3.29738 4.81097 3.07761 5.03073C2.85784 5.2505 2.73438 5.54857 2.73438 5.85938C2.73438 6.17018 2.85784 6.46825 3.07761 6.68802C3.29738 6.90778 3.59545 7.03125 3.90625 7.03125H4.29688V20.3125C4.29688 20.8305 4.50265 21.3273 4.86893 21.6936C5.23521 22.0599 5.732 22.2656 6.25 22.2656H18.75C19.268 22.2656 19.7648 22.0599 20.1311 21.6936C20.4974 21.3273 20.7031 20.8305 20.7031 20.3125V7.03125H21.0938C21.4046 7.03125 21.7026 6.90778 21.9224 6.68802C22.1422 6.46825 22.2656 6.17018 22.2656 5.85938C22.2656 5.54857 22.1422 5.2505 21.9224 5.03073C21.7026 4.81097 21.4046 4.6875 21.0938 4.6875ZM9.76562 3.51562C9.76562 3.41202 9.80678 3.31267 9.88004 3.23941C9.95329 3.16616 10.0526 3.125 10.1562 3.125H14.8438C14.9474 3.125 15.0467 3.16616 15.12 3.23941C15.1932 3.31267 15.2344 3.41202 15.2344 3.51562V4.6875H9.76562V3.51562ZM18.3594 19.9219H6.64062V7.03125H18.3594V19.9219ZM11.3281 10.1562V16.4062C11.3281 16.7171 11.2047 17.0151 10.9849 17.2349C10.7651 17.4547 10.4671 17.5781 10.1562 17.5781C9.84545 17.5781 9.54738 17.4547 9.32761 17.2349C9.10784 17.0151 8.98438 16.7171 8.98438 16.4062V10.1562C8.98438 9.84545 9.10784 9.54738 9.32761 9.32761C9.54738 9.10784 9.84545 8.98438 10.1562 8.98438C10.4671 8.98438 10.7651 9.10784 10.9849 9.32761C11.2047 9.54738 11.3281 9.84545 11.3281 10.1562ZM16.0156 10.1562V16.4062C16.0156 16.7171 15.8922 17.0151 15.6724 17.2349C15.4526 17.4547 15.1546 17.5781 14.8438 17.5781C14.5329 17.5781 14.2349 17.4547 14.0151 17.2349C13.7953 17.0151 13.6719 16.7171 13.6719 16.4062V10.1562C13.6719 9.84545 13.7953 9.54738 14.0151 9.32761C14.2349 9.10784 14.5329 8.98438 14.8438 8.98438C15.1546 8.98438 15.4526 9.10784 15.6724 9.32761C15.8922 9.54738 16.0156 9.84545 16.0156 10.1562Z" fill="#F2743B"/>
-                                                </svg>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="sectionListe">
+                                <table class="table table-responsive mb-4">
+                                    <thead>
+                                        <tr class="sticky-top">
+                                            <th scope="col">N° Section</th>
+                                            <th scope="col">Début section</th>
+                                            <th scope="col">Fin section</th>
+                                            <th scope="col">Prix trajet (FCFA)</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody *ngFor="let section of tabSectionLigneActifs let index = index">
+                                        <tr>
+                                            <td>{{section.num}}</td>
+                                            <td>{{section.depart}}</td>
+                                            <td>{{section.arrivee}}</td>
+                                            <td>{{section.prix}}</td>
+                                            <td>
+                                                <button class="btnAction px-2 py-1 rounded-2 me-4" title="Details" data-bs-toggle="modal" data-bs-target="#detailsLigne" (click)="showDetails(section)" >
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                                                        <path d="M12.4993 9.375C13.3282 9.375 14.123 9.70424 14.7091 10.2903C15.2951 10.8763 15.6243 11.6712 15.6243 12.5C15.6243 13.3288 15.2951 14.1237 14.7091 14.7097C14.123 15.2958 13.3282 15.625 12.4993 15.625C11.6705 15.625 10.8757 15.2958 10.2896 14.7097C9.70359 14.1237 9.37435 13.3288 9.37435 12.5C9.37435 11.6712 9.70359 10.8763 10.2896 10.2903C10.8757 9.70424 11.6705 9.375 12.4993 9.375ZM12.4993 4.6875C17.7077 4.6875 22.1556 7.92708 23.9577 12.5C22.1556 17.0729 17.7077 20.3125 12.4993 20.3125C7.29102 20.3125 2.8431 17.0729 1.04102 12.5C2.8431 7.92708 7.29102 4.6875 12.4993 4.6875ZM3.31185 12.5C4.15378 14.2191 5.46113 15.6674 7.08526 16.6805C8.7094 17.6935 10.5852 18.2305 12.4993 18.2305C14.4135 18.2305 16.2893 17.6935 17.9134 16.6805C19.5376 15.6674 20.8449 14.2191 21.6868 12.5C20.8449 10.7809 19.5376 9.33255 17.9134 8.31953C16.2893 7.3065 14.4135 6.76946 12.4993 6.76946C10.5852 6.76946 8.7094 7.3065 7.08526 8.31953C5.46113 9.33255 4.15378 10.7809 3.31185 12.5Z" fill="#F2743B"/>
+                                                    </svg>
+                                                </button>
+                                                <button class="btnAction px-2 py-1 rounded-2 me-4" title="Modifier" data-bs-toggle="modal" data-bs-target="#modifierSection" (click)="infosSection(section, index)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                                                        <path d="M22.4556 3.74126L21.2577 2.54334C21.1133 2.39721 20.9414 2.28118 20.7518 2.202C20.5623 2.12281 20.3589 2.08203 20.1535 2.08203C19.9481 2.08203 19.7447 2.12281 19.5552 2.202C19.3656 2.28118 19.1937 2.39721 19.0493 2.54334L13.541 8.05272V11.4579H16.9473L22.4556 5.9496C22.6017 5.80523 22.7178 5.6333 22.7969 5.44376C22.8761 5.25422 22.9169 5.05085 22.9169 4.84543C22.9169 4.64001 22.8761 4.43664 22.7969 4.2471C22.7178 4.05756 22.6017 3.88562 22.4556 3.74126ZM16.2275 9.84335H15.1546V8.77043L18.7493 5.1798L19.8223 6.25272L16.2275 9.84335Z" fill="#F2743B"/>
+                                                        <path d="M19.7917 19.7917H5.20833V5.20833H11.4583V3.125H5.20833C4.65631 3.12665 4.12736 3.34667 3.73702 3.73702C3.34667 4.12736 3.12665 4.65631 3.125 5.20833V19.7917C3.12665 20.3437 3.34667 20.8726 3.73702 21.263C4.12736 21.6533 4.65631 21.8734 5.20833 21.875H19.7917C20.3437 21.8734 20.8726 21.6533 21.263 21.263C21.6533 20.8726 21.8734 20.3437 21.875 19.7917V13.5417H19.7917V19.7917Z" fill="#F2743B"/>
+                                                    </svg>
+                                                </button>
+                                                <button class="btnAction px-2 py-1 rounded-2 me-4" title="Supprimer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+                                                        <path d="M21.0938 4.6875H17.5781V3.51562C17.5781 2.79042 17.29 2.09492 16.7772 1.58213C16.2645 1.06934 15.569 0.78125 14.8438 0.78125H10.1562C9.43105 0.78125 8.73555 1.06934 8.22275 1.58213C7.70996 2.09492 7.42188 2.79042 7.42188 3.51562V4.6875H3.90625C3.59545 4.6875 3.29738 4.81097 3.07761 5.03073C2.85784 5.2505 2.73438 5.54857 2.73438 5.85938C2.73438 6.17018 2.85784 6.46825 3.07761 6.68802C3.29738 6.90778 3.59545 7.03125 3.90625 7.03125H4.29688V20.3125C4.29688 20.8305 4.50265 21.3273 4.86893 21.6936C5.23521 22.0599 5.732 22.2656 6.25 22.2656H18.75C19.268 22.2656 19.7648 22.0599 20.1311 21.6936C20.4974 21.3273 20.7031 20.8305 20.7031 20.3125V7.03125H21.0938C21.4046 7.03125 21.7026 6.90778 21.9224 6.68802C22.1422 6.46825 22.2656 6.17018 22.2656 5.85938C22.2656 5.54857 22.1422 5.2505 21.9224 5.03073C21.7026 4.81097 21.4046 4.6875 21.0938 4.6875ZM9.76562 3.51562C9.76562 3.41202 9.80678 3.31267 9.88004 3.23941C9.95329 3.16616 10.0526 3.125 10.1562 3.125H14.8438C14.9474 3.125 15.0467 3.16616 15.12 3.23941C15.1932 3.31267 15.2344 3.41202 15.2344 3.51562V4.6875H9.76562V3.51562ZM18.3594 19.9219H6.64062V7.03125H18.3594V19.9219ZM11.3281 10.1562V16.4062C11.3281 16.7171 11.2047 17.0151 10.9849 17.2349C10.7651 17.4547 10.4671 17.5781 10.1562 17.5781C9.84545 17.5781 9.54738 17.4547 9.32761 17.2349C9.10784 17.0151 8.98438 16.7171 8.98438 16.4062V10.1562C8.98438 9.84545 9.10784 9.54738 9.32761 9.32761C9.54738 9.10784 9.84545 8.98438 10.1562 8.98438C10.4671 8.98438 10.7651 9.10784 10.9849 9.32761C11.2047 9.54738 11.3281 9.84545 11.3281 10.1562ZM16.0156 10.1562V16.4062C16.0156 16.7171 15.8922 17.0151 15.6724 17.2349C15.4526 17.4547 15.1546 17.5781 14.8438 17.5781C14.5329 17.5781 14.2349 17.4547 14.0151 17.2349C13.7953 17.0151 13.6719 16.7171 13.6719 16.4062V10.1562C13.6719 9.84545 13.7953 9.54738 14.0151 9.32761C14.2349 9.10784 14.5329 8.98438 14.8438 8.98438C15.1546 8.98438 15.4526 9.10784 15.6724 9.32761C15.8922 9.54738 16.0156 9.84545 16.0156 10.1562Z" fill="#F2743B"/>
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Pagination  -->
-                <div *ngIf="getItemsPage(tabSectionLigneActifs).length">
+                <!-- <div *ngIf="getItemsPage(tabSectionLigneActifs).length">
                     <div class="d-flex justify-content-end mb-2">
                     <button class="rounded-2 btnColor  mx-2" [disabled]="pageActuelle === 1" (click)="pageActuelle = pageActuelle - 1">
                         <i class="bi bi-caret-left-fill fs-4"></i>
@@ -419,13 +423,12 @@
                     <button class=" mx-2 page" *ngFor="let page of pages" (click)="pageActuelle = page">
                         <span class="pageActuelle fs-5" *ngIf="page===pageActuelle">{{page}}</span>
                         <span  *ngIf="page != pageActuelle">{{page}}</span>
-                        <!-- {{ page }} -->
                     </button>
                     <button class="rounded-2 btnColor mx-2" [disabled]="pageActuelle === totalPages" (click)="pageActuelle = pageActuelle + 1">
                         <i class="bi bi-caret-right-fill fs-4"></i>
                     </button>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>
@@ -459,23 +462,132 @@
 
 
 <!-- Modal modifier une Ligne  -->  
-<div class="modal fade modalItineraire" id="modifierLigne" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content text-center">
+<div class="modal fade" id="modifierLigne" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog  modalModifLigne">
+        <div class="modal-content border text-center">
             
-            <div class="modal-body">
-                <h4 class="modal-title fs-5 titre mb-4" id="staticBackdropLabel">Détails de la ligne</h4>
-                <p class="mb-3"><span class="fw-bold">Type: </span>{{ligne.nom}}</p> 
-                <p class="mb-3"><span class="fw-bold">lieuDepart (FCFA): </span>{{ligne.lieuDepart}}</p> 
-                <p class="mb-3"><span class="fw-bold">Durée: </span>{{ligne.lieuArrivee}}</p> 
-                <!-- <p class="mb-3"><span class="fw-bold">Description: </span>{{ligne.description}}</p>  -->
-                <p class="mb-3"><span class="fw-bold">Crée par: </span>{{ligne.created_by}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de création: </span>{{ligne.created_at}}</p> 
-                <p class="mb-3"><span class="fw-bold">Modifié par: </span>{{ligne.updated_by}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de dernière modification: </span>{{ligne.updated_at}}</p> 
+            <div class="modal-body ">
+                <h4 class="modal-title fs-5 titre mb-4" id="staticBackdropLabel">Modifer la ligne</h4>
+                <!-- Modifier une ligne  -->
+                <form action="">
+                    <!-- Nom et type de ligne  -->
+                    <div class="row">
+                        <!-- Le nom de la ligne  -->
+                        <div class="col-md-6 mb-3">
+                            <label for="inputNumLigne" class="form-label">Numéro de ligne: <span class="require">*</span></label>
+                            <input type="text" name="numeroLigne" class="form-control" id="inputNumLigne" [(ngModel)]="ligne.nom">
+                        </div>
+
+                        <!-- Le type de ligne  -->
+                        <div class="col-md-6 mb-3">
+                            <label for="inputType" class="form-label">Type de ligne: <span class="require">*</span></label>                            
+                            <select id="role" class="form-select" name="typeLigne" aria-label="les type de ligne" [(ngModel)]="ligne.type_id">
+                                <option *ngFor="let typeLigne of tabTypeLigne" [value]="typeLigne.id" >{{typeLigne.nom}}</option>
+                                <option value="">Aucun</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Point de départ et d'arrivée de la ligne  -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="inputlieuDepart" class="form-label">Point de depart / arrivé: <span class="require">*</span></label>
+                            <input type="text" name="depart" class="form-control" id="inputlieuDepart" [(ngModel)]="ligne.lieuDepart">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="inputlieuArrivee" class="form-label">Point de arrivé / départ: <span class="require">*</span></label>
+                            <input type="text" name="arrivee" class="form-control" id="inputlieuArrivee" [(ngModel)]="ligne.lieuArrivee">
+                        </div>
+                    </div>
+
+                    <!-- Les sections de la ligne  -->
+                    <div class="row" *ngFor="let section of tabSectionsLigne; let index = index;">
+                        <div class="col-md-2 mb-3">Section {{index + 1}}</div>
+
+                        <div class="col-md-5 mb-3">
+                            <label for="inputDebut" class="form-label">Debut section: <span class="require">*</span></label>
+                            <!-- {{section.depart}} -->
+                            <input type="text" name="debut" class="form-control" id="inputDebut" [value]="ligne.lieuDepart" disabled *ngIf="index==0">
+                            <input type="text" name="debut" class="form-control" id="inputDebut" [value]="tabSectionsLigne[index-1].arrivee" disabled *ngIf="index > 0">
+                            
+                            <!-- <label for="inputDebut" class="form-label">Debut section: <span class="require">*</span></label> -->
+                            
+                            <!-- si c'est la première section  -->
+                            <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [value]="section.depart" disabled *ngIf="index==0"> -->
+                            <!-- Si c'est entre les sections  -->
+                            <!-- <p *ngIf="index > 0">CC {{tabAjoutSections[index-1].fin}}</p> -->
+                            <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [value]="tabSectionsLigne[index-1].arrivee" disabled *ngIf="index > 0"> -->
+
+                            <!-- Si c'est entre les sections  -->
+                            <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [(ngModel)]="tabAjoutSections[index -1].fin" disabled *ngIf="index > 0"> -->
+                            <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [value]="section.debut" (input)="verifInfosSection(section)" [(ngModel)]="section.debut"> -->
+                            <!-- <p class="text-danger" *ngIf="!section.isExact ">Doit etre identique à la fin de la section précédente</p>
+                            <p class="text-success" *ngIf="section.isExact"></p> -->
+                            
+
+                            <!-- <input type="text" name="debut" class="form-control" id="inputDebut" (input)="verifSectionInfos()" [(ngModel)]="section.debut">
+                            <p class="text-danger" *ngIf="!isInfosValid && section.num !='1'">Doit etre identique à la fin de la section précédente</p>
+                            <p class="text-success" *ngIf="isInfosValid && section.num !='1'"></p> -->
+                        </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="inputFinSection" class="form-label">Fin section: <span class="require">*</span></label>
+                            <input type="text" [name]="setFin(index)" class="form-control" id="inputFinSection" [(ngModel)]="section.arrivee" *ngIf="index < (tabSectionsLigne.length-1)">
+                            <input type="text" [name]="setFin(index)" class="form-control" id="inputFinSection" [value]="ligne.lieuArrivee" disabled  *ngIf="index == (tabSectionsLigne.length-1)">
+                            <!-- {{section.arrivee}} -->
+                        </div>
+                        <!-- <div class="col-md-4 mb-3">
+                            <label for="inputFinSection" class="form-label">Fin section: <span class="require">*</span></label>
+                            <input type="text" name="fin" class="form-control" id="inputFinSection" [(ngModel)]="tabSectionsLigne[index].arrivee">
+                        </div> -->
+                    </div>
+                    
+                </form> 
                 
+                <div class="text-end">
+                    <button type="button" class="btn px-3 me-3" (click)="modifierLigne()" >Modifer</button>
+                    <button type="button" class="btn btnColor" data-bs-dismiss="modal">Fermer</button>
+                </div>     
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal modifier une Section  -->  
+<div class="modal fade" id="modifierSection" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border">
+            
+            <div class="modal-body ">
+                <h4 class="modal-title fs-5 titre mb-4" id="staticBackdropLabel">Modiferi d la section</h4>
+                <h5>
+                    <span  class="fw-bold">Ligne {{ligne.nom}}   </span>
+                    <span>{{ligne.lieuDepart}} - {{ligne.lieuArrivee}}</span>
+                </h5>
+                <form action="">
+                    <div class="mb-3">Section {{indexObject + 1}}</div>
+
+                    <div class="mb-3">
+                        <label for="inputDebut" class="form-label">Debut section: <span class="require">*</span></label>
+                        <!-- {{section.depart}} -->
+                        <input type="text" name="debut" class="form-control" id="inputDebut" [value]="ligne.lieuDepart" disabled *ngIf="indexObject==0">
+                        <input type="text" name="debut" class="form-control" id="inputDebut" [(ngModel)]="sectionObject.depart" disabled  *ngIf="indexObject > 0">
                         
-                <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputFinSection" class="form-label">Fin section: <span class="require">*</span></label>
+                        <input type="text" name="fin" class="form-control" id="inputFinSection" [(ngModel)]="sectionObject.arrivee" *ngIf="indexObject < (ligne.sections.length-1)">
+                        <input type="text" name="fin" class="form-control" id="inputFinSection" [value]="ligne.lieuArrivee" disabled  *ngIf="indexObject == (ligne.sections.length-1)">
+                        <!-- {{section.arrivee}} -->
+                    </div>
+                    
+                </form> 
+                
+                <div class="text-end">
+                    <button type="button" class="btn px-3 me-3" (click)="modifSection()" >Modifer</button>
+                    <button type="button" class="btn btnColor" data-bs-dismiss="modal">Fermer</button>
+                </div>     
             </div>
             
         </div>

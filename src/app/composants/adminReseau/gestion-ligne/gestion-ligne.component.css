@@ -94,3 +94,17 @@ thead tr th{
     border: 1px solid var(--base2);
     background-color: white;
 }
+
+.modalModifLigne{
+    width: 500vh!important;
+}
+
+/* .listeSections{
+    max-height: 30vh;
+    overflow: hidden;
+} */
+
+.sectionListe{
+    max-height: 50vh !important;
+    overflow-y: scroll !important;
+}

@@ -27,8 +27,8 @@ export class LignesComponent implements OnInit{
 
   // Les réseaux 
   tabReseauxActifs: any [] = [];
-  idAftu?: number;
-  idDemDikk?: number;
+  idAftu: number = 0;
+  idDemDikk: number = 0;
 
   // Pour ce qui concerne les lignes 
   // Les lignes actifs 
@@ -106,7 +106,6 @@ export class LignesComponent implements OnInit{
   }
   
   // Liste des réseaux 
-  // Liste des réseaux 
   listeReseau(){
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
@@ -183,8 +182,6 @@ export class LignesComponent implements OnInit{
       }
     )
   }
-
-  
   
   // les sections 
   // Liste des sections
@@ -236,9 +233,9 @@ export class LignesComponent implements OnInit{
             // On prend les debut des sections sauf le premier qui est déjà enregistré
             for(let y = 1; y < tabSection.length; y++){
               tabSection[y].num = `${y+1}`;
-              // console.log(tabSection[y].Depart);
+              // console.log(tabSection[y].depart);
               
-              tabSectionLigne.push(tabSection[y].Depart)
+              tabSectionLigne.push(tabSection[y].depart)
             }
           }
           tabSectionLigne.push(this.tabAftu[i].lieuArrivee); // Stocke en dernier le lieu d'arrivé de la ligne;
@@ -269,9 +266,9 @@ export class LignesComponent implements OnInit{
             // On prend les debut des sections sauf le premier qui est déjà enregistré
             for(let y = 1; y < tabSection.length; y++){
               tabSection[y].num = `${y+1}`;
-              // console.log(tabSection[y].Depart);
+              // console.log(tabSection[y].depart);
               
-              tabSectionLigne.push(tabSection[y].Depart)
+              tabSectionLigne.push(tabSection[y].depart)
             }
           }
           tabSectionLigne.push(this.tabLigneDemDikk[i].lieuArrivee); // Stocke en dernier le lieu d'arrivé de la ligne;
@@ -345,6 +342,7 @@ export class LignesComponent implements OnInit{
     
   }
 
+  // Voir toutes les lignes 
   showAllLigne(){
     this.isAll = true;    
     this.tabLigneDemDikkFilter = this.tabLigneDemDikk;
@@ -452,7 +450,10 @@ export class LignesComponent implements OnInit{
     return tab.map((objet:any) => {
       return {
         ...objet,
-        sections: objet.sections.filter((section:any) => section.depart.toLowerCase() === lieuDepart.toLowerCase() && section.arrivee.toLowerCase() === lieuArrivee.toLowerCase())
+        sections: objet.sections.filter((section:any) => ( 
+          (section.depart.toLowerCase() === lieuDepart.toLowerCase() && section.arrivee.toLowerCase() === lieuArrivee.toLowerCase())|| 
+          (section.depart.toLowerCase() === lieuArrivee.toLowerCase() && section.arrivee.toLowerCase() === lieuDepart.toLowerCase()) )
+        )
       };
     });
 

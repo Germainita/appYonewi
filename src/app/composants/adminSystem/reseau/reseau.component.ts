@@ -246,8 +246,8 @@ export class ReseauComponent implements OnInit {
           // On enregistre la dernière section qui est le debut et la fin de la ligne 
           if(tabSection.length) {
             let lastSection = new SectionModel;
-            lastSection.Depart = this.tabLigne[i].lieuDepart;
-            lastSection.Arrivee = this.tabLigne[i].lieuArrivee;
+            lastSection.depart = this.tabLigne[i].lieuDepart;
+            lastSection.arrivee = this.tabLigne[i].lieuArrivee;
             lastSection.created_at = this.tabLigne[i].created_at;
             lastSection.created_by = this.tabLigne[i].created_by;
             lastSection.updated_at = this.tabLigne[i].updated_at;
@@ -338,7 +338,7 @@ export class ReseauComponent implements OnInit {
   onSearchSections(){
     // Recherche se fait selon le nom ou le prenom 
     this.tabSectionsFilter = this.tabSections.filter(
-      (elt:any) => (elt?.Depart.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.Arrivee.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.prix.toString().toLowerCase().includes(this.filterValue.toLowerCase()))
+      (elt:any) => (elt?.depart.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.arrivee.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.prix.toString().toLowerCase().includes(this.filterValue.toLowerCase()))
     );
   }
 

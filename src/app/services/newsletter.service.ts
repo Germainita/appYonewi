@@ -17,6 +17,6 @@ export class NewsletterService{
 
     // souscricre à la newsletter
     inscriptionNewsletter(user:any){
-        return this.http.post(`${url}/newsletter`, user)
+        return this.http.post(`${url}/newsletter/subscribe`, user)
     }
 }

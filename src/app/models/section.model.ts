@@ -9,8 +9,8 @@ export class Section {
 
 export class SectionModel {
     id!: number;
-    Depart!: string;
-    Arrivee!: string;
+    depart!: string;
+    arrivee!: string;
     tarif_id!: string;
     ligne_id!: string;
     etat!: string;

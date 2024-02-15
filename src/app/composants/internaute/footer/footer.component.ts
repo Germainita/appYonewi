@@ -37,13 +37,14 @@ export class FooterComponent implements OnInit{
       // On vérifie d'abord s'il n'existe pas 
       // let newsletterExist
       this.newsLetterService.inscriptionNewsletter(this.newsletterObjet).subscribe(
-        (resp) =>{
+        (resp:any) =>{
           console.log(resp);
-          sweetAlertMessage("success", "", "Vous maintenant inscrit à la newsletter");
+          sweetAlertMessage("success", "", resp.message);
           this.newsletterObjet.email = "";
         },
         (err) =>{
           console.log(err);
+          sweetAlertMessage("error", "", err.error.message);
         }
       )
     }
