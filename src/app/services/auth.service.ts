@@ -24,8 +24,8 @@ export class AuthService {
 
     // On vide le localStorage 
     localStorage.setItem("userConnect", JSON.stringify(""));
-
-    localStorage.setItem("isUserConnected", JSON.stringify(false));
+    localStorage.setItem("isAdminSystemConnected", JSON.stringify(false));
+    localStorage.setItem("isAdminReseauConnected", JSON.stringify(false));
   }
 
   // Réinitialiser mot de passe 

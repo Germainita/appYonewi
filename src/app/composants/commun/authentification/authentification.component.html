@@ -18,19 +18,21 @@
 
                     <form action="">
                         <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Email: <span class="require">*</span></label>
-                            <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ..." [(ngModel)]="email" (input)="verifiEmailFunction()">
-                            <p class="textIncorrect">{{verifMessageEmail}}</p>
+                            <label for="emailInput" class="form-label fw-bold fs-5">Email: <span class="require">*</span></label>
+                            <input type="email" name="email" class="form-control" id="emailInput" placeholder="Votre adresse email ..." [(ngModel)]="email" (input)="verifEmailFunction()">
+                            <p class="textIncorrect" *ngIf="verifMessageEmail"><i class="bi bi-exclamation-circle"></i> {{verifMessageEmail}}</p>
                         </div>
                         <div class="mb-4">
-                            <label for="exampleFormControlInput1" class="form-label fw-bold fs-5">Mot de passe: <span class="require">*</span></label>
-                            <input type="password" name="password" class="form-control" id="exampleFormControlInput1" placeholder="Votre mot de passe ..." [(ngModel)]="password">
+                            <label for="passwordInput" class="form-label fw-bold fs-5">Mot de passe: <span class="require">*</span></label>
+                            <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Votre mot de passe ..." [(ngModel)]="password" (input)="verifPasswordFunction()"> 
+                            <p class="textIncorrect" *ngIf="verifMessagePassword"> <i class="bi bi-exclamation-circle"></i> {{verifMessagePassword}}</p>
                         </div>
                         <p class="mdpOublier">Mot de passe oublié ? <span class="reinitialiser" (click)="showFirstRein()"> Rénitialiser</span></p>
                         <!-- <p class="mt-3  fs-4 px-2" *ngIf="!iscorrectValues">Email ou mot de passe incorrects</p>
                         <p class="mt-3 text-danger" *ngIf="iscorrectValues"></p> -->
     
-                        <button class=" btn btnAuth col-12 fw-bold fs-5 d-block" type="submit" (click)="login()">Se connecter</button>
+                        <button class=" btn btnAuth col-12 fw-bold fs-5 d-block" type="submit" (click)="login()" [disabled]="!verifEmail || !verifPassword" [class.deseable]="!verifEmail || !verifPassword">Se connecter</button>
+
                         
                     </form>
                 </div>

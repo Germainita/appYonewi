@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { error } from 'highcharts';
 import { AuthService } from 'src/app/services/auth.service';
 import { sweetAlertMessage } from 'src/app/services/sweetAlert/alert.service';
-import { verifiEmailFunction } from 'src/app/validation/validation';
+import { validateEmail} from 'src/app/validation/validation';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -40,11 +40,6 @@ export class AuthentificationComponent implements OnInit {
       localStorage.setItem("userConnect", JSON.stringify(""))
     }
 
-    // Connexion global à enlever 
-    if(!localStorage.getItem("isUserConnected")){
-      localStorage.setItem("isUserConnected", JSON.stringify(false))
-    }
-
     // La connexion de l'admin system 
     if(!localStorage.getItem("isAdminSystemConnected")){
       localStorage.setItem("isAdminSystemConnected", JSON.stringify(false))
@@ -76,27 +71,40 @@ export class AuthentificationComponent implements OnInit {
     this.isConnexion = false;
   }
 
+  // Vérification de l'email 
+  verifEmailFunction(){
+    this.verifEmail = validateEmail(this.email);
+    if(!this.email){
+      this.verifMessageEmail = "L'email est obligatoire"
+    }else if(!this.verifEmail){
+      this.verifMessageEmail = "Le format de l'email est incorrect";
+    } else{
+        this.verifMessageEmail = "";
+        this.verifEmail = true;
+      }
+  }
+
+  // Vérification du mot de passe 
+  verifPasswordFunction(){
+    this.verifPassword = false;
+    if(!this.password){
+      this.verifMessagePassword = "Le mot de passe est obligatoire"
+    }
+     else if(this.password.length < 5){
+      this.verifMessagePassword = "La longueur du mot de passe doit etre supérieure à 5"
+    }
+     else{
+      this.verifMessagePassword = "";
+      this.verifPassword = true;
+    }
+    return this.verifPassword;
+  }
+
   // Methode de connexion 
   login(){
-    if(this.email=="" || this.password==""){
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '',
-        text: 'Veillez remplir les champs',
-        showConfirmButton: true,
-      })
-    } else if (this.email.endsWith("@") || (!this.email.includes("."))) // Vérifie si l'email se termine juste par @
-    {
-      Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: '',
-        text: 'Veillez saissir un email valide',
-        showConfirmButton: true,
-      })
-    }
-    else{
+    this.verifEmailFunction();
+    this.verifPasswordFunction();
+    if (this.verifEmail && this.verifPassword){
       let user = {
         email: this.email,
         password: this.password
@@ -106,7 +114,7 @@ export class AuthentificationComponent implements OnInit {
       this.authService.login(user).subscribe(
         (rep) =>{
           response = rep;
-          console.log(response);
+          // console.log(response);
           if (response.status){
             // console.log ("C'est bon");
             Swal.fire({
@@ -119,9 +127,6 @@ export class AuthentificationComponent implements OnInit {
             
             this.route.navigate(['/dashbord']); // Redirection vers le dashbord concerné 
             this.authService.isAuthenticated = true; // Définit la variable isAuthicated à true pour la guard
-
-            localStorage.setItem("isUserConnected", JSON.stringify(true));
-
     
             if(response.type == "admin"){ //Si l'administrateur system est en ligne on désactive l'admin réseau
               localStorage.setItem("isAdminSystemConnected", JSON.stringify(true));
@@ -150,56 +155,25 @@ export class AuthentificationComponent implements OnInit {
           }
         },
         (error) =>{
+          this.verifMessageEmail = this.verifMessagePassword = "Email ou mot de passe incorrect";
           // this.iscorrectValues = false;
           console.log(error);
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: '',
-            text: 'Les informations sont incorrectes',
-            showConfirmButton: true,
-          })
+          // Swal.fire({
+          //   position: 'center',
+          //   icon: 'error',
+          //   title: '',
+          //   text: 'Les informations sont incorrectes',
+          //   showConfirmButton: true,
+          // })
         })
     }
   }
 
-  // Vérification de l'email 
-  verifEmailFunctionTest(){
-    verifiEmailFunction(this.email, this.verifEmail, this.verifMessageEmail);
-  }
-
-  verifiEmailFunction(){
-    this.verifEmail = this.validateEmail(this.email);
-    if(!this.email){
-      this.verifMessageEmail = "L'email est obligatoire"
-    }else if(!this.verifEmail){
-      this.verifMessageEmail = "Le format de l'email est incorrect";
-    } else{
-        this.verifMessageEmail = "";
-        this.verifEmail = true;
-      }
-  }
-
-  validateEmail(email: string): boolean {
-    const emailRegex=/^[A-Za-z]+[A-Za-z0-9\._%+-]+@[A-Za-z0-9\.-]+\.[A-Za-z]{2,}$/;
-    return emailRegex.test(email);
-  }
-
-  verifPasswordFunction(){
-    this.verifPassword = false;
-    if(!this.password){
-      this.verifMessagePassword = "Le mot de passe est obligatoire"
-    } else{
-      this.verifMessagePassword = "";
-      this.verifPassword = true;
-    }
-    return this.verifPassword;
-  }
+  
 
   // Réinitialiser le mot de passe 
   resetPassword(){
     console.log(this.email);
-    verifiEmailFunction(this.email, this.verifEmail, this.verifMessageEmail);
     if (this.verifEmail){
       let emailObjet = {
         email: this.email

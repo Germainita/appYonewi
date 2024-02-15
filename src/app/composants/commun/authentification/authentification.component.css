@@ -59,3 +59,8 @@
 .textIncorrect{
     color: var(--base1);
 }
+
+.deseable{
+    background-color: gray;
+    color: white;
+}
