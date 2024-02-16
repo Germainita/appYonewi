@@ -101,8 +101,7 @@
                     </div>
                     <h3 class="text-center" *ngIf="!tabTypeLigne.length">Aucun type de ligne enregistré pour le moment</h3>
     
-                    <!-- Ajouter et modifier un type de ligne  -->
-    
+                    <!-- Ajouter et modifier un type de ligne  -->    
                     <div class="col-md-4 px-4" [class.centerDiv]="!tabTypeLigne.length">
                         <!-- Ajouter un type de ligne  -->                    
                         <div class="card cardAjout px-3 py-4 pt-3 shadow-sm" *ngIf="isAjout">
@@ -111,7 +110,9 @@
                             <form action="">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Nom du type: <span class="require">*</span></label>
-                                    <input type="email" class="form-control" name="nom" id="exampleFormControlInput1" [(ngModel)]="typeLigne.nom">
+                                    <input type="email" class="form-control" name="nom" id="exampleFormControlInput1" [(ngModel)]="typeLigne.nom" (input)="verifNameFunction()">
+                                    <p class="text-danger" *ngIf="verifMessageLigne"><i class="bi bi-exclamation-circle"></i> {{verifMessageLigne}}</p>
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">Description: </label>
@@ -119,7 +120,8 @@
                                 </div>
     
                                 <div class="text-center">
-                                    <button class="btn px-4" (click)="ajoutTypeLigne()"> Ajouter</button>
+                                    <button class="btn px-4" (click)="ajoutTypeLigne()" [disabled]="!verifNameTypeLigne" [class.deseable]="!verifNameTypeLigne"> Ajouter</button>
+
                                 </div>
                             </form>
                         </div>
@@ -131,7 +133,8 @@
                             <form action="">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Nom du type: <span class="require">*</span></label>
-                                    <input type="email" class="form-control" name="nom" id="exampleFormControlInput1" [(ngModel)]="typeLigne.nom">
+                                    <input type="email" class="form-control" name="nom" id="exampleFormControlInput1" [(ngModel)]="typeLigne.nom" (input)="verifNameFunction()">
+                                    <p class="text-danger" *ngIf="verifMessageLigne"><i class="bi bi-exclamation-circle"></i> {{verifMessageLigne}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">Description: </label>
@@ -139,7 +142,7 @@
                                 </div>
     
                                 <div class="text-center">
-                                    <button class="btn px-4" (click)="modifierTypeLigne()"> Modifier</button>
+                                    <button class="btn px-4" (click)="modifierTypeLigne()" [disabled]="!verifNameTypeLigne" [class.deseable]="!verifNameTypeLigne"> Modifier</button>
                                 </div>
                             </form>
                         </div>

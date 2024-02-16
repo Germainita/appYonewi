@@ -115,19 +115,21 @@
                             <form action="">
                                 <div class="mb-3">
                                     <label for="inputType" class="form-label">Type: <span class="require">*</span></label>
-                                    <input type="text" class="form-control" name="type" id="inputType" [(ngModel)]="abonnement.type">
+                                    <input type="text" class="form-control" name="type" id="inputType" [(ngModel)]="abonnement.type" (input)="verifTypeFunction()">
+                                    <p class="text-danger" *ngIf="verifTypeMessage"><i class="bi bi-exclamation-circle"></i> {{verifTypeMessage}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="inputPrix" class="form-label">Prix (FCFA): <span class="require">*</span></label>
-                                    <input type="number" class="form-control" name="prix" id="inputPrix" [(ngModel)]="abonnement.prix">
+                                    <input type="number" class="form-control" name="prix" id="inputPrix" [(ngModel)]="abonnement.prix" (input)="verifPrixFunction()"> 
+                                    <p class="text-danger" *ngIf="verifPrixMessage"><i class="bi bi-exclamation-circle"></i> {{verifPrixMessage}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="inputDuree" class="form-label">Durée: <span class="require">*</span></label>
-                                    <!-- <input type="text" class="form-control" name="duree" id="exampleFormControlInput1" [(ngModel)]="abonnement.duree"> -->
-
                                     <div class="row g-2">
                                         <div class="col-md-6">
-                                            <input type="number" name="nombreJour" class="form-control" id="inputDuree" [(ngModel)]="nombreJour">
+                                            <input type="number" name="nombreJour" class="form-control" id="inputDuree" [(ngModel)]="nombreJour" (input)="verifNbreJourFunction()">
+                                            <p class="text-danger" *ngIf="verifNbreJourMessage"><i class="bi bi-exclamation-circle"></i> {{verifNbreJourMessage}}</p>
+
                                         </div>
                                         <div class="col-md-6">
                                             <select class="form-select" aria-label="Default select example" name="dureeTemps" id="inputDuree" [(ngModel)]="temps">
@@ -137,6 +139,8 @@
                                                 <option value="Mois">Mois</option>
                                                 <option value="Annee">Annee</option>
                                             </select>
+                                            <p class="text-danger" *ngIf="verifTempsMessage"><i class="bi bi-exclamation-circle"></i> {{verifTempsMessage}}</p>
+
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +151,7 @@
                                 </div>
     
                                 <div class="text-center">
-                                    <button class="btn px-4" (click)="ajouter()"> Ajouter</button>
+                                    <button class="btn px-4" (click)="ajouter()" [disabled]="!isType || isNbreJour || isTemps || isPrix" [class.deseable]="!isType || isNbreJour || isTemps || isPrix"> Ajouter</button> 
                                 </div>
                             </form>
                         </div>
@@ -159,28 +163,32 @@
                             <form action="">
                                 <div class="mb-3">
                                     <label for="inputType" class="form-label">Type: <span class="require">*</span></label>
-                                    <input type="text" class="form-control" name="type" id="inputType" [(ngModel)]="abonnement.type">
+                                    <input type="text" class="form-control" name="type" id="inputType" [(ngModel)]="abonnement.type" (input)="verifTypeFunction()">
+                                    <p class="text-danger" *ngIf="verifTypeMessage"><i class="bi bi-exclamation-circle"></i> {{verifTypeMessage}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="inputPrix" class="form-label">Prix (FCFA): <span class="require">*</span></label>
-                                    <input type="number" class="form-control" name="prix" id="inputPrix" [(ngModel)]="abonnement.prix">
+                                    <input type="number" class="form-control" name="prix" id="inputPrix" [(ngModel)]="abonnement.prix" (input)="verifPrixFunction()"> 
+                                    <p class="text-danger" *ngIf="verifPrixMessage"><i class="bi bi-exclamation-circle"></i> {{verifPrixMessage}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="inputDuree" class="form-label">Durée: <span class="require">*</span></label>
-                                    <!-- <input type="text" class="form-control" name="duree" id="exampleFormControlInput1" [(ngModel)]="abonnement.duree"> -->
-
                                     <div class="row g-2">
                                         <div class="col-md-6">
-                                            <input type="number" name="nombreJour" class="form-control" id="inputDuree" [(ngModel)]="nombreJour">
+                                            <input type="number" name="nombreJour" class="form-control" id="inputDuree" [(ngModel)]="nombreJour" (input)="verifNbreJourFunction()">
+                                            <p class="text-danger" *ngIf="verifNbreJourMessage"><i class="bi bi-exclamation-circle"></i> {{verifNbreJourMessage}}</p>
+
                                         </div>
                                         <div class="col-md-6">
-                                            <select class="form-select" name="dureeTemps" id="inputDuree" [(ngModel)]="temps">
-                                                <option selected value="Selectionnez">Selectionnez</option>
+                                            <select class="form-select" aria-label="Default select example" name="dureeTemps" id="inputDuree" [(ngModel)]="temps">
+                                                <!-- <option selected value="....">Selectionnez</option> -->
                                                 <option value="Jour">Jour</option>
                                                 <option value="Semaine">Semaine(s)</option>
                                                 <option value="Mois">Mois</option>
                                                 <option value="Annee">Annee</option>
                                             </select>
+                                            <p class="text-danger" *ngIf="verifTempsMessage"><i class="bi bi-exclamation-circle"></i> {{verifTempsMessage}}</p>
+
                                         </div>
                                     </div>
                                 </div>
@@ -188,10 +196,10 @@
                                 <div class="mb-3">
                                     <label for="inputDescription" class="form-label">Description: </label>
                                     <textarea class="form-control" name="description" id="inputDescription" rows="3" [(ngModel)]="abonnement.description"></textarea>
-                                </div>
+                                </div> 
     
                                 <div class="text-center">
-                                    <button class="btn px-4" (click)="modifier()"> Modifier</button>
+                                    <button class="btn px-4" (click)="modifier()"  [disabled]="!isType || isNbreJour || isTemps || isPrix" [class.deseable]="!isType || isNbreJour || isTemps || isPrix"> Modifier</button>
                                 </div>
                             </form>
                         </div>

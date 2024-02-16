@@ -51,11 +51,20 @@ export class AuthentificationComponent implements OnInit {
     }
   }
 
+  // On vide tous les champs 
+  viderChamps(){
+    this.email = "";
+    this.password = "";
+    this.verifMessageEmail ="";
+    this.verifMessagePassword = "";
+  }
+
   // Methodes pour voir le formulaire de connexion 
   showConnexion(){
     this.isConnexion = true;
     this.isRein1 = false;
     this.isRein2 = false;
+    this.viderChamps();
   }
 
  // Methodes pour voir le formulaire de réinitialisation 
@@ -63,12 +72,7 @@ export class AuthentificationComponent implements OnInit {
     this.isRein1 = true;
     this.isConnexion = false;
     this.isRein2 = false;
-  }
- // Methodes pour voir le formulaire de réinitialisation suite 
-  showSecondRein(){
-    this.isRein2 = true;
-    this.isRein1 = false;
-    this.isConnexion = false;
+    this.viderChamps();
   }
 
   // Vérification de l'email 
@@ -156,7 +160,6 @@ export class AuthentificationComponent implements OnInit {
         },
         (error) =>{
           this.verifMessageEmail = this.verifMessagePassword = "Email ou mot de passe incorrect";
-          // this.iscorrectValues = false;
           console.log(error);
           // Swal.fire({
           //   position: 'center',
@@ -173,7 +176,8 @@ export class AuthentificationComponent implements OnInit {
 
   // Réinitialiser le mot de passe 
   resetPassword(){
-    console.log(this.email);
+    this.verifEmailFunction();
+    // console.log(this.email);
     if (this.verifEmail){
       let emailObjet = {
         email: this.email

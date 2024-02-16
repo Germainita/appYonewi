@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TypeLigne } from 'src/app/models/typeLigne.model';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { TypeLigneService } from 'src/app/services/typeLigne.service';
+import { validateLengthField } from 'src/app/validation/validation';
 
 @Component({
   selector: 'app-type-ligne',
@@ -39,6 +40,9 @@ export class TypeLigneComponent implements OnInit {
   // Le tableau filtrer peu importe la liste 
   tabFilter:any[] = [];
 
+  verifNameTypeLigne:boolean = false;
+  verifMessageLigne: string = "";
+
   constructor(private typeLigneService: TypeLigneService){}
 
   
@@ -57,6 +61,7 @@ export class TypeLigneComponent implements OnInit {
     this.isActifs = true;
     this.isSup = false;
     this.filterValue = "";
+    // this.viderChamps();
   }
 
   // Voir la liste des TypeLignes supprime 
@@ -64,6 +69,7 @@ export class TypeLigneComponent implements OnInit {
     this.isSup = true;
     this.isActifs = false;
     this.filterValue = "";
+    // this.viderChamps();
     this.listeTypeLignesSup();
   }
 
@@ -96,6 +102,7 @@ export class TypeLigneComponent implements OnInit {
     this.isAjout = false;
     this.isModifier = true;
     this.typeLigne = element;
+    this.viderChamps();
   }
   
 
@@ -108,10 +115,9 @@ export class TypeLigneComponent implements OnInit {
   listeTypeLignes(){
     this.typeLigneService.getTypesLigneReseau().subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         this.tabTypeLigne = data.types;
         this.tabTypeLigneFilterActifs = this.tabTypeLigne;
-
       }
     )
   }
@@ -131,38 +137,60 @@ export class TypeLigneComponent implements OnInit {
     )
   }
 
+  // On vérifie le type de ligne 
+  verifNameFunction(){
+    this.verifNameTypeLigne = validateLengthField(this.typeLigne.nom);
+    if(!this.typeLigne.nom ) {
+      this.verifMessageLigne = " Le nom est obligatoire";
+    }
+    else if (!this.verifNameTypeLigne){
+      this.verifMessageLigne = " La longueur doit etre supérieur ou égale à 2";
+    } else {
+      this.verifMessageLigne = "";
+    }
+  }
+
+  // On vide les champs 
+  viderChamps(){
+    this.verifMessageLigne = "";
+    this.verifNameTypeLigne = false; 
+  }
+
   // Ajouter un TypeLigne 
   ajoutTypeLigne(){
+
+    this.verifNameFunction();
     // On vérifie si les champs sont vides 
-    if (!this.typeLigne.nom){
-      sweetAlertMessage("error", "", "Le nom est obligatoire");
-    }
-    // On vérifie si le TypeLigne n'existe pas déjà 
-    let typeLigneExist = this.tabTypeLigne.find((typeLigne:any) => typeLigne.nom.toLowerCase() == this.typeLigne.nom.toLowerCase());
-    let typeLigneExist1 = this.tabTypeLignesSup.find((typeLigne:any) => typeLigne.nom.toLowerCase() == this.typeLigne.nom.toLowerCase());
-    if(typeLigneExist){
-      sweetAlertMessage("error", "", "Un type de ligne a dèjà ce nom");
-    }
-    else if (typeLigneExist1) {
-      sweetAlertMessage("error", "", "Un type de ligne a dèjà ce nom dans la corbeille");
-    }
-    // if (typeLigneExist || typeLigneExist1){
-    //   sweetAlertMessage("error", "", "Ce type de ligne est déjà enregistré");
-    // } 
-    else{
-      // let nom = {"nom": this.nomTypeLigne}
-      this.typeLigneService.addTypeLigne(this.typeLigne).subscribe( 
-        (data:any) =>{
-          console.log(data);
-          sweetAlertMessage("success", "", data.message);
-          this.listeTypeLignes();
-          this.typeLigne.nom = "";
-          this.typeLigne.description = "";
-        },
-        (err) =>{
-          console.log(`Erreur lors de l'ajout ${err}`);
-        }
-      )
+    if (this.verifNameTypeLigne){
+      // On vérifie si le TypeLigne n'existe pas déjà 
+      let typeLigneExist = this.tabTypeLigne.find((typeLigne:any) => typeLigne.nom.toLowerCase() == this.typeLigne.nom.toLowerCase());
+      let typeLigneExist1 = this.tabTypeLignesSup.find((typeLigne:any) => typeLigne.nom.toLowerCase() == this.typeLigne.nom.toLowerCase());
+      if(typeLigneExist){
+        this.verifMessageLigne = "Un type de ligne a dèjà ce nom";
+        // sweetAlertMessage("error", "", "Un type de ligne a dèjà ce nom");
+      }
+      else if (typeLigneExist1) {
+        this.verifMessageLigne = "Un type de ligne a dèjà ce nom dans la corbeille";
+        // sweetAlertMessage("error", "", "Un type de ligne a dèjà ce nom dans la corbeille");
+      }
+      // if (typeLigneExist || typeLigneExist1){
+      //   sweetAlertMessage("error", "", "Ce type de ligne est déjà enregistré");
+      // } 
+      else{
+        // let nom = {"nom": this.nomTypeLigne}
+        this.typeLigneService.addTypeLigne(this.typeLigne).subscribe( 
+          (data:any) =>{
+            console.log(data);
+            sweetAlertMessage("success", "", data.message);
+            this.listeTypeLignes();
+            this.typeLigne.nom = "";
+            this.typeLigne.description = "";
+          },
+          (err) =>{
+            console.log(`Erreur lors de l'ajout ${err}`);
+          }
+        )
+      }
     }
   }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Abonnement } from 'src/app/models/abonnement.model';
 import { AbonnementService } from 'src/app/services/abonnement.service';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
+import { validateLengthField } from 'src/app/validation/validation';
 
 @Component({
   selector: 'app-abonnement',
@@ -38,6 +39,23 @@ export class AbonnementComponent {
     temps ?: string; 
 
     test: any;
+
+    // Validation des infos 
+    // type 
+    isType:boolean = false;
+    verifTypeMessage: string = "";
+
+    // Nombre de jour 
+    isNbreJour:boolean = false;
+    verifNbreJourMessage: string = "";
+
+    // Temps 
+    isTemps:boolean = false;
+    verifTempsMessage: string = "";
+
+    // Prix 
+    isPrix:boolean = false;
+    verifPrixMessage: string = "";
 
   
     // Le tableau filtrer peu importe la liste 
@@ -86,6 +104,8 @@ export class AbonnementComponent {
         (elt:any) => (elt?.type.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.duree.toLowerCase().includes(this.filterValue.toLowerCase()))   
       );
     }
+
+    
   
     // Voir Formulaire d'ajout 
     showAjout(){
@@ -150,22 +170,75 @@ export class AbonnementComponent {
       this.abonnement.description = "";
     }
 
+    // Validation des infos 
+    // Validation du type d'abonnement 
+    verifTypeFunction(){
+      this.verifTypeMessage = "";
+      this.isType = validateLengthField(this.abonnement.type);
+      if(!this.abonnement.type ) {
+        this.verifTypeMessage = " Le nom de l'abonnement est obligatoire";
+      }
+      else if (!this.isType){
+        this.verifTypeMessage = " La longueur doit etre supérieur ou égale à 2";
+      } else {
+        this.verifTypeMessage = "";
+      }
+    }
+
+    // Validation du type d'abonnement 
+    verifPrixFunction(){
+      this.verifPrixMessage = "";
+      if(!this.abonnement.prix ) {
+        this.verifPrixMessage = " Le prix est obligatoire";
+      }
+      else if (parseInt(this.abonnement.prix) < 1000){
+        this.verifPrixMessage = "Le prix doit etre supérieure ou égal à 1000 FCFA";
+      } else {
+        this.verifPrixMessage = "";
+      }
+    }
+
+    // Validation du nombre de jour de l'abonnement 
+    verifNbreJourFunction(){
+      this.verifNbreJourMessage = "";
+      if(!this.nombreJour) {
+        this.verifNbreJourMessage = " Le nombre est obligatoire";
+      }
+      else if (parseInt(this.nombreJour) < 1){
+        this.verifNbreJourMessage = "Le nombre ne peut etre nigatif ni null";
+      } else {
+        this.verifNbreJourMessage = "";
+      }
+    }
+
+    // Validation du nombre de jour de l'abonnement 
+    verifTempsFunction(){
+      this.verifTempsMessage = "";
+      if(!this.temps) {
+        this.verifTempsMessage = " Le nombre est obligatoire";
+      } else {
+        this.verifTempsMessage = "";
+      }
+    }
+
     // Ajouter un abonnement à vérifier 
     ajouter(){
-      // On vérifie si les champs sont vides 
-      if (!this.abonnement.type || !this.nombreJour || !this.temps || !this.abonnement.prix){
-        sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
-      } else if ( parseInt(this.nombreJour) < 1){
-        sweetAlertMessage("error", "", "La durée doit etre supérieure ou égale à 1");
-      }else{
+      this.verifTypeFunction();
+      this.verifPrixFunction();
+      this.verifNbreJourFunction();
+      this.verifTempsFunction();
+
+      if(this.isType && this.isNbreJour && this.isTemps && this.isPrix){
         // On vérifie si le abonnement n'existe pas déjà 
         let abonnementExist = this.tabAbonnement.find((abonnement:any) => abonnement.type.toLowerCase() == this.abonnement.type.toLowerCase());
         let abonnementExist1 = this.tabAbonnementsSup.find((abonnement:any) => abonnement.type.toLowerCase() == this.abonnement.type.toLowerCase());
         if(abonnementExist){
-          sweetAlertMessage("error", "", "le type de l'abonnement doit être unique");
+          this.verifTypeMessage = "Le type de l'abonnement doit être unique"
+          // sweetAlertMessage("error", "", "le type de l'abonnement doit être unique");
         }
         else if (abonnementExist1) {
-          sweetAlertMessage("error", "", "Ce type est déjà dans la corbeille. Vueillez le restaure");
+          this.verifTypeMessage = "Ce type est déjà dans la corbeille. Vueillez le restaure"
+          // sweetAlertMessage("error", "", "Ce type est déjà dans la corbeille. Vueillez le restaure");
         } 
         else{
           this.abonnement.duree =  `${this.nombreJour} ${this.temps }`;
@@ -189,16 +262,19 @@ export class AbonnementComponent {
             }
           )
         }
+        
       }
+      
     }
   
     // Modifier abonnement 
     modifier(){ 
-      if (!this.abonnement.type || !this.nombreJour || !this.temps || !this.abonnement.prix){
-        sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
-      } else if (parseInt(this.nombreJour) < 1){
-        sweetAlertMessage("error", "", "La durée doit etre supérieure ou égale à 1");
-      } else{
+      this.verifTypeFunction();
+      this.verifPrixFunction();
+      this.verifNbreJourFunction();
+      this.verifTempsFunction();
+
+      if(this.isType && this.isNbreJour && this.isTemps && this.isPrix) {
         this.abonnement.duree =  `${this.nombreJour} ${this.temps }`;     
         this.abonnementService.updateAbonnement(this.abonnement.id, this.abonnement).subscribe( 
           (data:any) =>{
