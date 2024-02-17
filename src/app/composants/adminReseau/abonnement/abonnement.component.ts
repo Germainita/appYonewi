@@ -174,7 +174,7 @@ export class AbonnementComponent {
     // Validation du type d'abonnement 
     verifTypeFunction(){
       this.verifTypeMessage = "";
-      this.isType = validateLengthField(this.abonnement.type);
+      this.isType = validateLengthField(this.abonnement.type, 2);
       if(!this.abonnement.type ) {
         this.verifTypeMessage = " Le nom de l'abonnement est obligatoire";
       }

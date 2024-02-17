@@ -8,6 +8,7 @@ import { SectionService } from 'src/app/services/section.service';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { TarifService } from 'src/app/services/tarif.service';
 import { TypeLigneService } from 'src/app/services/typeLigne.service';
+import { validateLengthField, validateLigneName } from 'src/app/validation/validation';
 
 @Component({
   selector: 'app-gestion-ligne',
@@ -87,6 +88,24 @@ export class GestionLigneComponent {
   isInfosValid:boolean = true; //Vérifie si le début de la section est pareille que la fin de la section précédente
 
   tabTypeLigne: TypeLigne[] = [];
+
+  // Les validations 
+  // Le nom de la ligne 
+  isNomValide:boolean = false;
+  verifMessageNom: string = "";
+
+  // Début ligne 
+  isFieldValide:boolean = false;
+  isDebutValide:boolean = false;
+  verifMessageDebut: string = "";
+
+  // Fin Ligne 
+  isFinValide:boolean = false;
+  verifMessageFin: string = "";
+
+  // Nombre de sections 
+  isNombreSection:boolean = false;
+  verifMessageNbreSection: string = "";
 
   constructor(
     private ligneService: LigneService, 
@@ -195,17 +214,19 @@ export class GestionLigneComponent {
     this.isAjoutLigne = false;
     this.isAjoutSection = true;
     this.isFinalisation = false;
-    if (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart || !this.nombreLigne){
-      sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
-    } 
-    else if(!this.tabAjoutSections.length){
+    // if (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart || !this.nombreLigne){
+    //   sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
+    // } 
+    // else 
+    if(!this.tabAjoutSections.length){
       for(let i=0; i< parseInt(this.nombreLigne); i++ ){
         // this.objectSection.num = (i + 1).toString();
         if( i== 0){
           let objet = {
             num: (i + 1).toString(),
-            debut: this.ligne.lieuDepart,
-            fin: "",
+            depart: this.ligne.lieuDepart,
+            arrivee: "",
+            messageInfo: "",
             prix:0,
             isExact: true,
           }
@@ -214,8 +235,9 @@ export class GestionLigneComponent {
         else{
           let ojetTest = {
             num: (i + 1).toString(),
-            debut: "",
-            fin: "",
+            depart: "",
+            arrivee: "",
+            messageInfo: "",
             prix:0,
             isExact: true,
           }
@@ -237,7 +259,7 @@ export class GestionLigneComponent {
   verifInfosSection(section:Section){
     section.isExact = true;
     if(section.num != "1"){
-      if (section.debut != this.tabAjoutSections[parseInt(section.num) - 2].fin){
+      if (section.depart != this.tabAjoutSections[parseInt(section.num) - 2].arrivee){
         section.isExact = false;
       }else{
         section.isExact = true;
@@ -249,7 +271,6 @@ export class GestionLigneComponent {
   // showModifLigneForm()
   // Voir Formulaire de modification 
   showModif(element:any){
-    alert(element.id)
     this.isAjout = false;
     this.isModifier = true;
     this.ligne = element;
@@ -259,6 +280,7 @@ export class GestionLigneComponent {
     console.log(this.tabSectionsLigne);
   }
 
+  // Variable pour le nom de la fin de la section 
   setFin(index:any){
     return `Fin ${index}`
   }
@@ -284,6 +306,7 @@ export class GestionLigneComponent {
             for(let y = 0; y < tabSection.length; y++){
               tabSection[y].num = (y + 1).toString();
               tabSection[y].prix = this.prixSection;
+              tabSection[y].messageInfo = "";
             }   
             
             // console.log(tabSection);         
@@ -485,46 +508,155 @@ export class GestionLigneComponent {
     this.nombreLigne = "";
   }
 
-  // Ajouter un Ligne à vérifier 
-  ajouterEtape1(){
-    // On vérifie si 
-    let ligneExist = this.tabLigne.find((ligne:any) => ligne.nom.toLowerCase() === this.ligne.nom.toLowerCase());
-    let ligneExist1 = this.tabLignesSup.find((ligne:any) => ligne.nom.toLowerCase() == this.ligne.nom.toLowerCase());
+  // Vérification des infos de la ligne pout la premiere étape 
+  // Vérification du nom de la ligne 
+  verifNomLigneFunction(nomLigne:any){
+    this.verifMessageNom = "";
+    this.isNomValide = validateLigneName(nomLigne);
+    let ligneExist = this.tabLigne.find((ligne:any) => ligne.nom.toLowerCase() == nomLigne.toLowerCase());
+    let ligneExist1 = this.tabLignesSup.find((ligne:any) => ligne.nom.toLowerCase() == nomLigne.toLowerCase());
 
-    // les champs sont vides 
-    if (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart){
-      sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
+    if (!nomLigne){
+      this.verifMessageNom = "Le numéro de la ligne est obligatoire";
+    } else if (!this.isNomValide){
+      this.verifMessageNom = "Le numéro de la ligne doit commencer par un chiffre positif différent de 0";
+    }else if (ligneExist1) {
+      this.verifMessageNom = "Ce numéro de ligne est déjà dans la corbeille. Vueillez le restaure";
+    } else if (ligneExist){
+      this.verifMessageNom = "Ce numéro existe déja";
+    } else {
+      this.verifMessageNom = "";
     }
-    else if (ligneExist1) {
-      sweetAlertMessage("error", "", "Ce type est déjà dans la corbeille. Vueillez le restaure");
-    } 
-    else{
+  }
+
+  // Pour la modification, on ne vérifie pas si pour l'instant le nom existe 
+  veriModiffNomLigneFunction(nomLigne:any){
+    this.verifMessageNom = "";
+    this.isNomValide = validateLigneName(nomLigne);
+
+    if (!nomLigne){
+      this.verifMessageNom = "Le numéro de la ligne est obligatoire";
+    } else if (!this.isNomValide){
+      this.verifMessageNom = "Le numéro de la ligne doit commencer par un chiffre positif différent de 0";
+    }else {
+      this.verifMessageNom = "";
+    }
+  }
+
+  // Vérification du départ 
+  verifDepart(){
+    this.isDebutValide = validateLengthField(this.ligne.lieuDepart, 3);
+    if (!this.ligne.lieuDepart){
+      this.verifMessageDebut = "Le depart est obligatoire";
+    } else if(this.ligne.lieuDepart == this.ligne.lieuArrivee){
+      this.verifMessageDebut = "Les lieux de depart et d'arrivée ne peuvent etre identique";
+    } else if(!this.isDebutValide){
+      this.verifMessageDebut = "La longueur doit etre supérieur ou égale à 3";
+    } else {
+      this.verifMessageDebut = "";
+    }
+  }
+
+  // Vérification de la fin 
+  verifArrivee(){
+    this.isFinValide = validateLengthField(this.ligne.lieuArrivee, 3);
+    if (!this.ligne.lieuArrivee){
+      this.verifMessageFin = "L'arrivee est obligatoire";
+    }else if(this.ligne.lieuDepart == this.ligne.lieuArrivee){
+      this.verifMessageFin = "Les lieux de depart et d'arrivée ne peuvent etre identique";
+    } else if(!this.isFinValide){
+      this.verifMessageFin = "La longueur doit etre supérieur ou égale à 3";
+    } else {
+      this.verifMessageFin = "";
+    }
+  }
+
+  // Vérification du nombre de section 
+  verifNombreSection(){
+    this.verifMessageNbreSection = "";
+    this.isNombreSection = false;
+    if (parseInt(this.nombreLigne) < 2){
+      this.verifMessageNbreSection = "Le nombre de sections doit etre au minimum égale à 2";
+    } else if (!this.nombreLigne){
+      this.verifMessageNbreSection = "Le nombre de sections est obligatoire";
+    } else {
+      this.verifMessageNbreSection = "";
+      this.isNombreSection = true;
+    }
+  }
+
+  // Ajouter une Ligne à vérifier 
+  ajouterEtape1(){
+    this.verifNomLigneFunction(this.ligne.nom);
+    this.verifDepart();
+    this.verifArrivee();
+    this.verifNombreSection();
+    
+    if (this.isNomValide && this.isDebutValide && this.isFinValide){
+      // this.verifMessageNom = "";
       this.showAjoutSection();
+    } else {
+      this.showAjoutLigne();
     }
     
   }
 
+  // Vérification des sections 
+  verifSections(section:any, tabSections:any[]){
+    let validLenght = validateLengthField(section.arrivee, 3);
+    for (let i =1; i < tabSections.length; i++ ){
+      tabSections[i].depart = tabSections[i-1].arrivee;
+    } 
+    tabSections[tabSections.length-1].arrivee = this.ligne.lieuArrivee;
+    console.log(tabSections);
+
+    if(!section.arrivee) {
+      section.messageInfo = "La fin de la section est obligatoire";
+    } else if(section.depart == section.arrivee) {
+      section.messageInfo = "Le debut et la fin de la section ne peuvent etre identique";
+    } else if(section.arrivee == this.ligne.lieuDepart ||section.arrivee == this.ligne.lieuArrivee){
+      section.messageInfo = "Le nom de la section doit etre unique";
+    } else if(!validLenght){
+      section.messageInfo = "La longueur doit etre supérieur ou égale à 3";
+    } else {
+      section.messageInfo = "valide";
+    }
+  }
+
   // Ajout section vérification 
   ajouterEtape2(){
+    let isValid:boolean = false;
     // Le début de La ligne suivante prend la fin de la ligne d'avant
-    for (let i =1; i < this.tabAjoutSections.length; i++ ){
-      this.tabAjoutSections[i].debut = this.tabAjoutSections[i-1].fin;
+    for (let i =0; i < this.tabAjoutSections.length -1; i++ ){
+      this.verifSections(this.tabAjoutSections[i],this.tabAjoutSections );
+      // alert(this.tabAjoutSections[i].messageInfo);
+      if(this.tabAjoutSections[i].messageInfo == "valide"){
+        isValid = true;
+      } else {
+        isValid = false;
+      }
     }
-    this.tabAjoutSections[this.tabAjoutSections.length-1].fin = this.ligne.lieuArrivee;
-    console.log(this.tabAjoutSections);
+    if(isValid){
+      this.showFinalisation();
+    }
+
+    
     // On vérifie d'abord si les sections de la ligne ne sont pas vide 
-    let sectionVide = this.tabAjoutSections.find((element:any) => element.debut == "" || element.fin == "" );
-    let sectionIdentique = this.tabAjoutSections.find((element:any) => element.debut == element.fin);
-    if(sectionVide){
-      sweetAlertMessage("error", "", "Les données ne peuvent pas etre vide");
-    } else if( sectionIdentique){
-    sweetAlertMessage("error", "", "Le début et la fin d'une section ne peuvent etre identique");
-    } else if (this.tabAjoutSections[this.tabAjoutSections.length-1].fin != this.ligne.lieuArrivee){
-      sweetAlertMessage("error", "", "Le point d'arrivée de la ligne et la fin de la dernière section doivent etre identique");
-    } 
-    else{
-    this.showFinalisation();
+    let sectionNotValide = this.tabAjoutSections.find((element:any) => element.messageInfo != "valide");
+    if(!sectionNotValide) {
+      this.showFinalisation();
     }
+    // let sectionIdentique = this.tabAjoutSections.find((element:any) => element.depart == element.fin);
+    // if(sectionNotValide){
+    //   sweetAlertMessage("error", "", "Les données ne peuvent pas etre vide");
+    // } else if( sectionIdentique){
+    // sweetAlertMessage("error", "", "Le début et la fin d'une section ne peuvent etre identique");
+    // } else if (this.tabAjoutSections[this.tabAjoutSections.length-1].fin != this.ligne.lieuArrivee){
+    //   sweetAlertMessage("error", "", "Le point d'arrivée de la ligne et la fin de la dernière section doivent etre identique");
+    // } 
+    // else{
+    // this.showFinalisation();
+    // }
   }
 
   // Ajout de la ligne 
@@ -560,8 +692,8 @@ export class GestionLigneComponent {
 
     for(let i = 0; i <this.tabAjoutSections.length; i++){
       let section = {
-        depart: this.tabAjoutSections[i].debut,
-        arrivee: this.tabAjoutSections[i].fin,
+        depart: this.tabAjoutSections[i].depart,
+        arrivee: this.tabAjoutSections[i].arrivee,
         tarif_id: this.tarif_id,
         ligne_id: this.lastidLigne + 1,
       }
@@ -586,20 +718,23 @@ export class GestionLigneComponent {
 
   
 
-  isLigneUpdated: boolean = false;
+  // isLigneUpdated: boolean = false;
   // Modifier une Ligne et ses section
   modifierLigne(){ 
-    if  (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart){
-      sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
-    } else{
+    this.veriModiffNomLigneFunction(this.ligne.nom);
+    this.verifDepart();
+    this.verifArrivee();
+    this.verifNombreSection();
+    
+    if (this.isNomValide && this.isDebutValide && this.isFinValide){
       sweetMessageConfirm("Vous allez modifier cette Ligne", "Oui, je modifie").then( (result) =>{
         if(result.isConfirmed ){
 
           // On modifie la ligne 
-          console.log(this.ligne);
+          // console.log(this.ligne);
           this.ligneService.updateLigne(this.ligne.id, this.ligne).subscribe(
             (data:any) =>{
-              console.log(data);
+              // console.log(data);
               // Les sections de la ligne 
               this.tabSectionsLigne[0].depart = this.ligne.lieuDepart; //Debut de la premiere section = lieu de depart de la ligne
               this.tabSectionsLigne[this.tabSectionsLigne.length-1].arrivee = this.ligne.lieuArrivee; // Fin de la derniere section = lieu d'arrivée de la ligne
@@ -619,6 +754,7 @@ export class GestionLigneComponent {
           )
 
           // On modifie les sections 
+          let isValid: boolean = false;
           for(let i = 0; i <this.tabSectionsLigne.length; i++){
             let section = {
               depart: this.tabSectionsLigne[i].depart,
@@ -626,14 +762,30 @@ export class GestionLigneComponent {
               tarif_id: this.tabSectionsLigne[i].tarif_id,
               ligne_id: this.tabSectionsLigne[i].ligne_id,
             }
-            console.log(section);
+
+            // On vérifie les sections             
+            this.verifSections(this.tabSectionsLigne[i], this.tabSectionsLigne);
+            // alert(this.tabAjoutSections[i].messageInfo);
+            if(this.tabAjoutSections[i].messageInfo == "valide"){
+              isValid = true;
+            } else {
+              isValid = false;
+            }
+            // console.log(section);
             // On met à jour la sectiion 
-            this.updateSectionFonction(this.tabSectionsLigne[i].id, section);
-            sweetAlertMessage("success", "", "Les sections de la ligne ont été mis à jour");
+            if (isValid){
+              this.updateSectionFonction(this.tabSectionsLigne[i].id, section);
+              sweetAlertMessage("success", "", "Les sections de la ligne ont été mis à jour");
+            }
           }
         }
-      })   
+      }) 
     }
+    // if  (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart){
+    //   sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
+    // } else{
+        
+    // }
   }
 
   // Charger les infos de la section 

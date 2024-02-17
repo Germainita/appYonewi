@@ -139,7 +139,7 @@ export class TypeLigneComponent implements OnInit {
 
   // On vérifie le type de ligne 
   verifNameFunction(){
-    this.verifNameTypeLigne = validateLengthField(this.typeLigne.nom);
+    this.verifNameTypeLigne = validateLengthField(this.typeLigne.nom, 2);
     if(!this.typeLigne.nom ) {
       this.verifMessageLigne = " Le nom est obligatoire";
     }

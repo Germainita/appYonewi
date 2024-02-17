@@ -145,7 +145,8 @@
                                 <div class="row g-4">
                                     <div class="col-md-6 mb-3">
                                         <label for="inputNumLigne" class="form-label">Numéro de ligne: <span class="require">*</span></label>
-                                        <input type="text" name="numeroLigne" class="form-control" id="inputNumLigne" [(ngModel)]="ligne.nom">
+                                        <input type="text" name="numeroLigne" class="form-control" id="inputNumLigne" [(ngModel)]="ligne.nom" (input)="verifNomLigneFunction(ligne.nom)">
+                                        <p class="text-danger" *ngIf="verifMessageNom"><i class="bi bi-exclamation-circle"></i> {{verifMessageNom}}</p>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="inputType" class="form-label">Type de ligne: <span class="require">*</span></label>
@@ -155,7 +156,7 @@
                                             <option value="Mois">AIBD & Diamniadio</option>
                                             <option value="aucun">Aucun</option>
                                         </select> -->
-                                        <select id="role" class="form-select" name="typeLigne" aria-label="les type de ligne" [(ngModel)] ="ligne.type_id">
+                                        <select id="inputType" class="form-select" name="typeLigne" aria-label="les type de ligne" [(ngModel)] ="ligne.type_id">
                                             <option *ngFor="let typeLigne of tabTypeLigne" [value]="typeLigne.id" >{{typeLigne.nom}}</option>
                                             <option value="">Aucun</option>
                                         </select>
@@ -166,18 +167,24 @@
                                 <div class="row g-4">
                                     <div class="col-md-6 mb-3">
                                         <label for="inputlieuDepart" class="form-label">Point de depart / arrivé: <span class="require">*</span></label>
-                                        <input type="text" name="depart" class="form-control" id="inputlieuDepart" [(ngModel)]="ligne.lieuDepart">
+                                        <input type="text" name="depart" class="form-control" id="inputlieuDepart" [(ngModel)]="ligne.lieuDepart" (input)="verifDepart()">
+                                        <!-- <p class="text-danger" *ngIf="verifMessageField && ligne.lieuDepart"><i class="bi bi-exclamation-circle"></i> {{verifMessageField}}</p> -->
+                                        <p class="text-danger" *ngIf="verifMessageDebut"><i class="bi bi-exclamation-circle"></i> {{verifMessageDebut}}</p>
+
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="inputlieuArrivee" class="form-label">Point de arrivé / départ: <span class="require">*</span></label>
-                                        <input type="text" name="arrivee" class="form-control" id="inputlieuArrivee" [(ngModel)]="ligne.lieuArrivee">
+                                        <input type="text" name="arrivee" class="form-control" id="inputlieuArrivee" [(ngModel)]="ligne.lieuArrivee" (input)="verifArrivee()">
+                                        <p class="text-danger" *ngIf="verifMessageFin"><i class="bi bi-exclamation-circle"></i> {{verifMessageFin}}</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     
                                     <label for="inputNombreLigne" class="form-label">Nombre de sections: <span class="require">*</span></label>
                                     <div class="col-md-6 mb-3">
-                                        <input type="number" class="form-control" name="nombreLigne" id="inputNombreLigne" [(ngModel)]="nombreLigne">
+                                        <input type="number" class="form-control" name="nombreLigne" id="inputNombreLigne" [(ngModel)]="nombreLigne" (input)="verifNombreSection()">
+                                        <p class="text-danger" *ngIf="verifMessageNbreSection"><i class="bi bi-exclamation-circle"></i> {{verifMessageNbreSection}}</p>
+
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <button class="btn px-4 col-md-6" (click)="ajouterEtape1()"> Ajouter les sections</button>
@@ -193,28 +200,29 @@
                                 <div class="row g-4" *ngFor="let section of tabAjoutSections; let index = index;">
                                     <div class="col-md-4 mb-3">Section {{tabAjoutSections[index].num}}</div>
                                     <div class="col-md-4 mb-3">
-                                        <label for="inputDebut" class="form-label">Debut section: <span class="require">*</span> {{section.debut}}</label>
+                                        <label for="inputDebut" class="form-label">Debut section: <span class="require">*</span></label>
                                         
                                         <!-- si c'est la première section  -->
-                                        <input type="text" name="debut" class="form-control" id="inputDebut" [value]="section.debut" disabled *ngIf="index==0">
+                                        <input type="text" name="debut" class="form-control" id="inputDebut" [value]="section.depart" disabled *ngIf="index==0">
                                         <!-- Si c'est entre les sections  -->
-                                        <!-- <p *ngIf="index > 0">CC {{tabAjoutSections[index-1].fin}}</p> -->
-                                        <input type="text" name="debut" class="form-control" id="inputDebut" [value]="tabAjoutSections[index-1].fin" disabled *ngIf="index > 0">
+                                        <!-- <p *ngIf="index > 0">CC {{tabAjoutSections[index-1].arrivee}}</p> -->
+                                        <input type="text" name="debut" class="form-control" id="inputDebut" [value]="tabAjoutSections[index-1].arrivee" disabled *ngIf="index > 0">
 
                                         <!-- Si c'est entre les sections  -->
-                                        <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [(ngModel)]="tabAjoutSections[index -1].fin" disabled *ngIf="index > 0"> -->
-                                        <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [value]="section.debut" (input)="verifInfosSection(section)" [(ngModel)]="section.debut"> -->
+                                        <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [(ngModel)]="tabAjoutSections[index -1].arrivee" disabled *ngIf="index > 0"> -->
+                                        <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [value]="section.depart" (input)="verifInfosSection(section)" [(ngModel)]="section.depart"> -->
                                         <!-- <p class="text-danger" *ngIf="!section.isExact ">Doit etre identique à la fin de la section précédente</p>
                                         <p class="text-success" *ngIf="section.isExact"></p> -->
                                         
 
-                                        <!-- <input type="text" name="debut" class="form-control" id="inputDebut" (input)="verifSectionInfos()" [(ngModel)]="section.debut">
+                                        <!-- <input type="text" name="debut" class="form-control" id="inputDebut" (input)="verifSectionInfos()" [(ngModel)]="section.depart">
                                         <p class="text-danger" *ngIf="!isInfosValid && section.num !='1'">Doit etre identique à la fin de la section précédente</p>
                                         <p class="text-success" *ngIf="isInfosValid && section.num !='1'"></p> -->
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="inputFinSection" class="form-label">Fin section: <span class="require">*</span></label>
-                                        <input type="text" [name]="setFin(index)" class="form-control" id="inputFinSection" [(ngModel)]="section.fin" *ngIf="index < (tabAjoutSections.length-1)">
+                                        <input type="text" [name]="setFin(index)" class="form-control" id="inputFinSection" [(ngModel)]="section.arrivee" *ngIf="index < (tabAjoutSections.length-1)" (input)="verifSections(section, tabAjoutSections)">
+                                        <p class="text-danger" *ngIf="section.messageInfo && index < (tabAjoutSections.length-1) && section.messageInfo!='valide'"><i class="bi bi-exclamation-circle"></i> {{section.messageInfo}}</p>
                                         <input type="text" [name]="setFin(index)" class="form-control" id="inputFinSection" [value]="ligne.lieuArrivee" disabled  *ngIf="index == (tabAjoutSections.length-1)">
                                     </div>
                                 </div>
@@ -239,8 +247,8 @@
                                 <p class="mb-3"><span class="fw-bold">Nombre de section: </span> {{tabAjoutSections.length + 1}}</p>
                                 <p class="mb-3" *ngFor="let section of tabAjoutSections">
                                     <span class="fw-bold">Section {{section.num}} </span> <br>
-                                    <span class="fw-bold">Debut: </span> {{section.debut}} 
-                                    <span class="fw-bold">Fin: </span>  {{section.fin}}
+                                    <span class="fw-bold">Debut: </span> {{section.depart}} 
+                                    <span class="fw-bold">Fin: </span>  {{section.arrivee}}
                                 </p>
                                 <p class="mb-3">
                                     <span class="fw-bold">Section {{tabAjoutSections.length + 1}} </span> <br>
@@ -475,12 +483,14 @@
                         <!-- Le nom de la ligne  -->
                         <div class="col-md-6 mb-3">
                             <label for="inputNumLigne" class="form-label">Numéro de ligne: <span class="require">*</span></label>
-                            <input type="text" name="numeroLigne" class="form-control" id="inputNumLigne" [(ngModel)]="ligne.nom">
+                            <!-- <input type="text" name="numeroLigne" class="form-control" id="inputNumLigne" [(ngModel)]="ligne.nom"> -->                            
+                            <input type="text" name="numeroLigne" class="form-control" id="inputNumLigne" [(ngModel)]="ligne.nom" (input)="veriModiffNomLigneFunction(ligne.nom)">
+                            <p class="text-danger" *ngIf="verifMessageNom"><i class="bi bi-exclamation-circle"></i> {{verifMessageNom}}</p>
                         </div>
 
                         <!-- Le type de ligne  -->
                         <div class="col-md-6 mb-3">
-                            <label for="inputType" class="form-label">Type de ligne: <span class="require">*</span></label>                            
+                            <label for="inputType" class="form-label">Type de ligne: </label>                            
                             <select id="role" class="form-select" name="typeLigne" aria-label="les type de ligne" [(ngModel)]="ligne.type_id">
                                 <option *ngFor="let typeLigne of tabTypeLigne" [value]="typeLigne.id" >{{typeLigne.nom}}</option>
                                 <option value="">Aucun</option>
@@ -492,11 +502,14 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="inputlieuDepart" class="form-label">Point de depart / arrivé: <span class="require">*</span></label>
-                            <input type="text" name="depart" class="form-control" id="inputlieuDepart" [(ngModel)]="ligne.lieuDepart">
+                            <!-- <input type="text" name="depart" class="form-control" id="inputlieuDepart" [(ngModel)]="ligne.lieuDepart"> -->
+                            <input type="text" name="depart" class="form-control" id="inputlieuDepart" [(ngModel)]="ligne.lieuDepart" (input)="verifDepart()">
+                            <p class="text-danger" *ngIf="verifMessageDebut"><i class="bi bi-exclamation-circle"></i> {{verifMessageDebut}}</p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="inputlieuArrivee" class="form-label">Point de arrivé / départ: <span class="require">*</span></label>
-                            <input type="text" name="arrivee" class="form-control" id="inputlieuArrivee" [(ngModel)]="ligne.lieuArrivee">
+                            <input type="text" name="arrivee" class="form-control" id="inputlieuArrivee" [(ngModel)]="ligne.lieuArrivee" (input)="verifArrivee()">
+                            <p class="text-danger" *ngIf="verifMessageFin"><i class="bi bi-exclamation-circle"></i> {{verifMessageFin}}</p>
                         </div>
                     </div>
 
@@ -510,29 +523,15 @@
                             <input type="text" name="debut" class="form-control" id="inputDebut" [value]="ligne.lieuDepart" disabled *ngIf="index==0">
                             <input type="text" name="debut" class="form-control" id="inputDebut" [value]="tabSectionsLigne[index-1].arrivee" disabled *ngIf="index > 0">
                             
-                            <!-- <label for="inputDebut" class="form-label">Debut section: <span class="require">*</span></label> -->
-                            
-                            <!-- si c'est la première section  -->
-                            <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [value]="section.depart" disabled *ngIf="index==0"> -->
-                            <!-- Si c'est entre les sections  -->
-                            <!-- <p *ngIf="index > 0">CC {{tabAjoutSections[index-1].fin}}</p> -->
-                            <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [value]="tabSectionsLigne[index-1].arrivee" disabled *ngIf="index > 0"> -->
-
-                            <!-- Si c'est entre les sections  -->
-                            <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [(ngModel)]="tabAjoutSections[index -1].fin" disabled *ngIf="index > 0"> -->
-                            <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [value]="section.debut" (input)="verifInfosSection(section)" [(ngModel)]="section.debut"> -->
-                            <!-- <p class="text-danger" *ngIf="!section.isExact ">Doit etre identique à la fin de la section précédente</p>
-                            <p class="text-success" *ngIf="section.isExact"></p> -->
-                            
-
-                            <!-- <input type="text" name="debut" class="form-control" id="inputDebut" (input)="verifSectionInfos()" [(ngModel)]="section.debut">
-                            <p class="text-danger" *ngIf="!isInfosValid && section.num !='1'">Doit etre identique à la fin de la section précédente</p>
-                            <p class="text-success" *ngIf="isInfosValid && section.num !='1'"></p> -->
+                           
                         </div>
                         <div class="col-md-5 mb-3">
                             <label for="inputFinSection" class="form-label">Fin section: <span class="require">*</span></label>
-                            <input type="text" [name]="setFin(index)" class="form-control" id="inputFinSection" [(ngModel)]="section.arrivee" *ngIf="index < (tabSectionsLigne.length-1)">
+                            <input type="text" [name]="setFin(index)" class="form-control" id="inputFinSection" [(ngModel)]="section.arrivee" *ngIf="index < (tabSectionsLigne.length-1)" (input)="verifSections(section, tabSectionsLigne)">
+                            <p class="text-danger" *ngIf="section.messageInfo && index < (tabSectionsLigne.length-1) && section.messageInfo!='valide'"><i class="bi bi-exclamation-circle"></i> {{section.messageInfo}}</p>
                             <input type="text" [name]="setFin(index)" class="form-control" id="inputFinSection" [value]="ligne.lieuArrivee" disabled  *ngIf="index == (tabSectionsLigne.length-1)">
+
+                            
                             <!-- {{section.arrivee}} -->
                         </div>
                         <!-- <div class="col-md-4 mb-3">

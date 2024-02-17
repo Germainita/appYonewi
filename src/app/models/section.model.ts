@@ -1,8 +1,9 @@
 export class Section {
     // id: number = 0;
     num: string= "";
-    debut: String= "";
-    fin: String= "";
+    depart: String= "";
+    arrivee: String= "";
+    messageInfo ?: string;
     prix: number= 0;
     isExact:boolean= true
 }
@@ -19,8 +20,9 @@ export class SectionModel {
     updated_at!:Date;
     updated_by!:string;
     num: string= "";
-    debut: String= "";
-    fin: String= "";
+    // debut: String= "";
+    // fin: String= "";
     prix: number= 0;
     isExact:boolean= true
+    messageInfo: string = "";
 }
