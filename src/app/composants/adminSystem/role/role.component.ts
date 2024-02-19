@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Role} from 'src/app/models/role.model';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { RoleService } from 'src/app/services/role.service';
+import { validateLengthField, validateLigneName } from 'src/app/validation/validation';
 
 @Component({
   selector: 'app-role',
@@ -155,10 +156,9 @@ export class RoleComponent implements OnInit{
 
   // Liste des roles supprimés 
   listeRolesSup(){
-    let response;
     this.roleService.getRolesDeleted().subscribe(
       (data:any) =>{
-        response = data.roles;
+        // response = data.roles;
         // On filtre les roles supprimés 
         this.tabRolesSup = this.tabRoleFilterSup = data.roles;
       },
@@ -169,13 +169,33 @@ export class RoleComponent implements OnInit{
     )
   }
 
+  // Vérification du nom de la ligne 
+  verifMessageNom:string = "";
+  isNomValide: boolean = false;
+  verifNomRoleFunction(nom:any){
+    this.verifMessageNom = "";
+    this.isNomValide = validateLengthField(nom, 3);;
+    let roleExist = this.tabRole.find((role:any) => role.nom.toLowerCase() == nom.toLowerCase());
+
+    let roleExist1 = this.tabRolesSup.find((ligne:any) => ligne.nom.toLowerCase() == nom.toLowerCase());
+
+    if (!nom){
+      this.verifMessageNom = "Le nom du role est obligatoire";
+    } else if (!this.isNomValide){
+      this.verifMessageNom = "Le nom du role doit etre supérieure ou égale à 3";
+    }else if (roleExist1) {
+      this.verifMessageNom = "Ce nom de role est déjà dans la corbeille. Vueillez le restaure";
+    } else if (roleExist){
+      this.verifMessageNom = "Ce nom  existe déja";
+    } else {
+      this.verifMessageNom = "";
+    }
+  }
+
   // Ajouter un role 
   ajoutRole(){
-    // On vérifie si le role n'existe pas déjà 
-    let roleExist = this.tabRole.find((role:any) => role.nom.toLowerCase() == this.nomRole.toLowerCase());
-    if (roleExist){
-      sweetAlertMessage("error", "", "Ce role est déjà enregistré");
-    } else{
+    this.verifNomRoleFunction(this.nomRole);
+    if(this.isNomValide){
       let nom = {"nom": this.nomRole}
       this.roleService.addRole(nom).subscribe( 
         (data) =>{
@@ -191,118 +211,127 @@ export class RoleComponent implements OnInit{
     }
   }
 
- // Modifier role 
- modifierRole(){
-  // On vérifie si le role n'existe pas déjà 
-  let roleExist = this.tabRole.find((role:any) => role.nom.toLowerCase() == this.nomRole.toLowerCase());
-  if (roleExist){
-    sweetAlertMessage("error", "", "Ce role est déjà enregistré");
-  } else{
-    let nom = {"nom": this.role.nom} 
   
-    this.roleService.updateRole(this.role.id, nom).subscribe( 
-      (resp) =>{
-        sweetAlertMessage("success", "", "Role mis à jour avec succes");
-        this.listeRoles();
-        this.role.nom = "";
-        this.showAjoutRole();
-      },
-      (err) =>{
-        console.log (err)
-
-      }
-    )
+  verifModifNomRoleFunction(nom:any){
+    this.verifMessageNom = "";
+    this.isNomValide = validateLengthField(nom, 3);
+    if (!nom){
+      this.verifMessageNom = "Le nom du role est obligatoire";
+    } else if (!this.isNomValide){
+      this.verifMessageNom = "Le nom du role doit etre supérieure ou égale à 3";
+    } else {
+      this.verifMessageNom = "";
+    }
   }
-}
-
-// Supprimer un role
-supprimerRole(role:any){
-  sweetMessageConfirm("Vous allez supprimer ce role", "Oui, je supprime").then( (result) =>{
-    if(result.isConfirmed ){
-      let response: any;
-      this.roleService.deleteRole(role.id).subscribe(
-        (data) =>{
-          console.log(data);
-          response = data;
-          sweetAlertMessage("success", "", response.message);
+ // Modifier role 
+  modifierRole(){
+    this.verifModifNomRoleFunction(this.nomRole);
+    if(this.isNomValide){
+      let nom = {"nom": this.role.nom} 
+    
+      this.roleService.updateRole(this.role.id, nom).subscribe( 
+        (resp) =>{
+          sweetAlertMessage("success", "", "Role mis à jour avec succes");
           this.listeRoles();
-        },
-        (err) => {
-          alert("Error");
-          console.log(err);
-        }
-      )
-    }
-  })
-  
-}
-
-// Restaurer un role 
-restaureRole(role:any){
-  sweetMessageConfirm("Vous allez restaurer ce role", "Oui, je restaure").then( (result) =>{
-    if(result.isConfirmed ){
-      let response: any;
-      role.etat = "actif";
-      this.roleService.restaureRole(role.id).subscribe(
-        (data) =>{
-          console.log(data);
-          response = data;
-          sweetAlertMessage("success", "", response.message);
-          this.listeRoles();
-          this.listeRolesSup();
-        },
-        (err) => {
-          alert("Error");
-          console.log(err);
-        }
-      )
-    }
-  })
-}
-
-
-// Supprimer d"finitivement ce role 
-supprimerDefinitif(role:any){
-  sweetMessageConfirm("Vous allez supprimer définitivement ce role", "Oui, je supprime").then( (result) =>{
-    if(result.isConfirmed ){
-      this.roleService.deleteDefinitif(role.id).subscribe(
-        (data:any) =>{
-          sweetAlertMessage("success", "", data.message);
-          this.listeRolesSup();
+          this.role.nom = "";
+          this.showAjoutRole();
         },
         (err) =>{
-          console.log(err);
+          console.log (err)
+
         }
       )
-      // this.roleService.restaureRole(role.id).subscribe(
-      //   (data) =>{
-      //     console.log(data);
-      //     response = data;
-      //     sweetAlertMessage("success", "", response.message);
-      //     this.listeRoles();
-      //   },
-      //   (err) => {
-      //     alert("Error");
-      //     console.log(err);
-      //   }
-      // )
     }
-  })
-}
+  }
 
-// Méthode pour vider la corbeille 
-viderCorbeille(){
-    sweetMessageConfirm("Vous allez vider la corbeille", "Oui, je vide").then( (result) =>{
+  // Supprimer un role
+  supprimerRole(role:any){
+    sweetMessageConfirm("Vous allez supprimer ce role", "Oui, je supprime").then( (result) =>{
       if(result.isConfirmed ){
-        this.roleService.emptyTrash().subscribe(
-          (data:any) =>{
-            sweetAlertMessage("success", "", data.message);
-            this.listeRolesSup();
+        let response: any;
+        this.roleService.deleteRole(role.id).subscribe(
+          (data) =>{
+            console.log(data);
+            response = data;
+            sweetAlertMessage("success", "", response.message);
+            this.listeRoles();
+          },
+          (err) => {
+            alert("Error");
+            console.log(err);
           }
         )
       }
     })
-}
+    
+  }
+
+  // Restaurer un role 
+  restaureRole(role:any){
+    sweetMessageConfirm("Vous allez restaurer ce role", "Oui, je restaure").then( (result) =>{
+      if(result.isConfirmed ){
+        let response: any;
+        role.etat = "actif";
+        this.roleService.restaureRole(role.id).subscribe(
+          (data) =>{
+            console.log(data);
+            response = data;
+            sweetAlertMessage("success", "", response.message);
+            this.listeRoles();
+            this.listeRolesSup();
+          },
+          (err) => {
+            alert("Error");
+            console.log(err);
+          }
+        )
+      }
+    })
+  }
+
+
+  // Supprimer d"finitivement ce role 
+  supprimerDefinitif(role:any){
+    sweetMessageConfirm("Vous allez supprimer définitivement ce role", "Oui, je supprime").then( (result) =>{
+      if(result.isConfirmed ){
+        this.roleService.deleteDefinitif(role.id).subscribe(
+          (data:any) =>{
+            sweetAlertMessage("success", "", data.message);
+            this.listeRolesSup();
+          },
+          (err) =>{
+            console.log(err);
+          }
+        )
+        // this.roleService.restaureRole(role.id).subscribe(
+        //   (data) =>{
+        //     console.log(data);
+        //     response = data;
+        //     sweetAlertMessage("success", "", response.message);
+        //     this.listeRoles();
+        //   },
+        //   (err) => {
+        //     alert("Error");
+        //     console.log(err);
+        //   }
+        // )
+      }
+    })
+  }
+
+  // Méthode pour vider la corbeille 
+  viderCorbeille(){
+      sweetMessageConfirm("Vous allez vider la corbeille", "Oui, je vide").then( (result) =>{
+        if(result.isConfirmed ){
+          this.roleService.emptyTrash().subscribe(
+            (data:any) =>{
+              sweetAlertMessage("success", "", data.message);
+              this.listeRolesSup();
+            }
+          )
+        }
+      })
+  }
   // Pagination pour tous les tableaux de manières automatique
   // getItemsPage(){
   //   const indexDebut = (this.pageActuelle - 1) * this.itemsParPage;

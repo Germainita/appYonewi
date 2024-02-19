@@ -7,6 +7,7 @@ import { ReseauService } from 'src/app/services/reseau.service';
 import { RoleService } from 'src/app/services/role.service';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { UserService } from 'src/app/services/user.service';
+import { validateEmail, validateLengthField, validateName, validatePassword, validatePhone } from 'src/app/validation/validation';
 
 @Component({
   selector: 'app-utilisateur',
@@ -56,6 +57,31 @@ export class UtilisateurComponent {
   // Attribut pour la pagination
   itemsParPage = 3; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
+
+  // Validations 
+  // Mot de passe 
+  isPasswordValid:boolean = false;
+  passwordMessage: string = "";
+
+  // Nom 
+  isNameValid: boolean = false;
+  nameMessage: string = "";
+
+  // Prénom 
+  isPrenomValid: boolean = false;
+  prenomMessage: string = "";
+
+  // Téléphone 
+  isPhoneValid: boolean = false;
+  phoneMessage: string = "";
+
+  // Adresse 
+  adresseMessage: string = "";
+  isAdresseValid: boolean = false;
+
+  // Email 
+  isEmailValid: boolean = false;
+  emailMessage: string = "";
 
 
   // Déclaration des méhodes 
@@ -171,18 +197,134 @@ export class UtilisateurComponent {
     return ""
   }
 
+  // Vérification des infos avant ajout ou modification   
+  
+  // Vérif mot de passe par défaut
+  verifPasswordFunction(password:any){
+    this.passwordMessage = "";
+    this.isPasswordValid = validatePassword(password);
+    if(!this.isPasswordValid){
+      this.passwordMessage = "Le format du mot de passe est incorrect";
+    } else if(!password){
+      this.passwordMessage = "Le mot de passe est obligatoire";
+    }
+     else {
+      this.passwordMessage = "";
+    }
+  }
+  
+
+  // Vérification du nom 
+  verifNameFunction(name:any){
+    this.nameMessage = "";
+    this.prenomMessage = "";
+
+    // Vérification du format du nom ou du prénom 
+    let nameLengthvalidate = validateLengthField(name, 2)
+    let nameFormatValidate = validateName(name);
+    if(!name){
+      this.nameMessage = "Le nom est obligatoire";
+    } else if (!nameLengthvalidate) {
+      this.nameMessage = "La longueur doit être supérieur ou égale à 2";
+    }
+    else if(!nameFormatValidate){
+      this.nameMessage = "Ce champ ne doit pas contenir de chiffre ni de caractères speciaux.";
+    } else {
+      this.nameMessage = "";
+      this.isNameValid =  true;
+    }
+  }
+
+  // Vrification du prénom 
+  verifPrenomFunction(name:any){
+    this.prenomMessage = "";
+
+    let nameLengthvalidate = validateLengthField(name, 2)
+    let nameFormatValidate = validateName(name);
+    if(!name){
+      this.prenomMessage = "Le prenom est obligatoire";
+    } else if (!nameLengthvalidate) {
+      this.prenomMessage = "La longueur doit être supérieur ou égale à 2";
+    }
+    else if(!nameFormatValidate){
+      this.prenomMessage = "Ce champ ne doit pas contenir de chiffre ni de caractères speciaux.";
+    } else {
+      this.prenomMessage = "";
+      this.isPrenomValid = true;
+    }
+  }
+
+  // Vérification du numéro de téléphone 
+  verifPhoneFunction(Phone:any){
+    this.phoneMessage = "";
+
+    let PhoneFormatValidate = validatePhone(Phone);
+    if(!Phone){
+      this.phoneMessage = "Le numéro de telephone est obligatoire";
+    }else if(!PhoneFormatValidate){
+      this.phoneMessage = "Le format est incorrect";
+    } else {
+      this.phoneMessage = "";
+      this.isPhoneValid = true;
+    }
+  }
+
+  
+  // Vérification de l'email 
+  verifEmailFunction(email: any){
+    this.emailMessage = "";
+    this.isEmailValid = validateEmail(email);
+    if(!email){
+      this.emailMessage = "L'email est obligatoire"
+    }else if(!this.isEmailValid){
+      this.emailMessage = "Le format de l'email est incorrect";
+    } else{
+        this.emailMessage = "";
+        this.isEmailValid = true;
+      }
+  }
+
+  // Vérification de l'adresse 
+  verifAdresseFunction(adresse:any){
+    this.adresseMessage = "";
+
+    let adresseLengthvalidate = validateLengthField(adresse, 3)
+    if(!adresse){
+      this.adresseMessage = "L'adresse est obligatoire";
+    } else if (!adresseLengthvalidate) {
+      this.adresseMessage = "La longueur doit être supérieur ou égale à 3";
+    } else {
+      this.adresseMessage = "";
+      this.isAdresseValid = true;
+    }
+  }
+
+  reseauMessage: string = "";
+  isReseauValid: boolean = false;
+  // Vérification du reseau  
+  verifReseauFunction(reseau:any){
+    this.reseauMessage = "";
+    if(!reseau){
+      this.reseauMessage = "L'reseau est obligatoire";
+    }  else {
+      this.reseauMessage = "";
+      this.isReseauValid = true;
+    }
+  }
+
+  // Ajouter un compte pour admin reseau 
   ajouterAdmin(){
-    const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}$/;
+    this.verifNameFunction(this.utilisateur.nom);
+    this.verifPrenomFunction(this.utilisateur.prenom);
+    this.verifAdresseFunction(this.utilisateur.adresse);
+    this.verifEmailFunction(this.utilisateur.email);
+    this.verifPasswordFunction(this.utilisateur.password);
+    this.verifPhoneFunction(this.utilisateur.telephone);
+
     // On recherche dans la table réseau le role adminReseau 
     let roleAdminRoseau = this.tabRole.find((role:any) => role.nom.toLowerCase() == "adminreseau");
-    // console.log(roleAdminRoseau);
-    
-    // console.log(this.utilisateur);
-    if(!this.utilisateur.nom || !this.utilisateur.prenom || !this.utilisateur.email || !this.utilisateur.password ||!this.utilisateur.reseau_id){
-      sweetAlertMessage("error", "", "Veuillez saisir les informations demandées");
-    } else if (!this.utilisateur.email.match(emailPattern) || this.utilisateur.email.endsWith("@") || !this.utilisateur.email.includes(".")){
-      sweetAlertMessage("error", "", "Veuillez donner un email valide");
-    } else{
+
+    if(this.isNameValid && this.isPrenomValid && this.isPhoneValid && this.isAdresseValid && this.isEmailValid && this.isPasswordValid) {
       // On peut faire appelle au service 
       // Le mot de passe de confirmation est le meme que celui par defaut 
       this.utilisateur.password_confirmation = this.utilisateur.password;
@@ -198,7 +340,8 @@ export class UtilisateurComponent {
             this.viderChamps();
           }
           else if(!data.success){
-            // console.log(data.errors);
+            console.log(data.errors);
+
             if(data.errors.email){
               sweetAlertMessage("error", "", data.errors.email);
             }
@@ -206,17 +349,31 @@ export class UtilisateurComponent {
               sweetAlertMessage("error", "", data.errors.password);
             }
             if(data.errors.telephone){
-              sweetAlertMessage("error", "", data.errors.telephone);
+              sweetAlertMessage("error", "", data.error.errors.telephone);
             }
             
           } 
-          // else if (data.status){
-          //   sweetAlertMessage("success", "", data.message);
-          // }
+          else if (data.status){
+            sweetAlertMessage("success", "", data.message);
+          }
         },
         (err) =>{
-          console.log(err);
-          console.log(err.errors);          
+          // console.log("Les erreurs");
+          
+          // console.log(err);
+          // console.log(err.error.errors);
+          // si l'email existe déjà 
+          if(err.error.errors.email){
+            this.emailMessage = err.error.errors.email[0];
+          }          
+          // si le mot de passe existe 
+          if(err.error.errors.password){
+            this.passwordMessage = err.error.errors.password[0];
+          }          
+          // si le téléphone existe déjà 
+          if(err.error.errors.telephone){
+            this.phoneMessage = err.error.errors.telephone[0];
+          }          
         }
       )
     }
@@ -237,13 +394,16 @@ export class UtilisateurComponent {
   // Modifier un compte 
   infosCompte(user:any){
     this.utilisateur = user;
-    console.log(this.utilisateur);
-    if(this.utilisateur.telephone == this.utilisateur.password){
-      console.log("ils sont identiques");
-      
-    } else {
-      console.log("Ils ne sont pas identiques")
-    }
+    // ici tout est ok 
+    this.isNameValid = true;
+    this.isPhoneValid = true;
+    this.isAdresseValid = true;
+    this.isEmailValid = true;
+    this.isAdresseValid = true;
+    this.isPasswordValid = true;
+    this.isPhoneValid = true;
+    this.isReseauValid = true;
+    alert(this.isNameValid);
   }
 
   // Bon 
@@ -255,46 +415,72 @@ export class UtilisateurComponent {
     dataModif.telephone = this.utilisateur.telephone;
     dataModif.adresse = this.utilisateur.adresse;
     dataModif.reseau_id = this.utilisateur.reseau_id;
-    if(this.emailModif){
-      dataModif.email = this.emailModif
-    }
-    if (this.passwordModif){
-      dataModif.password = this.passwordModif;
-    }
-    
-    // console.log(dataModif);
-    sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
-      if(result.isConfirmed ){
-        this.userService.updateAdminReseau(dataModif.id, dataModif).subscribe(
-          (data:any) =>{
-            console.log(data);
-            if(data.status){
-              // console.log(data.message);
-              sweetAlertMessage("success", "", data.message);
-              this.listeUsers();
-              this.viderChamps();
-            }
-            else if(!data.success){
-              if(data.errors.email){
-                sweetAlertMessage("error", "", data.errors.email);
-              }
-              if(data.errors.password){
-                sweetAlertMessage("error", "", data.errors.password);
-              }
-              if(data.errors.telephone){
-                sweetAlertMessage("error", "", data.errors.telephone);
-              }
-            } 
-            // sweetAlertMessage("success", "", data.message);
-            // this.viderChamps()
-          },
-          (err) =>{
-            console.log(err);
-            
-          }
-        )
+
+    this.verifNameFunction(dataModif.nom);
+    this.verifPrenomFunction(dataModif.prenom);
+    this.verifAdresseFunction(dataModif.adresse);
+    this.verifEmailFunction(this.emailModif);
+    this.verifPasswordFunction(this.passwordModif);
+    this.verifPhoneFunction(dataModif.telephone);
+
+    if(this.isNameValid && this.isPrenomValid && this.isPhoneValid && this.isAdresseValid) {
+      
+      if(this.emailModif){
+        dataModif.email = this.emailModif
       }
-    })
+      if (this.passwordModif){
+        dataModif.password = this.passwordModif;
+      }
+      
+      // console.log(dataModif);
+      sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
+        if(result.isConfirmed ){
+          this.userService.updateAdminReseau(dataModif.id, dataModif).subscribe(
+            (data:any) =>{
+              console.log(data);
+              if(data.status){
+                // console.log(data.message);
+                sweetAlertMessage("success", "", data.message);
+                this.listeUsers();
+                this.viderChamps();
+              }
+              else if(!data.success){
+                if(data.errors.email){
+                  sweetAlertMessage("error", "", data.errors.email);
+                }
+                if(data.errors.password){
+                  sweetAlertMessage("error", "", data.errors.password);
+                }
+                if(data.errors.telephone){
+                  sweetAlertMessage("error", "", data.errors.telephone);
+                }
+              } 
+              // sweetAlertMessage("success", "", data.message);
+              // this.viderChamps()
+            },
+            (err) =>{
+              // console.log("Les erreurs");
+              
+              // console.log(err);
+              // console.log(err.error.errors);
+              // si l'email existe déjà 
+              if(err.error.errors.email){
+                this.emailMessage = err.error.errors.email[0];
+              }          
+              // si le mot de passe existe 
+              if(err.error.errors.password){
+                this.passwordMessage = err.error.errors.password[0];
+              }          
+              // si le téléphone existe déjà 
+              if(err.error.errors.telephone){
+                this.phoneMessage = err.error.errors.telephone[0];
+              }          
+            }
+          )
+        }
+      })
+
+    }
   }
 
   // Les infos à envoyer pour la confirmation de la suppression

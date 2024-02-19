@@ -120,7 +120,7 @@
                             <form action="">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Nom du réseau: <span class="require">*</span></label>
-                                    <input type="email" class="form-control" name="nom" id="exampleFormControlInput1" [(ngModel)]="reseau.nom">
+                                    <input type="email" class="form-control" name="nom" id="exampleFormControlInput1" [(ngModel)]="reseau.nom" (input)="verifNomFunction(reseau.nom)">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">Description: </label>
@@ -128,7 +128,8 @@
                                 </div>
     
                                 <div class="text-center">
-                                    <button class="btn px-4" (click)="ajoutReseau()"> Ajouter</button>
+                                    <button class="btn px-4" (click)="ajoutReseau()" [disabled]="!isNomValide" [class.deseable]="!isNomValide"> Ajouter</button>
+
                                 </div>
                             </form>
     
@@ -143,7 +144,7 @@
                             <form action="">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label">Nom du réseau: <span class="require">*</span></label>
-                                    <input type="text" name="nomReseau" class="form-control" id="exampleFormControlInput1" [(ngModel)]="reseau.nom">
+                                    <input type="text" name="nomReseau" class="form-control" id="exampleFormControlInput1" [(ngModel)]="reseau.nom" (input)="verifModifNomFunction(reseau.nom)">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">Description: </label>
@@ -151,7 +152,7 @@
                                 </div>
     
                                 <div class="text-center">
-                                    <button class="btn px-4" (click)="modifReseau()"> Modifier</button>
+                                    <button class="btn px-4" (click)="modifReseau()" [disabled]="!isNomValide" [class.deseable]="!isNomValide"> Modifier</button>
                                 </div>
                             </form>
                         </div>

@@ -110,11 +110,13 @@
                             <form action="">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label mb-4 fs-5">Nom du rôle: <span class="require">*</span></label>
-                                    <input type="text" name="nomRole" class="form-control" id="exampleFormControlInput1" placeholder="" [(ngModel)]="nomRole"  >
+                                    <input type="text" name="nomRole" class="form-control" id="exampleFormControlInput1" placeholder="" [(ngModel)]="nomRole" (input)="verifNomRoleFunction(nomRole)" >
+                                    <p class="text-danger" *ngIf="verifMessageNom"><i class="bi bi-exclamation-circle"></i> {{verifMessageNom}}</p>
                                 </div>
     
                                 <div class="text-center">
-                                    <button class="btn px-4" (click)="ajoutRole()"> Ajouter</button>
+                                    <button class="btn px-4" (click)="ajoutRole()" [disabled]="!isNomValide" [class.deseable]="!isNomValide"> Ajouter</button>
+                                    <!-- <button class="btn px-4" (click)="ajouter()" > Ajouter</button>  -->
                                 </div>
                             </form>
     
@@ -129,11 +131,12 @@
                             <form action="">
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1" class="form-label mb-4 fs-5">Nom du rôle: <span class="require">*</span></label>
-                                    <input type="text" name="nomRole" class="form-control" id="exampleFormControlInput1" [(ngModel)]="role.nom">
+                                    <input type="text" name="nomRole" class="form-control" id="exampleFormControlInput1" [(ngModel)]="role.nom" (input)="verifModifNomRoleFunction(role.nom)">
+                                    <p class="text-danger messageInfo" *ngIf="verifMessageNom"><i class="bi bi-exclamation-circle"></i> {{verifMessageNom}}</p>
                                 </div>
     
                                 <div class="text-center">
-                                    <button class="btn px-4" (click)="modifierRole()"> Modifier</button>
+                                    <button class="btn px-4" (click)="modifierRole()" [disabled]="!isNomValide" [class.deseable]="!isNomValide"> Modifier</button>
                                 </div>
                             </form>
                         </div>

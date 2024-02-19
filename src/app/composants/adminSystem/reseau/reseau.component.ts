@@ -9,6 +9,7 @@ import { ReseauService } from 'src/app/services/reseau.service';
 import { SectionService } from 'src/app/services/section.service';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { TarifService } from 'src/app/services/tarif.service';
+import { validateLengthField } from 'src/app/validation/validation';
 
 @Component({
   selector: 'app-reseau',
@@ -163,6 +164,10 @@ export class ReseauComponent implements OnInit {
 
   tabReseauxSup : Reseau[] = []
   tabReseauxSupFilter : Reseau[] = []
+
+  // Variable pour la vérification 
+  verifMessageNom:string = "";
+  isNomValide: boolean = false;
 
   // Déclaration des méthodes 
   constructor(
@@ -350,33 +355,47 @@ export class ReseauComponent implements OnInit {
     this.isModifier = false;
   }
 
+  // Vérification du nom de la ligne 
+  verifNomFunction(nom:any){
+    this.verifMessageNom = "";
+    this.isNomValide = validateLengthField(nom, 3);;
+    let roleExist = this.tabReseauxActifs.find((role:any) => role.nom.toLowerCase() == nom.toLowerCase());
+
+    let roleExist1 = this.tabReseauxSup.find((ligne:any) => ligne.nom.toLowerCase() == nom.toLowerCase());
+
+    if (!nom){
+      this.verifMessageNom = "Le nom du role est obligatoire";
+    } else if (!this.isNomValide){
+      this.verifMessageNom = "Le nom du role doit etre supérieure ou égale à 3";
+    }else if (roleExist1) {
+      this.verifMessageNom = "Ce nom de role est déjà dans la corbeille. Vueillez le restaure";
+    } else if (roleExist){
+      this.verifMessageNom = "Ce nom  existe déja";
+    } else {
+      this.verifMessageNom = "";
+    }
+  }
+
   // Ajouter un réseau 
   ajoutReseau(){
-    if(!this.reseau.nom){
-      sweetAlertMessage("error", "", "Le nom est obligatoire")
-    } else{
-      // On vérifie si le réseau n'existe pas déjà 
-      let reseauExiste = this.tabReseauxActifs.find((element) => element.nom == this.reseau.nom);
-      if(reseauExiste){
-        sweetAlertMessage("success", "", "Ce nom est déjà pris");
-      } else {
-        let reseauAdd = {
-          nom: this.reseau.nom
-        }
-        this.reseauService.addReseau(reseauAdd).subscribe(
-          (data:any)=>{
-            console.log(data);
-            sweetAlertMessage("success", "", data.message);
-            this.reseau.nom = "";
-            this.reseau.description = "";
-            this.listeReseau();
-          },
-          (error) =>{
-            console.log(error);
-            
-          }
-        )
+    this.verifNomFunction(this.reseau.nom);
+    if(this.isNomValide){
+      let reseauAdd = {
+        nom: this.reseau.nom
       }
+      this.reseauService.addReseau(reseauAdd).subscribe(
+        (data:any)=>{
+          console.log(data);
+          sweetAlertMessage("success", "", data.message);
+          this.reseau.nom = "";
+          this.reseau.description = "";
+          this.listeReseau();
+        },
+        (error) =>{
+          console.log(error);
+          
+        }
+      )
     }
   }
 
@@ -407,25 +426,40 @@ export class ReseauComponent implements OnInit {
     this.reseau = element;
   }
 
+  // Vérif pour la modification 
+  verifModifNomFunction(nom:any){
+    this.verifMessageNom = "";
+    this.isNomValide = validateLengthField(nom, 3);
+    if (!nom){
+      this.verifMessageNom = "Le nom du role est obligatoire";
+    } else if (!this.isNomValide){
+      this.verifMessageNom = "Le nom du role doit etre supérieure ou égale à 3";
+    } else {
+      this.verifMessageNom = "";
+    }
+  }
   // Modifier un réseau 
   modifReseau(){
-    sweetMessageConfirm("Vous allez modifier ce réseau", "Oui je modifie").then( (result) =>{
-      if(result.isConfirmed ){
-        let nomReseau = {"nom": this.reseau.nom}
-        this.reseauService.updateReseau(this.reseau.id, nomReseau).subscribe(
-          (data:any) =>{
-            // console.log(data);
-            sweetAlertMessage("success", "", data.message);
-            this.reseau.nom = "";
-            this.showAjoutReseau();
-          },
-          (err) =>{
-            console.log(err);
-            
-          }
-        )
-      }
-    })
+    this.verifModifNomFunction(this.reseau.nom)
+    if(this.isNomValide){
+      sweetMessageConfirm("Vous allez modifier ce réseau", "Oui je modifie").then( (result) =>{
+        if(result.isConfirmed ){
+          let nomReseau = {"nom": this.reseau.nom}
+          this.reseauService.updateReseau(this.reseau.id, nomReseau).subscribe(
+            (data:any) =>{
+              // console.log(data);
+              sweetAlertMessage("success", "", data.message);
+              this.reseau.nom = "";
+              this.showAjoutReseau();
+            },
+            (err) =>{
+              console.log(err);
+              
+            }
+          )
+        }
+      })
+    }
   }
 
   // Supprimer un reseau

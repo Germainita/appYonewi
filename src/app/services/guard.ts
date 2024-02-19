@@ -2,6 +2,7 @@ import { inject } from "@angular/core"
 
 import { Router } from "@angular/router";
 
+// Guard pour l'admin reseau 
 export const AuthGuardAdminReseau = () =>{
     // const auth = inject(AuthService);
     const router = inject(Router);
@@ -17,8 +18,7 @@ export const AuthGuardAdminReseau = () =>{
     return true;
 }
 
-
-
+// Guard pour l'administrateur system 
 export const AuthGuardAdminSystem =() =>{
     const router = inject(Router);
 
@@ -31,7 +31,6 @@ export const AuthGuardAdminSystem =() =>{
 
     return true;
 }
-
 
 // Guard pour le dashbord qui est commun au deux 
 export const AuthGuard = () =>{
@@ -51,3 +50,5 @@ export const AuthGuard = () =>{
 
     return true;
 }
+
+// 778000303

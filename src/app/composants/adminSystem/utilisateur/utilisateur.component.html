@@ -220,27 +220,35 @@
                 <form action="">
                     <div class="mb-3">
                         <label for="nameInput" class="form-label">Nom: <span class="require">*</span></label>
-                        <input type="text" name="name" class="form-control" id="nameInput" [(ngModel)] = "utilisateur.nom">
+                        <input type="text" name="name" class="form-control" id="nameInput" [(ngModel)]="utilisateur.nom" (input)="verifNameFunction(utilisateur.nom)">
+                        <p class="text-danger messageInfo" *ngIf="nameMessage"><i class="bi bi-exclamation-circle"></i> {{nameMessage}}</p>
                     </div>
                     <div class="mb-3">
                         <label for="prenomInput" class="form-label">Prenom: <span class="require">*</span></label>
-                        <input type="text" name="prenom" class="form-control" id="prenomInput" [(ngModel)]= "utilisateur.prenom">
+                        <input type="text" name="prenom" class="form-control" id="prenomInput" [(ngModel)]= "utilisateur.prenom" (input)="verifPrenomFunction(utilisateur.prenom)">
+                        <p class="text-danger messageInfo" *ngIf="prenomMessage"><i class="bi bi-exclamation-circle"></i> {{prenomMessage}}</p>
+
                     </div>
                     <div class="mb-3">
                         <label for="telephone" class="form-label">Telephone: <span class="require">*</span></label>
-                        <input type="text" name="telephone" class="form-control" id="telephone" [(ngModel)]= "utilisateur.telephone">
+                        <input type="text" name="telephone" class="form-control" id="telephone" [(ngModel)]="utilisateur.telephone" (input)="verifPhoneFunction(utilisateur.telephone)">
+                        <p class="text-danger messageInfo" *ngIf="phoneMessage"><i class="bi bi-exclamation-circle"></i> {{phoneMessage}}</p>
                     </div>
                     <div class="mb-3">
                         <label for="adresseInput" class="form-label">Adresse: <span class="require">*</span></label>
-                        <input type="text" name="adresse" class="form-control" id="adresseInput" [(ngModel)]= "utilisateur.adresse">
+                        <input type="text" name="adresse" class="form-control" id="adresseInput" [(ngModel)]="utilisateur.adresse" (input)="verifAdresseFunction(utilisateur.adresse)">
+                        <p class="text-danger messageInfo" *ngIf="adresseMessage"><i class="bi bi-exclamation-circle"></i> {{adresseMessage}}</p>
+
                     </div>
                     <div class="mb-3">
                         <label for="emailInput" class="form-label">Adresse email: <span class="require">*</span></label>
-                        <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)] ="utilisateur.email">
+                        <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)]="utilisateur.email" (input)="verifEmailFunction(utilisateur.email)">
+                        <p class="text-danger messageInfo" *ngIf="emailMessage"><i class="bi bi-exclamation-circle"></i> {{emailMessage}}</p>
                     </div>
                     <div class="mb-3">
                         <label for="telephoneInput" class="form-label">Mot de passe (defaut): <span class="require">*</span></label>
-                        <input type="tel" name="pass" class="form-control" id="telephoneInput" [(ngModel)] ="utilisateur.password">
+                        <input type="tel" name="pass" class="form-control" id="telephoneInput" [(ngModel)] ="utilisateur.password" (input)="verifPasswordFunction(utilisateur.password)">
+                        <p class="text-danger messageInfo" *ngIf="passwordMessage"><i class="bi bi-exclamation-circle"></i> {{passwordMessage}}</p>
                     </div>
                     
                     <!-- Le role pour l'utilisateur -->
@@ -257,10 +265,11 @@
                         <select id="reseau" class="form-select" name="reseau" aria-label="reseau de l'admin reseau" [(ngModel)] ="utilisateur.reseau_id">
                             <option *ngFor="let reseau of tabReseaux" [value]="reseau.id" >{{reseau.nom}}</option>
                         </select>
+                        <p class="text-danger messageInfo" *ngIf="reseauMessage"><i class="bi bi-exclamation-circle"></i> {{reseauMessage}}</p>
                     </div>  
 
                     <div class="text-end">
-                        <button type="button" class="btn me-4" (click)="ajouterAdmin()">Ajouter</button>
+                        <button type="button" class="btn me-4" (click)="ajouterAdmin()" [disabled]="!isNameValid || !isPrenomValid || !isPhoneValid || !isAdresseValid || !isEmailValid || !isPasswordValid" [class.deseable]="!isNameValid || !isPrenomValid || !isPhoneValid || !isAdresseValid || !isEmailValid || !isPasswordValid">Ajouter</button>
                         <button type="button" class="btn btnAnnuler" data-bs-dismiss="modal" (click)="viderChamps()">Annuler</button>
                     </div>
                 </form>
@@ -284,27 +293,34 @@
                 <form action="">
                     <div class="mb-3">
                         <label for="nameInput" class="form-label">Nom: <span class="require">*</span></label>
-                        <input type="text" name="name" class="form-control" id="nameInput" [(ngModel)] = "utilisateur.nom">
+                        <input type="text" name="name" class="form-control" id="nameInput" [(ngModel)]="utilisateur.nom" (input)="verifNameFunction(utilisateur.nom)">
+                        <p class="text-danger messageInfo" *ngIf="nameMessage"><i class="bi bi-exclamation-circle"></i> {{nameMessage}}</p>
                     </div>
                     <div class="mb-3">
                         <label for="prenomInput" class="form-label">Prenom: <span class="require">*</span></label>
-                        <input type="text" name="prenom" class="form-control" id="prenomInput" [(ngModel)]= "utilisateur.prenom">
+                        <input type="text" name="prenom" class="form-control" id="prenomInput" [(ngModel)]= "utilisateur.prenom" (input)="verifPrenomFunction(utilisateur.prenom)">
+                        <p class="text-danger messageInfo" *ngIf="prenomMessage"><i class="bi bi-exclamation-circle"></i> {{prenomMessage}}</p>
                     </div>
                     <div class="mb-3">
                         <label for="telephone" class="form-label">Telephone: <span class="require">*</span></label>
-                        <input type="text" name="telephone" class="form-control" id="telephone" [(ngModel)]= "utilisateur.telephone">
+                        <input type="text" name="telephone" class="form-control" id="telephone" [(ngModel)]="utilisateur.telephone" (input)="verifPhoneFunction(utilisateur.telephone)">
+                        <p class="text-danger messageInfo" *ngIf="phoneMessage"><i class="bi bi-exclamation-circle"></i> {{phoneMessage}}</p>
                     </div>
                     <div class="mb-3">
                         <label for="adresseInput" class="form-label">Adresse: <span class="require">*</span></label>
-                        <input type="text" name="adresse" class="form-control" id="adresseInput" [(ngModel)]= "utilisateur.adresse">
+                        <input type="text" name="adresse" class="form-control" id="adresseInput" [(ngModel)]="utilisateur.adresse" (input)="verifAdresseFunction(utilisateur.adresse)">
+                        <p class="text-danger messageInfo" *ngIf="adresseMessage"><i class="bi bi-exclamation-circle"></i> {{adresseMessage}}</p>
                     </div>
                     <div class="mb-3">
                         <label for="emailInput" class="form-label">Adresse email: <span class="require">*</span></label>
-                        <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)] ="emailModif">
+                        <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)]="emailModif" *ngIf="emailModif" (input)="verifEmailFunction(emailModif)">
+                        <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)]="emailModif" *ngIf="!emailModif">
+                        <p class="text-danger messageInfo" *ngIf="emailMessage"><i class="bi bi-exclamation-circle"></i> {{emailMessage}}</p>
                     </div>
                     <div class="mb-3">
                         <label for="telephoneInput" class="form-label">Mot de passe (defaut): <span class="require">*</span></label>
-                        <input type="tel" name="password" class="form-control" id="telephoneInput" [(ngModel)] ="passwordModif">
+                        <input type="tel" name="password" class="form-control" id="telephoneInput" [(ngModel)] ="passwordModif" (input)="verifPasswordFunction(passwordModif)">
+                        <p class="text-danger messageInfo" *ngIf="passwordMessage"><i class="bi bi-exclamation-circle"></i> {{passwordMessage}}</p>
                     </div>
                     
                     <!-- Le réseau administré -->
@@ -316,8 +332,9 @@
                     </div>  
 
                     <div class="text-end">
-                        <button type="button" class="btn me-4" (click)="modifAdminReseau()">Modifier</button>
-                        <button type="button" class="btn btnAnnuler" data-bs-dismiss="modal" (click)="viderChamps()">Annuler</button>
+                        <button type="button" class="btn me-4" (click)="modifAdminReseau()" [disabled]="!isNameValid || !isPrenomValid || !isPhoneValid || !isAdresseValid || !isEmailValid || !isPasswordValid" [class.deseable]="!isNameValid || !isPrenomValid || !isPhoneValid || !isAdresseValid || !isEmailValid || !isPasswordValid">Modifier</button>
+                        <!-- <button type="button" class="btn me-4" (click)="modifAdminReseau()" *ngIf="!emailModif || !passwordModif" [disabled]="!isNameValid || !isPrenomValid || !isPhoneValid" [class.deseable]="!isNameValid || !isPrenomValid || !isPhoneValid">Modifier</button> -->
+                        <button type="button" class="btn btnAnnuler" data-bs-dismiss="modal">Annuler</button>
                     </div>
                 </form>
 
