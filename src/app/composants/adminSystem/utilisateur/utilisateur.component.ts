@@ -279,9 +279,9 @@ export class UtilisateurComponent {
     }else if(!this.isEmailValid){
       this.emailMessage = "Le format de l'email est incorrect";
     } else{
-        this.emailMessage = "";
-        this.isEmailValid = true;
-      }
+      this.emailMessage = "";
+      this.isEmailValid = true;
+    }
   }
 
   // Vérification de l'adresse 
@@ -391,45 +391,97 @@ export class UtilisateurComponent {
     this.utilisateur.reseau_id =0;
   }
 
+  verifEmailModif(emailModif:any){
+    this.emailMessage = "";
+    if(emailModif){
+      this.isEmailValid = validateEmail(emailModif);
+      if(!this.isEmailValid){
+        this.emailMessage = "Le format de l'email est incorrect";
+        this.isEmailValid = false;
+      } else{
+        this.emailMessage = "";
+        this.isEmailValid = true;
+      }
+
+    }
+  }
+
+  verifPhoneModif(phone:any){
+    this.phoneMessage = "";
+    if(this.telephoneModif){
+      let phoneFormatValidate = validatePhone(phone);
+      if(!phone){
+        this.phoneMessage = "Le numéro de telephone est obligatoire";
+      }else if(!phoneFormatValidate){
+        this.phoneMessage = "Le format est incorrect";
+      } else {
+        this.phoneMessage = "";
+        this.isPhoneValid = true;
+      }
+
+    }
+  }
+
+  // Vérif mot de passe par défaut
+  verifPasswordModifFunction(passwordModif:any){
+    this.passwordMessage = "";
+    if(passwordModif){
+      this.isPasswordValid = validatePassword(passwordModif);
+      if(!this.isPasswordValid){
+        this.passwordMessage = "Le format du mot de passe est incorrect";
+      } 
+       else {
+        this.passwordMessage = "";
+      }
+    }
+  }
+  telephoneModif:string  = "";
   // Modifier un compte 
   infosCompte(user:any){
     this.utilisateur = user;
+    this.telephoneModif = user.telephone;
+    this.emailModif = user.email;
     // ici tout est ok 
-    this.isNameValid = true;
-    this.isPhoneValid = true;
-    this.isAdresseValid = true;
-    this.isEmailValid = true;
-    this.isAdresseValid = true;
-    this.isPasswordValid = true;
-    this.isPhoneValid = true;
-    this.isReseauValid = true;
-    alert(this.isNameValid);
+    // this.isNameValid = true;
+    // this.isPrenomValid = true;
+    // this.isAdresseValid = true;
+    // this.isEmailValid = true;
+    // this.isAdresseValid = true;
+    // this.isPasswordValid = true;
+    // this.isPhoneValid = true;
+    // this.isReseauValid = true;
+    // alert(this.isNameValid);
   }
 
   // Bon 
+  
   modifAdminReseau(){
     let dataModif = new UserModif
     dataModif.id = this.utilisateur.id;
     dataModif.nom = this.utilisateur.nom;
     dataModif.prenom = this.utilisateur.prenom;
-    dataModif.telephone = this.utilisateur.telephone;
+    // dataModif.telephone = this.utilisateur.telephone;
     dataModif.adresse = this.utilisateur.adresse;
     dataModif.reseau_id = this.utilisateur.reseau_id;
 
     this.verifNameFunction(dataModif.nom);
     this.verifPrenomFunction(dataModif.prenom);
     this.verifAdresseFunction(dataModif.adresse);
-    this.verifEmailFunction(this.emailModif);
-    this.verifPasswordFunction(this.passwordModif);
-    this.verifPhoneFunction(dataModif.telephone);
+    this.verifEmailModif(this.emailModif);
+    this.verifPasswordModifFunction(this.passwordModif);
+    this.verifPhoneModif(this.telephoneModif);
 
     if(this.isNameValid && this.isPrenomValid && this.isPhoneValid && this.isAdresseValid) {
       
-      if(this.emailModif){
+      if(this.emailModif != this.utilisateur.email){
         dataModif.email = this.emailModif
       }
       if (this.passwordModif){
         dataModif.password = this.passwordModif;
+      }
+
+      if(this.telephoneModif!= this.utilisateur.telephone) {
+        dataModif.telephone = this.telephoneModif;
       }
       
       // console.log(dataModif);
