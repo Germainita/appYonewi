@@ -32,3 +32,9 @@ export const validatePhone = (phone: string): boolean =>{
   const phoneRegex=/^(77|78|76|70|75|33)[0-9]{7}$/;
   return phoneRegex.test(phone);
 }
+
+// Vérification  du format des autres champs qui ne doivent pas commencer par un espace 
+export const validateField = (name: string): boolean =>{
+  const nameRegex=/^[a-zA-Z]/;
+  return nameRegex.test(name);
+}

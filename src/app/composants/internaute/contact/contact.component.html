@@ -26,19 +26,23 @@
                 <form action="">
                     <div class="mb-4">
                         <label for="exampleFormControlInput1" class="form-label">Email: <span class="require">*</span></label>
-                        <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ..." [(ngModel)]="contact.email">
+                        <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="Votre adresse email ..." [(ngModel)]="contact.email"  (input)="verifEmailFunction(contact.email)">
+                        <p class="text-danger messageInfo" *ngIf="emailMessage"><i class="bi bi-exclamation-circle"></i> {{emailMessage}}</p>
+
                     </div>
                     <div class="mb-4">
                         <label for="exampleFormControlInput1" class="form-label">Sujet: <span class="require">*</span></label>
-                        <input type="text" name="sujet" class="form-control" id="exampleFormControlInput1" placeholder="Votre sujet ..." [(ngModel)]="contact.sujet">
+                        <input type="text" name="sujet" class="form-control" id="exampleFormControlInput1" placeholder="Votre sujet ..." [(ngModel)]="contact.sujet" (input)="verifSujetFunction(contact.sujet)">
+                        <p class="text-danger messageInfo" *ngIf="sujetMessage"><i class="bi bi-exclamation-circle"></i> {{sujetMessage}}</p>
                     </div>
                     <div class="mb-4">
                         <label for="exampleFormControlTextarea1" class="form-label">Message: <span class="require">*</span></label>
-                        <textarea class="form-control" name="message" id="exampleFormControlTextarea1" placeholder="Votre suggestion ou question ..." rows="3" [(ngModel)]="contact.contenu"></textarea>
+                        <textarea class="form-control" name="message" id="exampleFormControlTextarea1" placeholder="Votre suggestion ou question ..." rows="3" [(ngModel)]="contact.contenu" (input)="verifMessageFunction(contact.contenu)"></textarea>
+                        <p class="text-danger messageInfo" *ngIf="messageMessage"><i class="bi bi-exclamation-circle"></i> {{messageMessage}}</p>
                     </div>
 
                     <div class="text-end">
-                        <button class=" btn btnEnvoyer fw-bold fs-5 px-5 py-2" (click)="addContact()">Envoyer</button>
+                        <button class=" btn btnEnvoyer fw-bold fs-5 px-5 py-2" (click)="addContact()" [disabled]="!isEmailValid || !isMessage || !isSujet">Envoyer</button>
                     </div>
                 </form>
 
