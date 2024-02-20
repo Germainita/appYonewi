@@ -6,7 +6,11 @@ export const validateEmail = (email: string): boolean =>{
 
 // Vérification de la longueur des noms des champs 
 export const validateLengthField = (field: string, long:number): boolean =>{
-  return (field.length >= long);
+  let verif: boolean = false
+  if (field && (field.length >= long)) {
+    verif = true ;
+  }
+  return verif;
 }
 
 // Vérification du nom de la ligne 

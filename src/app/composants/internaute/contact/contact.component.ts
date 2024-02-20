@@ -49,7 +49,8 @@ export class ContactComponent implements OnInit{
       this.sujetMessage = "Le sujet est obligatoire";
     } else if(!sujetFormatValidate){
       this.sujetMessage = "Ce champ ne doit pas commencer par un espace.";
-    } else if (!sujetLengthvalidate) {
+    } 
+    else if (!sujetLengthvalidate) {
       this.sujetMessage = "La longueur doit être supérieur ou égale à 4";
     }
     else {
@@ -82,40 +83,47 @@ export class ContactComponent implements OnInit{
 
   // Methode pour ajouter un contact 
   addContact(){
-    // On ajoute le contact 
-    let contactObjet = {
-      email: this.contact.email,
-      sujet: this.contact.sujet,
-      contenu: this.contact.contenu
-    }
+    this.verifSujetFunction(this.contact.sujet);
+    this.verifEmailFunction(this.contact.email);
+    this.verifMessageFunction(this.contact.contenu);
 
-    // console.log(contact);
-    // On insère le contact dans la base de donnée 
-    this.contactService.addContact(contactObjet).subscribe(
-      (data:any) =>{
-        console.log(`Succes \n${data}`);
-        console.log(data);
-        
-        sweetAlertMessage("success", "", data.message);
-
-        // On vide les champs 
-        this.contact.email = "";
-        this.contact.sujet = "";
-        this.contact.contenu = "";
-        
-      },
-      (err:any) =>{
-        console.log(`erreur \n${err}`);
-        console.log(err);
-        if(err.error.erros.sujet){
-          this.sujetMessage = err.error.erros.sujet[0];
-        }
-        if(err.error.erros.contenu){
-          this.messageMessage = err.error.erros.contenu[0];
-        }
-        
+    if(this.isEmailValid && this.isMessage && this.isSujet){
+      // On ajoute le contact 
+      let contactObjet = {
+        email: this.contact.email,
+        sujet: this.contact.sujet,
+        contenu: this.contact.contenu
       }
-    )
+  
+      // console.log(contact);
+      // On insère le contact dans la base de donnée 
+      this.contactService.addContact(contactObjet).subscribe(
+        (data:any) =>{
+          console.log(`Succes \n${data}`);
+          console.log(data);
+          
+          sweetAlertMessage("success", "", data.message);
+  
+          // On vide les champs 
+          this.contact.email = "";
+          this.contact.sujet = "";
+          this.contact.contenu = "";
+          
+        },
+        (err:any) =>{
+          console.log(`erreur \n${err}`);
+          console.log(err.error.errors.contenu);
+          if(err.error.errors.sujet){
+            // console.log(err.error.errors.sujet[0]);            
+            this.sujetMessage = err.error.errors.sujet[0];
+          }
+          if(err.error.errors.contenu){
+            this.messageMessage = err.error.errors.contenu[0];
+          }
+          
+        }
+      )
+    }
   }
 
 }
