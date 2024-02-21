@@ -65,7 +65,7 @@ export class DashbordComponent implements OnInit{
   tabSectionReseau: SectionModel[] = [];
   tabSectionReseauSup: SectionModel[] = [];
 
-  tabTypeLigne: any[] = [];
+  tabTypeLigne: TypeLigne[] = [];
   tabTypeTarif: any[] = [];
   tabAbonnement: any[] = [];
 
@@ -106,17 +106,23 @@ export class DashbordComponent implements OnInit{
     }
 
     // Pour l'admin systeme 
-    this.listeReseau();
-    this.listeLigne();
-    this.listeUsersActifs();
-    this.listeUsersInactifs();
-    this.listeRoles();
-    this.listeNewsletters();
+    if(this.isAdminSystem) {
+      this.listeReseau();
+      this.listeLigne();
+      this.listeUsersActifs();
+      this.listeUsersInactifs();
+      this.listeRoles();
+      this.listeNewsletters();
+    }
 
     // Pour l'admin reseau 
-    this.listeLigneReseau();
-    this.listeSectionReseau();
-    this.statisticAdminReseau();
+    else if (this.isAdminReseau){
+      this.listeLigneReseau();
+      this.listeSectionReseau();
+      this.statisticAdminReseau();
+    }
+      
+
   }
 
   // Liste des lignes 
@@ -256,16 +262,25 @@ export class DashbordComponent implements OnInit{
     // Les sections actifs du réseau 
     this.sectionService.getAllSectionReseau().subscribe(
       (data:any) =>{
-        this.tabSectionReseau = data.sections;
-        this.totalSection += this.tabSectionReseau.length;
+        if(data.sections){
+          this.tabSectionReseau = data.sections;
+          this.totalSection += this.tabSectionReseau.length;
+        }
       },
     );
 
     // Les sections du réseaux inactifs 
     this.sectionService.getSectionDeleted().subscribe(
       (data:any) =>{
-        this.tabSectionReseauSup = data.lignes;
-        this.totalSection += this.tabSectionReseauSup.length;
+        // console.log(data);
+        if(data.sections){
+          this.tabSectionReseauSup = data.sections;
+          this.totalSection += this.tabSectionReseauSup.length;
+        }
+      }, 
+      (error:any) =>{
+        this.tabSectionReseauSup = [];
+        // this.totalSection = 0;
       }
     )
   }
@@ -275,7 +290,9 @@ export class DashbordComponent implements OnInit{
     this.tarifService.getAllTarifReseau().subscribe(
       (data:any) =>{
         // console.log(data);
-        this.tabTypeTarif = data.tarifs;        
+        if(data.tarifs){
+          this.tabTypeTarif = data.tarifs;   
+        }
       }
     );
 
@@ -283,7 +300,9 @@ export class DashbordComponent implements OnInit{
     this.abonnementService.getAllAbonnementReseau().subscribe(
       (data:any) =>{
         // console.log(data);
-        this.tabAbonnement = data.abonnements;
+        if(data.abonnements){
+          this.tabAbonnement = data.abonnements;
+        }
       }
     );
 
@@ -291,7 +310,11 @@ export class DashbordComponent implements OnInit{
     this.typeLigneService.getTypesLigneReseau().subscribe(
       (data:any) =>{
         console.log(data);
-        this.tabTypeLigne = data.types;
+        if(data.types) {
+          this.tabTypeLigne = data.types;
+        }
+      }, (err:any) => {
+        this.tabTypeLigne = [];
       }
     )
   }

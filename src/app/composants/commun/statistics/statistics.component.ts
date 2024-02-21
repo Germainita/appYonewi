@@ -64,13 +64,18 @@ export class StatisticsComponent implements OnInit{
         this.isAdminReseau = true;
     }
 
-    this.listeLigne();
-    this.listeAbonnement();
-    this.listetarif();
+    // Pour l'admin réseau 
+    if(this.isAdminReseau){
+      this.listeLigne();
+      this.listeAbonnement();
+      this.listetarif();
+    }
 
-    this.listeUsers();
-    this.listeReseau();
-    this.listeContacts();
+    else if (this.isAdminSystem){
+      this.listeUsers();
+      this.listeReseau();
+      this.listeContacts();
+    }
   }
 
   listeLigne(){

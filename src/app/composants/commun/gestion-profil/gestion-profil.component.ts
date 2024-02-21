@@ -43,6 +43,28 @@ export class GestionProfilComponent implements OnInit{
 
 
   imageUserConnected: any;
+
+  // Vérification
+  // Changer infos profils 
+  emailMessage : string = "";
+  isEmailValid: boolean = false;
+
+  phoneMessage: string =  "";
+  isPhoneValid: boolean = false;
+
+  adresseMessage : string = "";
+  isAdresseValid: boolean = false;
+
+  // Pour changer mot de passe 
+  isOldPassword: boolean = false;
+  passworldOldMessage: string = "";
+
+  passwordMessage: string ="";
+  isPasswordValid: boolean = false;
+
+  isPasswodConform: boolean = false;
+  passwordConformMessage: string = "";
+
   // Déclarations des méthodes 
   constructor( private roleService: RoleService, private reseauService:ReseauService, private userService:UserService){}
   ngOnInit() {
@@ -70,7 +92,7 @@ export class GestionProfilComponent implements OnInit{
 
         // L'image de l'utilisateur connecter 
         this.imageUserConnected = `${urlImage}${this.userConnect.image}`;
-        console.log(this.imageUserConnected);
+        // console.log(this.imageUserConnected);
         
 
         // Liste des réseaux 
@@ -117,8 +139,6 @@ export class GestionProfilComponent implements OnInit{
   }
 
   // Vérification des infos 
-  emailMessage : string = "";
-  isEmailValid: boolean = false;
 
   verifEmailModif(emailModif:any){
     this.emailMessage = "";
@@ -136,8 +156,6 @@ export class GestionProfilComponent implements OnInit{
   }
 
   // telephoneModif: string = "";
-  phoneMessage: string =  "";
-  isPhoneValid: boolean = false;
   verifPhoneModif(phone:any){
     this.phoneMessage = "";
     if(this.telephonModif){
@@ -154,9 +172,6 @@ export class GestionProfilComponent implements OnInit{
     }
   }
 
-
-  adresseMessage : string = "";
-  isAdresseValid: boolean = false;
   // Vérification de l'adresse 
   verifAdresseFunction(adresse:any){
     this.adresseMessage = "";
@@ -282,6 +297,7 @@ export class GestionProfilComponent implements OnInit{
               sweetAlertMessage("success", "", data.message);
               this.userProfilInfos();
               this.viderChamps();
+              window.location.reload();
               // this.showInfosProfil();
             } 
             // sweetAlertMessage("success", "", data.message);
@@ -303,8 +319,6 @@ export class GestionProfilComponent implements OnInit{
   }
 
   // Vérification de l'ancien mot de passe 
-  isOldPassword: boolean = false;
-  passworldOldMessage: string = "";
   verifOldPasswordFunction(password:any){
     this.passworldOldMessage = "";
     if(password) {
@@ -313,8 +327,7 @@ export class GestionProfilComponent implements OnInit{
     }
   }
 
-  passwordMessage: string ="";
-  isPasswordValid: boolean = false;
+  
   // Vérif mot de passe par défaut
   verifNewPasswordFunction(password:any){
     this.passwordMessage = "";
@@ -330,8 +343,7 @@ export class GestionProfilComponent implements OnInit{
     }
   }
 
-  isPasswodConform: boolean = false;
-  passwordConformMessage: string = "";
+  
   verifConfirmPasswordFunction(password:any, passwordConf:any){
     this.passwordConformMessage = "";
 

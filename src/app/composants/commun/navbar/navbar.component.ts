@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Reseau } from 'src/app/models/reseau.model';
 import { Role } from 'src/app/models/role.model';
+import { urlImage } from 'src/app/services/apiUrl';
 import { ReseauService } from 'src/app/services/reseau.service';
 import { RoleService } from 'src/app/services/role.service';
 import { sweetAlertMessage } from 'src/app/services/sweetAlert/alert.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -31,16 +33,22 @@ export class NavbarComponent implements OnInit{
 
   isDescUpdate:boolean = false;
   isContactUpdate:boolean = false;
+
+  imageUserConnected: any;
   
   // Déclaration des méthodes 
-  constructor(private roleService:RoleService, private reseauService: ReseauService){}
+  constructor(private roleService:RoleService, private reseauService: ReseauService, private userService:UserService){}
 
   ngOnInit(): void {
     // On récupère les infos de l'utilisateur qui s'est connecté 
     // localStorage.setItem("userConnect", JSON.stringify(userConnect));
     this.userConnect = JSON.parse(localStorage.getItem("userConnect")) || "";
 
-    this.listeReseau();
+    // Les infos de l'utilisateur connecté 
+    // console.log(this.userConnect.user);
+    // this.imageUserConnected = `${urlImage}${this.userConnect.image}`;    
+
+    
     
     if(this.userConnect.type == "admin"){
       this.isAdminSystem = true;
@@ -49,6 +57,42 @@ export class NavbarComponent implements OnInit{
         this.isAdminSystem = false;
         this.isAdminReseau = true;
     }
+
+    if(this.isAdminReseau){
+      this.listeReseau();
+    }
+
+    // Le profil de l'utilisateur connecté 
+    this.userService.getUserProfil().subscribe(
+      (resp:any) =>{
+        console.log(resp);
+        let userConnect = resp.user;
+
+        console.log("Utilisateur connecté");
+        
+        console.log(userConnect);
+        
+
+        // L'image de l'utilisateur connecter 
+        this.imageUserConnected = `${urlImage}${userConnect.image}`;
+        // console.log(this.imageUserConnected);
+        
+
+        // Liste des réseaux 
+        // this.reseauService.getAllReseaux().subscribe(
+        //   (data:any) =>{
+        //     this.tabReseaux  = data.reseaux;
+        //     let reseauFound = this.tabReseaux.find((elemt:any) => (elemt.id == this.userConnect.reseau_id) )
+        //     if (reseauFound){
+        //       this.reseauName = reseauFound.nom;
+        //     }
+        //   },
+        //   (error) =>{
+        //     console.log (error)
+        //   }
+        // )
+      }
+    )
   }
 
   // Liste des tous les roles 
