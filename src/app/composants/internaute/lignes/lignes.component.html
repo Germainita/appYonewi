@@ -74,8 +74,14 @@
                             <!-- section 1  -->
                             <div class="row mb-3" *ngFor="let section of ligneAftu.sections">
                                 <div class="col-4">{{section.depart}} </div>
+                                <div class="col-1"><i class="bi bi-arrow-left-right"></i>  </div>
                                 <div class="col-4">{{section.arrivee}}</div>
-                                <div class="col-4">{{section.prix}}</div>
+                                <div class="col-3">{{section.prix}} FCFA</div>
+
+                                <!-- <div class="col-4">{{section.depart}} </div>
+                                    <div class="col-1"> <i class="bi bi-arrow-left-right"></i> </div>
+                                    <div class="col-4">{{section.arrivee}}</div>
+                                    <div class="col-3">{{section.prix}} FCFA</div> -->
                             </div>
                             <!-- section 2  -->
                             <!-- <div class="row mb-3">
@@ -195,8 +201,9 @@
                                 <!-- section 1  -->
                                 <div class="row mb-3" *ngFor="let section of ligneDemDikk.sections">
                                     <div class="col-4">{{section.depart}} </div>
+                                    <div class="col-1"><i class="bi bi-arrow-left-right"></i> </div>
                                     <div class="col-4">{{section.arrivee}}</div>
-                                    <div class="col-4">{{section.prix}}</div>
+                                    <div class="col-3">{{section.prix}} FCFA</div>
                                 </div>
                                 
                                 
@@ -229,39 +236,39 @@
         </div>
 
         <!-- Les lignes de banlieue  -->
-        <div class="lignesUrbaine sectionEspace" *ngIf="isBanlieue">
-            <!-- Liste des lignes du réseau  -->
+        <!-- <div class="lignesUrbaine sectionEspace" *ngIf="isBanlieue">
+            Liste des lignes du réseau 
             <div class="ligne row ">
                 <div class="col-md-4 mb-3">
                     <div class="card text-center p-3 rounded-4">
                         <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">2</span></p>
-                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <span class="numLigne fw-bold fs-1 shadow-sm">1</span>
                         <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
 
-                        <!-- Liste des sections  -->
+                        Liste des sections 
                         <div class="">
                             <h5 class="sections fw-bold mb-3">Sections:</h5>
 
                             <div class="sectionsConatiner container mb-3">
-                                <!-- section 1  -->
+                                section 1 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 2  -->
+                                section 2 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 3  -->
+                                section 3 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 4  -->
+                                section 4 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
@@ -278,33 +285,33 @@
                 <div class="col-md-4 mb-3">
                     <div class="card text-center p-3 rounded-4">
                         <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">5</span></p>
-                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <span class="numLigne fw-bold fs-1 shadow-sm">1</span>
                         <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
 
-                        <!-- Liste des sections  -->
+                        Liste des sections 
                         <div class="">
                             <h5 class="sections fw-bold mb-3">Sections:</h5>
 
                             <div class="sectionsConatiner container mb-3">
-                                <!-- section 1  -->
+                                section 1 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 2  -->
+                                section 2 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 3  -->
+                                section 3 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 4  -->
+                                section 4 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
@@ -321,33 +328,33 @@
                 <div class="col-md-4 mb-3">
                     <div class="card text-center p-3 rounded-4">
                         <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">7</span></p>
-                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <span class="numLigne fw-bold fs-1 shadow-sm">1</span>
                         <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
 
-                        <!-- Liste des sections  -->
+                        Liste des sections 
                         <div class="">
                             <h5 class="sections fw-bold mb-3">Sections:</h5>
 
                             <div class="sectionsConatiner container mb-3">
-                                <!-- section 1  -->
+                                section 1 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 2  -->
+                                section 2 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 3  -->
+                                section 3 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 4  -->
+                                section 4 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
@@ -362,42 +369,42 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Les lignes AIBD  -->
-        <div class="lignesUrbaine sectionEspace" *ngIf="isAIBD">
-            <!-- Liste des lignes du réseau  -->
+        <!-- <div class="lignesUrbaine sectionEspace" *ngIf="isAIBD">
+            Liste des lignes du réseau 
             <div class="ligne row ">
                 <div class="col-md-4 mb-3">
                     <div class="card text-center p-3 rounded-4">
                         <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">4</span></p>
-                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <span class="numLigne fw-bold fs-1 shadow-sm">1</span>
                         <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
 
-                        <!-- Liste des sections  -->
+                        Liste des sections 
                         <div class="">
                             <h5 class="sections fw-bold mb-3">Sections:</h5>
 
                             <div class="sectionsConatiner container mb-3">
-                                <!-- section 1  -->
+                                section 1 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 2  -->
+                                section 2 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 3  -->
+                                section 3 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 4  -->
+                                section 4 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
@@ -414,33 +421,33 @@
                 <div class="col-md-4 mb-3">
                     <div class="card text-center p-3 rounded-4">
                         <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">6</span></p>
-                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <span class="numLigne fw-bold fs-1 shadow-sm">1</span>
                         <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
 
-                        <!-- Liste des sections  -->
+                        Liste des sections 
                         <div class="">
                             <h5 class="sections fw-bold mb-3">Sections:</h5>
 
                             <div class="sectionsConatiner container mb-3">
-                                <!-- section 1  -->
+                                section 1 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 2  -->
+                                section 2 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 3  -->
+                                section 3 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 4  -->
+                                section 4 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
@@ -457,33 +464,33 @@
                 <div class="col-md-4 mb-3">
                     <div class="card text-center p-3 rounded-4">
                         <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">8</span></p>
-                        <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
+                        <span class="numLigne fw-bold fs-1 shadow-sm">1</span>
                         <h4 class="itineraireLigne mb-4">HLM Grand Yoff - Lat Dior</h4>
 
-                        <!-- Liste des sections  -->
+                        Liste des sections 
                         <div class="">
                             <h5 class="sections fw-bold mb-3">Sections:</h5>
 
                             <div class="sectionsConatiner container mb-3">
-                                <!-- section 1  -->
+                                section 1 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 2  -->
+                                section 2 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 3  -->
+                                section 3 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
                                     <div class="col-4">150 FCFA</div>
                                 </div>
-                                <!-- section 4  -->
+                                section 4 
                                 <div class="row mb-3">
                                     <div class="col-4">Terminus HLM Grand Yoff </div>
                                     <div class="col-4">Scat Urbam</div>
@@ -498,7 +505,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </div>

@@ -41,59 +41,21 @@
                     <h1 class="mb-5 fw-bold" [ngClass]="{textactive: !(index%2), textinactive: (index%2)}">{{abonnement.prix}} FCFA</h1>
                     <p class="mb-3">{{abonnement.duree}}</p>
                     <p class="mb-3">Toutes les lignes</p>
-                    <p class="mb-5">{{abonnement.description}}</p>
+                    <p >{{abonnement.description}}</p>
     
-                    <div class="text-center">
+                    <!-- <div class="text-center">
                         <a href="" class="btn px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}" (click)="redirectToWhatsapp()">Je m'abonne</a>        
-                    </div>
+                    </div> -->
                 </div>
                 <div class="px-4">
                     <div class="inf" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}"></div>
                 </div>
             </div>
 
-            <!-- Standard  -->
-            <!-- <div class="col-lg-4 px-5 mb-3">
-                <div class="px-4">
-                    <div class="sup bginactive"></div>
-                </div>
-                <div class="card abonnement text-center py-5 border-0">
-                    <h3 class="mb-5 fs-1 fw-bold textinactive">Standard</h3>
-                    <h1 class="mb-5 fw-bold textinactive">25 000 FCFA</h1>
-                    <p class="mb-3">1 Mois</p>
-                    <p class="mb-3">Transport urbain</p>
-                    <p class="mb-5">Toutes les lignes</p>
-    
-                    <div class="text-center">
-                        <a href="" class="btn bginactive px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement">Je m'abonne</a>        
-                    </div>
-                </div>
-                <div class="px-4">
-                    <div class="inf bginactive"></div>
-                </div>
-            </div> -->
-
-            <!-- Premiun  -->
-            <!-- <div class="col-lg-4 px-5 mb-3">
-                <div class="px-4">
-                    <div class="sup bgactive"></div>
-                </div>
-                <div class="card abonnement text-center py-5 border-0">
-                    <h3 class="mb-5 fs-1 fw-bold textactive">Premium</h3>
-                    <h1 class="mb-5 fw-bold textactive">40 000 FCFA</h1>
-                    <p class="mb-3">2 Mois</p>
-                    <p class="mb-3">Transport urbain</p>
-                    <p class="mb-5">Toutes les lignes</p>
-    
-                    <div class="text-center">
-                        <a href="" class="btn bgactive px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement">Je m'abonne</a>        
-                    </div>
-                </div>
-                <div class="px-4">
-                    <div class="inf bgactive"></div>
-                </div>
-            </div> -->
         </div>
+        <div class="explorer text-center">
+            <a href="#" class="btn btnExplorer px-2 fw-bold fs-5 col-lg-3" data-bs-toggle="modal" data-bs-target="#abonnement" (click)="redirectToWhatsapp()">Souscrire à un abonnement</a>
+        </div>            
     </div>
 </div>
 

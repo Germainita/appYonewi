@@ -187,7 +187,9 @@ export class TypeLigneComponent implements OnInit {
             this.typeLigne.description = "";
           },
           (err) =>{
-            console.log(`Erreur lors de l'ajout ${err}`);
+            console.log(`Erreur lors de l'ajout`);
+            console.log(err);
+            
           }
         )
       }

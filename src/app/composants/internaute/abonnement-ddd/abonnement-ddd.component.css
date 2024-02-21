@@ -124,3 +124,9 @@
     color: var(--base2);
     text-decoration: underline var(--base2);
 }
+
+/* Le bouton explorer  */
+.btnExplorer{
+    box-shadow: 1px 1px 1px var(--base2);
+    color: var(--base1) !important;
+}

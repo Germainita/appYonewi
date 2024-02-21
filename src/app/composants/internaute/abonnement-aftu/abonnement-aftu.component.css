@@ -123,3 +123,9 @@
     cursor: pointer;
     text-decoration: underline;
 }
+
+/* Le bouton explorer  */
+.btnExplorer{
+    box-shadow: 1px 1px 1px var(--base2);
+    color: var(--base1) !important;
+}

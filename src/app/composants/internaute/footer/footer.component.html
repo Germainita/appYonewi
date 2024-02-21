@@ -15,7 +15,7 @@
                 <h3 class="fw-bold mb-4 titre">Inscrivez vous à la Newsletter</h3>
                 <div class="input-group input-group-lg mb-3 shadow-sm">
                     <input type="text" name="email" class="form-control" placeholder="Saisissez votre adresse email" [(ngModel)]="newsletterObjet.email" (input)="verifEmailFunction(newsletterObjet.email)">
-                    <button class="btn btnNewsletter" type="button" id="button-addon2" (click)="newsletterInscription()" [disabled]="!isEmailValid">s'inscrire</button>
+                    <button class="btn btnNewsletter" type="button" id="button-addon2" (click)="newsletterInscription()">s'inscrire</button>
                 </div>
                 <p class="text-danger messageInfo" *ngIf="emailMessage"><i class="bi bi-exclamation-circle"></i> {{emailMessage}}</p>
             </div>

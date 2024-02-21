@@ -38,17 +38,20 @@
                     <h1 class="mb-5 fw-bold" [ngClass]="{textactive: !(index%2), textinactive: (index%2)}">{{abonnement.prix}} FCFA</h1>
                     <p class="mb-3">{{abonnement.duree}}</p>
                     <p class="mb-3">Toutes les lignes</p>
-                    <p class="mb-5">{{abonnement.description}}</p>
+                    <p class="">{{abonnement.description}}</p>
     
-                    <div class="text-center">
+                    <!-- <div class="text-center">
                         <a href="" class="btn px-3 py-2" data-bs-toggle="modal" data-bs-target="#abonnement" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}" (click)="redirectToWhatsapp()">Je m'abonne</a>        
-                    </div>
+                    </div> -->
                 </div>
                 <div class="px-4">
                     <div class="inf" [ngClass]="{bgactive: !(index%2), bginactive: (index%2)}"></div>
                 </div>
             </div>
 
+        </div>
+        <div class="explorer text-center">
+            <a href="#" class="btn btnExplorer px-2 fw-bold fs-5 col-lg-3" data-bs-toggle="modal" data-bs-target="#abonnement" (click)="redirectToWhatsapp()">Souscrire à un abonnement</a>
         </div>
     </div>
 </div>
