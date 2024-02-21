@@ -71,6 +71,8 @@ export class GestionProfilComponent implements OnInit{
     this.infosUser = JSON.parse(localStorage.getItem("userConnect")) || "";
     this.userProfilInfos();
 
+    // console.log(this.infosUser);
+    
     // Liste des roles 
     this.roleService.getAllRoles().subscribe(
       (data: any) =>{
@@ -82,7 +84,7 @@ export class GestionProfilComponent implements OnInit{
     
   }
 
-  
+  // Les infos de l'utilisateur 
   userProfilInfos(){
     // Le profil de l'utilisateur connecté 
     this.userService.getUserProfil().subscribe(
@@ -91,7 +93,9 @@ export class GestionProfilComponent implements OnInit{
         this.userConnect = resp.user;
 
         // L'image de l'utilisateur connecter 
-        this.imageUserConnected = `${urlImage}${this.userConnect.image}`;
+        if (this.userConnect.image){
+          this.imageUserConnected = `${urlImage}${this.userConnect.image}`;
+        }
         // console.log(this.imageUserConnected);
         
 
@@ -191,75 +195,87 @@ export class GestionProfilComponent implements OnInit{
     }
   }
 
-  // Mettre à jour le profil 
-  modiferProfil(){
-    
-    let dataModif = new UserModif
-    dataModif.id = this.userConnect.id;
-    dataModif.nom = this.userConnect.nom;
-    dataModif.prenom = this.userConnect.prenom;
-    // dataModif.telephone = this.userConnect.telephone;
-    dataModif.adresse = this.userConnect.adresse;
-    dataModif.reseau_id = this.userConnect.reseau_id;
-
-    this.verifAdresseFunction(dataModif.adresse);
-    this.verifEmailModif(this.emailModif);
-    this.verifPhoneModif(this.telephonModif);
-
-    if(this.isEmailValid && this.isPhoneValid && this.isAdresseValid) {
-
-      if(this.emailModif && this.emailModif != this.userConnect.email){
-        dataModif.email = this.emailModif
-      }
-      if (this.telephonModif  && this.telephonModif != this.userConnect.telephone){
-        dataModif.telephone = this.telephonModif ;
-      }
-      
-      // console.log(dataModif);
-      sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
-        if(result.isConfirmed ){
-          this.userService.updateAdminReseau(dataModif.id, dataModif).subscribe(
-            (data:any) =>{
-              console.log(data);
-              if(data.status){
-                // console.log(data.message);
-                sweetAlertMessage("success", "", data.message);
-                this.userProfilInfos();
-                this.viderChamps();
-                this.showInfosProfil();
-              }
-              // else if(!data.success){
-              //   if(data.errors.email){
-              //     sweetAlertMessage("error", "", data.errors.email);
-              //   }
-              //   if(data.errors.password){
-              //     sweetAlertMessage("error", "", data.errors.password);
-              //   }
-              //   if(data.errors.telephone){
-              //     sweetAlertMessage("error", "", data.errors.telephone);
-              //   }
-              // } 
-              // sweetAlertMessage("success", "", data.message);
-              // this.viderChamps()
-            },
-            (err) =>{
-              console.log(err);
-              // si l'email existe déjà 
-              if(err.error.errors.email){
-                this.emailMessage = err.error.errors.email[0];
-              }         
-              if(err.error.errors.telephone){
-                this.phoneMessage = err.error.errors.telephone[0];
-              } 
-              
-            }
-          )
+  // Mis à jour admin réseau 
+  updateAdminReseau(id:number, objectAdminReseau:any){
+    this.userService.updateAdminReseau(id, objectAdminReseau).subscribe(
+      (data:any) =>{
+        console.log(data);
+        if(data.status){
+          console.log(data.message);
+          sweetAlertMessage("success", "", data.message);
+          this.userProfilInfos();
+          // this.viderChamps();
+          // this.showInfosProfil();
         }
-      })
-    }
-
+        // else if(!data.success){
+        //   if(data.errors.email){
+        //     sweetAlertMessage("error", "", data.errors.email);
+        //   }
+        //   if(data.errors.password){
+        //     sweetAlertMessage("error", "", data.errors.password);
+        //   }
+        //   if(data.errors.telephone){
+        //     sweetAlertMessage("error", "", data.errors.telephone);
+        //   }
+        // } 
+        // sweetAlertMessage("success", "", data.message);
+        // this.viderChamps()
+      },
+      (err) =>{
+        console.log(err);
+        // si l'email existe déjà 
+        if(err.error.errors.email){
+          this.emailMessage = err.error.errors.email[0];
+        }         
+        if(err.error.errors.telephone){
+          this.phoneMessage = err.error.errors.telephone[0];
+        } 
+        
+      }
+    )
   }
 
+  // Mis à jour admin system 
+  updateAdminSystem(objectAdminSystem:any){
+    this.userService.updateAdminSystem(objectAdminSystem).subscribe(
+      (data:any) =>{
+        console.log(data);
+        // console.log(data.message);
+        sweetAlertMessage("success", "", data.message);
+        this.userProfilInfos();
+        // this.viderChamps();
+        // this.showInfosProfil();
+        // if(data.status){
+        // }
+        // else if(!data.success){
+        //   if(data.errors.email){
+        //     sweetAlertMessage("error", "", data.errors.email);
+        //   }
+        //   if(data.errors.password){
+        //     sweetAlertMessage("error", "", data.errors.password);
+        //   }
+        //   if(data.errors.telephone){
+        //     sweetAlertMessage("error", "", data.errors.telephone);
+        //   }
+        // } 
+        // sweetAlertMessage("success", "", data.message);
+        // this.viderChamps()
+      },
+      (err) =>{
+        console.log(err);
+        // si l'email existe déjà 
+        if(err.error.errors.email){
+          this.emailMessage = err.error.errors.email[0];
+        }         
+        if(err.error.errors.telephone){
+          this.phoneMessage = err.error.errors.telephone[0];
+        } 
+        
+      }
+    )
+  }
+
+  // Vider les champs apres la modification 
   viderChamps(){
     this.emailModif = "";
     this.telephonModif = "";
@@ -267,6 +283,92 @@ export class GestionProfilComponent implements OnInit{
     this.passwordConf = "";
     this.password ="";
     this.passwordNew = "";    
+  }
+
+  // Méthodes appelées lors du clic pour les admins reseau et system
+  // Mettre à jour le profil.
+  modiferProfil(){
+    
+    let dataModif = new UserModif
+    dataModif.id = this.userConnect.id;
+    dataModif.nom = this.userConnect.nom;
+    dataModif.prenom = this.userConnect.prenom;
+
+    if(this.emailModif && this.emailModif != this.userConnect.email){ //S'il change l'email
+      dataModif.email = this.emailModif
+    }
+    if (this.telephonModif  && this.telephonModif != this.userConnect.telephone){ // Si le téléphone change
+      dataModif.telephone = this.telephonModif ;
+    }
+    
+    
+    // Si c'est un admin réseau on doit prendre l'adresse et le réseau sinon on ne prend que les infos restantes
+    if(this.infosUser.type != "admin"){
+      dataModif.adresse = this.userConnect.adresse;
+      dataModif.reseau_id = this.userConnect.reseau_id;
+      this.verifAdresseFunction(dataModif.adresse);
+    }
+
+    this.verifEmailModif(this.emailModif);
+    this.verifPhoneModif(this.telephonModif);
+
+    // Si c'est un admin réseau  
+    if(this.isEmailValid && this.isPhoneValid && this.isAdresseValid && (this.infosUser.type != "admin")) {
+      // console.log(dataModif);
+      sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
+        if(result.isConfirmed ){
+          // this.userService.updateAdminReseau(dataModif.id, dataModif).subscribe(
+          //   (data:any) =>{
+          //     console.log(data);
+          //     if(data.status){
+          //       // console.log(data.message);
+          //       sweetAlertMessage("success", "", data.message);
+          //       this.userProfilInfos();
+          //       this.viderChamps();
+          //       this.showInfosProfil();
+          //     }
+          //     // else if(!data.success){
+          //     //   if(data.errors.email){
+          //     //     sweetAlertMessage("error", "", data.errors.email);
+          //     //   }
+          //     //   if(data.errors.password){
+          //     //     sweetAlertMessage("error", "", data.errors.password);
+          //     //   }
+          //     //   if(data.errors.telephone){
+          //     //     sweetAlertMessage("error", "", data.errors.telephone);
+          //     //   }
+          //     // } 
+          //     // sweetAlertMessage("success", "", data.message);
+          //     // this.viderChamps()
+          //   },
+          //   (err) =>{
+          //     console.log(err);
+          //     // si l'email existe déjà 
+          //     if(err.error.errors.email){
+          //       this.emailMessage = err.error.errors.email[0];
+          //     }         
+          //     if(err.error.errors.telephone){
+          //       this.phoneMessage = err.error.errors.telephone[0];
+          //     } 
+              
+          //   }
+          // )
+          this.updateAdminReseau(dataModif.id, dataModif);
+          this.viderChamps();
+        }
+
+      })
+    }
+    // Si c'est l'admin system 
+    else if (this.isEmailValid && this.isPhoneValid && (this.infosUser.type == "admin")){
+      sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
+        if(result.isConfirmed ){
+          this.updateAdminSystem(dataModif);
+          this.viderChamps();
+        }
+      })
+    }
+
   }
 
   // Mettre à jour l'image du profil 
@@ -278,44 +380,69 @@ export class GestionProfilComponent implements OnInit{
   }
   
   changeImage(){
-    sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{ 
-      // let userModif = {
-      //   id: this.userConnect.id,
-      //   image: event.target.files[0],
-      // }
+    
+    // sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{ 
+    //   // let userModif = {
+    //   //   id: this.userConnect.id,
+    //   //   image: event.target.files[0],
+    //   // }
   
-      // On crée un formdata 
+    //   // On crée un formdata 
+       
+  
+    //   if(result.isConfirmed ){
+    //     this.userService.updateAdminReseau(this.userConnect.id, formData).subscribe(
+    //       (data:any) =>{
+    //         console.log(data);
+    //         if(data.status){
+    //           // console.log(data.message);
+    //           sweetAlertMessage("success", "", data.message);
+    //           this.userProfilInfos();
+    //           this.viderChamps();
+    //           window.location.reload();
+    //           // this.showInfosProfil();
+    //         } 
+    //         // sweetAlertMessage("success", "", data.message);
+    //         // this.viderChamps()
+    //       },
+    //       (err) =>{
+    //         console.log(err);
+    //         // si l'email existe déjà 
+    //         if(err.error){
+    //           console.log(err.error.error);
+    //           this.passworldOldMessage = err.error.error;
+    //         }          
+            
+            
+    //       }
+    //     )
+    //   }
+    // })
+    // Si c'est un admin réseau  
+    if((this.infosUser.type != "admin")) {
       const formData = new FormData();
-      formData.append("image", this.image); 
-  
-      if(result.isConfirmed ){
-        this.userService.updateAdminReseau(this.userConnect.id, formData).subscribe(
-          (data:any) =>{
-            console.log(data);
-            if(data.status){
-              // console.log(data.message);
-              sweetAlertMessage("success", "", data.message);
-              this.userProfilInfos();
-              this.viderChamps();
-              window.location.reload();
-              // this.showInfosProfil();
-            } 
-            // sweetAlertMessage("success", "", data.message);
-            // this.viderChamps()
-          },
-          (err) =>{
-            console.log(err);
-            // si l'email existe déjà 
-            if(err.error){
-              console.log(err.error.error);
-              this.passworldOldMessage = err.error.error;
-            }          
-            
-            
-          }
-        )
-      }
-    })
+      formData.append("image", this.image);
+      // console.log(dataModif);
+      sweetMessageConfirm("Vous allez modifier l'image de votre profil", "Oui je modifie").then( (result) =>{      
+        if(result.isConfirmed ){
+          this.updateAdminReseau(this.userConnect.id, formData);
+          // window.location.reload();
+        }
+
+      })
+    }
+    // Si c'est l'admin system 
+    else if ((this.infosUser.type == "admin")){
+      const formData = new FormData();
+      formData.append("image", this.image);
+      sweetMessageConfirm("Vous allez modifier l'image de votre profil", "Oui je modifie").then( (result) =>{      
+        if(result.isConfirmed ){
+          this.updateAdminSystem(formData);
+          window.location.reload();
+        }
+      })
+    }
+    
   }
 
   // Vérification de l'ancien mot de passe 
@@ -384,35 +511,58 @@ export class GestionProfilComponent implements OnInit{
         password_confirmation: this.passwordConf,
       }
       // console.log(dataModif);
-      sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
-        if(result.isConfirmed ){
-          this.userService.updateAdminReseau(userModif.id, userModif).subscribe(
-            (data:any) =>{
-              console.log(data);
-              if(data.status){
-                // console.log(data.message);
-                sweetAlertMessage("success", "", data.message);
-                this.userProfilInfos();
-                this.viderChamps();
-                // this.showInfosProfil();
-              } 
-              // sweetAlertMessage("success", "", data.message);
-              // this.viderChamps()
-            },
-            (err) =>{
-              console.log(err);
-              // si l'email existe déjà 
-              if(err.error){
-                console.log(err.error.error);
-                this.passworldOldMessage = err.error.error;
-              }          
+      // sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
+      //   if(result.isConfirmed ){
+      //     this.userService.updateAdminReseau(userModif.id, userModif).subscribe(
+      //       (data:any) =>{
+      //         console.log(data);
+      //         if(data.status){
+      //           // console.log(data.message);
+      //           sweetAlertMessage("success", "", data.message);
+      //           this.userProfilInfos();
+      //           this.viderChamps();
+      //           // this.showInfosProfil();
+      //         } 
+      //         // sweetAlertMessage("success", "", data.message);
+      //         // this.viderChamps()
+      //       },
+      //       (err) =>{
+      //         console.log(err);
+      //         // si l'email existe déjà 
+      //         if(err.error){
+      //           console.log(err.error.error);
+      //           this.passworldOldMessage = err.error.error;
+      //         }          
               
               
-            }
-          )
-        }
-      })
+      //       }
+      //     )
+      //   }
+      // })
+
+      // Si c'est un admin réseau  
+      if((this.infosUser.type != "admin")) {
+        // console.log(dataModif);
+        sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
+          if(result.isConfirmed ){
+            this.updateAdminReseau(userModif.id, userModif);
+            this.viderChamps();
+          }
+
+        })
+      }
+      // Si c'est l'admin system 
+      else if ((this.infosUser.type == "admin")){
+        sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
+          if(result.isConfirmed ){
+            this.updateAdminSystem(userModif);
+            this.viderChamps();
+          }
+        })
+      }
     }
+
+    
   }
   
 }

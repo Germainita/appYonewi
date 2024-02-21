@@ -129,34 +129,36 @@ export class DashbordComponent implements OnInit{
   listeLigne(){
     this.ligneService.getAllLigne().subscribe(
       (data:any) =>{
-        this.tabLigne = data.lignes;
-        this.tabLigneAftu = this.tabLigne.filter((ligne:any) => ligne.reseau_id == this.reseau_id_aftu);
-        console.log("Le tableau des ligne de aftu", this.tabLigneAftu);
-        
-        this.tabLigneDemDikk = this.tabLigne.filter((ligne:any)=> ligne.reseau_id == this.reseau_id_demDikk);
-        console.log("Le tableau des ligne de dakar dem dikk", this.tabLigneDemDikk);
-
-        this.chartOptions = {
-          series: [this.tabLigneAftu.length, this.tabLigneDemDikk.length],
-          chart: {
-            type: "donut",
-          },
-          labels: ["AFTU", "DDD"],
-          colors: ['#F2743B', '#2CCED2'],
-          responsive: [
-            {
-              breakpoint: 480,
-              options: {
-                chart: {
-                  width: 200
-                },
-                legend: {
-                  position: "bottom"
+        if(data.lignes){
+          this.tabLigne = data.lignes;
+          this.tabLigneAftu = this.tabLigne.filter((ligne:any) => ligne.reseau_id == this.reseau_id_aftu);
+          console.log("Le tableau des ligne de aftu", this.tabLigneAftu);
+          
+          this.tabLigneDemDikk = this.tabLigne.filter((ligne:any)=> ligne.reseau_id == this.reseau_id_demDikk);
+          console.log("Le tableau des ligne de dakar dem dikk", this.tabLigneDemDikk);
+  
+          this.chartOptions = {
+            series: [this.tabLigneAftu.length, this.tabLigneDemDikk.length],
+            chart: {
+              type: "donut",
+            },
+            labels: ["AFTU", "DDD"],
+            colors: ['#F2743B', '#2CCED2'],
+            responsive: [
+              {
+                breakpoint: 480,
+                options: {
+                  chart: {
+                    width: 200
+                  },
+                  legend: {
+                    position: "bottom"
+                  }
                 }
               }
-            }
-          ]
-        };
+            ]
+          };
+        }
       },
     );
   }
@@ -165,15 +167,17 @@ export class DashbordComponent implements OnInit{
   listeReseau(){
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
-        this.tabReseaux= data.reseaux;
-        let reseauAftu = this.tabReseaux.find((reseau:any)=> reseau.nom == "aftu");
-        if(reseauAftu){
-          this.reseau_id_aftu = reseauAftu.id;
-        }
-
-        let reseauDemDikk = this.tabReseaux.find((reseau:any)=> reseau.nom == "dakar dem dikk");
-        if(reseauDemDikk){
-          this.reseau_id_demDikk = reseauDemDikk.id;
+        if(data.reseaux){
+          this.tabReseaux= data.reseaux;
+          let reseauAftu = this.tabReseaux.find((reseau:any)=> reseau.nom == "aftu");
+          if(reseauAftu){
+            this.reseau_id_aftu = reseauAftu.id;
+          }
+  
+          let reseauDemDikk = this.tabReseaux.find((reseau:any)=> reseau.nom == "dakar dem dikk");
+          if(reseauDemDikk){
+            this.reseau_id_demDikk = reseauDemDikk.id;
+          }
         }
       },
       (error) =>{
@@ -187,7 +191,9 @@ export class DashbordComponent implements OnInit{
     this.userService.getAllUsers().subscribe(
       (data:any) =>{
         // console.log(data);
-        this.tabUtilisateurActifs = data.users;
+        if(data.users){
+          this.tabUtilisateurActifs = data.users;
+        }
       },
       (error) =>{
         // console.log(error);
@@ -201,7 +207,9 @@ export class DashbordComponent implements OnInit{
     this.userService.getAllUsersBlocked().subscribe(
       (data:any) =>{
         // console.log(data);
-        this.tabUtilisateurInactifs = data.users;
+        if(data.users){
+          this.tabUtilisateurInactifs = data.users;
+        }
       },
       (error) =>{
         // console.log(error);
@@ -214,7 +222,9 @@ export class DashbordComponent implements OnInit{
   listeRoles(){
     this.roleService.getAllRoles().subscribe(
       (data:any) =>{
-        this.tabRolesActif = data.roles;
+        if(data.roles){
+          this.tabRolesActif = data.roles;
+        }
       },
       (err:any) =>{
         this.tabRolesActif = [];
@@ -227,7 +237,9 @@ export class DashbordComponent implements OnInit{
     this.newsletterService.getAllUsersNewsletter().subscribe(
       (data:any) =>{
         // console.log(data);
-        this.tabNewsletter = data.subscribers
+        if(data.subscribers){
+          this.tabNewsletter = data.subscribers;
+        }
       },
       (err:any)=>{
         this.tabNewsletter = [];
@@ -242,16 +254,20 @@ export class DashbordComponent implements OnInit{
     // Les lignes du réseaux actifs 
     this.ligneService.getAllLigneReseau().subscribe(
       (data:any) =>{
-        this.tabLigneReseau = data.lignes;
-        this.totalLigne += this.tabLigneReseau.length
+        if(data.lignes){
+          this.tabLigneReseau = data.lignes;
+          this.totalLigne += this.tabLigneReseau.length;
+        }
       },
     );
 
     // Les lignes du réseaux inactifs 
     this.ligneService.getLigneDeleted().subscribe(
       (data:any) =>{
-        this.tabLigneReseauSup = data.lignes;
-        this.totalLigne += this.tabLigneReseauSup.length
+        if(data.lignes){
+          this.tabLigneReseauSup = data.lignes;
+          this.totalLigne += this.tabLigneReseauSup.length
+        }
       }
     )
 

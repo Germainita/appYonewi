@@ -7,7 +7,8 @@
     <div class="profil">
         <a href="" routerLink="/profil"> 
             <!-- <img src="https://img.freepik.com/photos-gratuite/bouchent-portrait-belle-femme-fleurs_23-2149150987.jpg?size=626&ext=jpg&ga=GA1.1.1865161314.1704357552&semt=ais" alt="">         -->
-            <img [src]="imageUserConnected" alt="">        
+            <img [src]="imageUserConnected" alt="" *ngIf="imageUserConnected">        
+            <img src="https://img.freepik.com/vecteurs-premium/icone-profil-utilisateur-dans-style-plat-illustration-vectorielle-avatar-membre-fond-isole-concept-entreprise-signe-autorisation-humaine_157943-15752.jpg" alt="" *ngIf="!imageUserConnected">        
         </a>
     </div>
 </div>

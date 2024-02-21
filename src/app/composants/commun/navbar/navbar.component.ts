@@ -66,15 +66,18 @@ export class NavbarComponent implements OnInit{
     this.userService.getUserProfil().subscribe(
       (resp:any) =>{
         console.log(resp);
-        let userConnect = resp.user;
+        let user = resp.user;
 
         console.log("Utilisateur connecté");
         
-        console.log(userConnect);
+        console.log(user);
         
 
         // L'image de l'utilisateur connecter 
-        this.imageUserConnected = `${urlImage}${userConnect.image}`;
+
+        if(user.image){
+          this.imageUserConnected = `${urlImage}${user.image}`;
+        }
         // console.log(this.imageUserConnected);
         
 

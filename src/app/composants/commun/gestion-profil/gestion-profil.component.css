@@ -12,6 +12,7 @@
     /* border: 2px solid var(--base2); */
     border-radius: 2vh;
     box-shadow: 0px 2px 3px var(--base2);
+    height: 100%;
 }
 .profil i{
     color: var(--base2);
@@ -19,12 +20,22 @@
 }
 
 .containerProfil .card {
-    /* padding: 0 2vh; */
     border: none;
+    height: 97%;
 }
+/* Pour l'admin réseau  */
 .profil img{
     width: 35vh;
     height: 35vh;
+    border-radius: 100%;
+    margin-top: -3vh;
+    margin-left: -1vh;
+}
+
+/* Pour l'admin systeme  */
+.containerAdminSystem .profil img {
+    width: 20vh;
+    height: 20vh;
     border-radius: 100%;
     margin-top: -3vh;
     margin-left: -1vh;
@@ -39,6 +50,7 @@
 .changeMdp{
     text-decoration: underline;
     cursor: pointer;
+    /* margin-bottom: -2vh; */
 }
 .changeMdp:hover{
     text-decoration: underline var(--base2);
