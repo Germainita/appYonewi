@@ -19,14 +19,14 @@
                             <div class="card-body">
                                 <div class="text-end"><i class="bi bi-pencil-square" (click)="showModifProfil()"></i></div>
                                 <div class="text-center">
-                                    <img src="https://img.freepik.com/photos-gratuite/bouchent-portrait-belle-femme-fleurs_23-2149150987.jpg?size=626&ext=jpg&ga=GA1.1.1865161314.1704357552&semt=ais" alt=""> 
+                                    <img [src]="imageUserConnected" alt=""> 
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-7 infosUser">
                         <div class="card py-3">
-                            <div class="card-body">
+                            <div class="card-body" *ngIf="userConnect">
                               <p class="card-text mb-3"><span class="fw-bold">Nom:</span> {{userConnect.nom}}</p>
                               <p class="card-text mb-3"><span class="fw-bold">Prenom: </span>{{userConnect.prenom}}</p>
                               <p class="card-text mb-3"><span class="fw-bold">Email:</span> {{userConnect.email}}</p>
@@ -45,41 +45,53 @@
             <!-- Modification du profil  -->
             <div class="containerProfil modifProfil px-5" *ngIf="isModifProfil">
                 <h3 class="text-center fw-bold mb-5">Modification du profil</h3>
-                <div class="row px-4 infoProfil mt-4">
+                <p (click)="showInfosProfil()" >Voir les infos de mon profil</p>
+                <div class="row px-4 mt-4">
                     <!-- Image de la personne  -->
-                    <div class="col-md-5 profil">
+                    <div class="col-md-5 mb-3 profil">
                         <div class="card py-3">
                             <div class="card-body">
-                                <img src="https://img.freepik.com/photos-gratuite/bouchent-portrait-belle-femme-fleurs_23-2149150987.jpg?size=626&ext=jpg&ga=GA1.1.1865161314.1704357552&semt=ais" alt="" class="mb-3">
-                                <div class="modifierImage  text-center mb-3">
-                                    <label for="fileInput" class="changeMdp">Modifier l'image</label>
-                                    <input type="file" name="image" id="fileInput" style="display: none;" accept="image/*" [(ngModel)]="userConnect.image">
-                                </div>
+                                <!-- formumaire pour modifier l'image avec encryption multipart/form-data  -->
+                                <form action=""  enctype="multipart/form-data" (onSubmit)="changeImage()">
+                                    <div class="text-center mb-3">
+                                        <img [src]="imageUserConnected" alt="" class="mb-3">
+                                    </div>
+                                    <div class="modifierImage  text-center mb-3">
+                                        <label for="fileInput" class="changeMdp">Modifier l'image</label>
+                                        <input type="file" name="image" id="fileInput" style="display: none;" accept="image/*" (change)="uploadImage($event)">
+                                    </div>
+                                </form>
     
-                                <p class="card-text text-center fw-bold">{{userConnect.prenom}} {{userConnect.nom}}</p>
+                                <p class="card-text text-center fw-bold" *ngIf="userConnect">{{userConnect.prenom}} {{userConnect.nom}}</p>
                                 <p class="card-text text-center" *ngIf="reseauName">Administrateur réseau {{reseauName | titlecase}}</p>
                                 <p class="card-text text-center" *ngIf="infosUser.type == 'admin'">Administrateur du système </p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-7 modifUser">
+                    <div class="col-md-7 modifUser card-0">
                         <div class="card py-3 px-4 border">
                             <form action="">
                                 <div class="mb-3">
                                     <label for="emailInput" class="form-label">Adresse email: <span class="require">*</span></label>
-                                    <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)]="emailModif">
+                                    <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)]="emailModif" (input)="verifEmailModif(emailModif)">
+                                    <p class="text-danger messageInfo" *ngIf="emailMessage"><i class="bi bi-exclamation-circle"></i> {{emailMessage}}</p>
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="telephone" class="form-label">Telephone: <span class="require">*</span></label>
-                                    <input type="text" name="telephone" class="form-control" id="telephone" [(ngModel)]="telephonModif">
+                                    <input type="text" name="telephone" class="form-control" id="telephone" [(ngModel)]="telephonModif"  (input)="verifPhoneModif(telephonModif)">
+                                    <p class="text-danger messageInfo" *ngIf="phoneMessage"><i class="bi bi-exclamation-circle"></i> {{phoneMessage}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="adresseInput" class="form-label">Adresse: <span class="require">*</span></label>
-                                    <input type="text" name="adresse" class="form-control" id="adresseInput" [(ngModel)]="userConnect.adresse">
+                                    <input type="text" name="adresse" class="form-control" id="adresseInput" [(ngModel)]="userConnect.adresse"  (input)="verifAdresseFunction(userConnect.adresse)">
+                                    <p class="text-danger messageInfo" *ngIf="adresseMessage"><i class="bi bi-exclamation-circle"></i> {{adresseMessage}}</p>
                                 </div>
             
                                 <div class="mb-3">
-                                    <button type="button" class="btn px-3" (click)="modiferProfil()" >Modifier</button>
+                                    <button type="button" class="btn px-3" (click)="modiferProfil()">Modifier</button>
+                        <!-- <button type="button" class="btn me-4" (click)="ajouterAdmin()" [disabled]="!isNameValid || !isPrenomValid || !isPhoneValid || !isAdresseValid || !isEmailValid || !isPasswordValid" [class.deseable]="!isNameValid || !isPrenomValid || !isPhoneValid || !isAdresseValid || !isEmailValid || !isPasswordValid">Ajouter</button> -->
+
                                 </div>
                             </form>
                             <p class="changeMdp" (click)="showModifMdp()">Changer votre mot de passe</p>                            
@@ -89,11 +101,13 @@
             </div>
 
             <!-- Changer le mot de passe -->
-            <div class="containerProfil modifMdpProfil px-5" *ngIf="isModifMdp">
+            <div class="containerProfil px-5" *ngIf="isModifMdp">
                 <h3 class="text-center fw-bold mb-5">Modification du mot de passe</h3>
-                <div class="row px-4 infoProfil">
+                <p (click)="showInfosProfil()" >Voir les infos de mon profil</p>
+                <p (click)="showModifProfil()" >Modifier mon profil</p>
+                <div class="row px-4 ">
                     <!-- Image de la personne  -->
-                    <div class="col-md-5 profil">
+                    <div class="col-md-5 mb-3 profil">
                         <div class="card py-3">
                             <div class="card-body">
                                 <div class="text-center mb-3">
@@ -106,23 +120,26 @@
                         </div>
                     </div>
                     <div class="col-md-7 modifUser">
-                        <div class="card py-3 px-4 border">
+                        <div class="card py-3 px-4 border-0 shadow-sm">
                             <form action="">
                                 <div class="mb-3">
                                     <label for="passwordInput" class="form-label">Ancien mot de passe: <span class="require">*</span></label>
-                                    <input type="password" name="password" class="form-control" id="passwordInput" [(ngModel)]="password">
+                                    <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Votre ancien mot de passe" [(ngModel)]="password" (input)="verifOldPasswordFunction(password)">
+                                    <p class="text-danger messageInfo" *ngIf="passworldOldMessage"><i class="bi bi-exclamation-circle"></i> {{passworldOldMessage}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="passwordNewInput" class="form-label">Nouveau mot de passe: <span class="require">*</span></label>
-                                    <input type="passwordNew" name="passwordNew" class="form-control" id="passwordNewInput" [(ngModel)]="passwordNew">
+                                    <input type="passwordNew" name="passwordNew" class="form-control" id="passwordNewInput" placeholder="Votre nouveau mot de passe" [(ngModel)]="passwordNew" (input)="verifNewPasswordFunction(passwordNew)" >
+                                    <p class="text-danger messageInfo" *ngIf="passwordMessage"><i class="bi bi-exclamation-circle"></i> {{passwordMessage}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="passwordConf" class="form-label">Confirmation de mot de passe: <span class="require">*</span></label>
-                                    <input type="text" name="passwordConf" class="form-control" id="passwordConf" [(ngModel)]="passwordConf">
+                                    <input type="text" name="passwordConf" class="form-control" id="passwordConf" placeholder="Confirmation du nouveau mot de passe" [(ngModel)]="passwordConf" (input)="verifConfirmPasswordFunction(passwordNew, passwordConf)">
+                                    <p class="text-danger messageInfo" *ngIf="passwordConformMessage"><i class="bi bi-exclamation-circle"></i> {{passwordConformMessage}}</p>
                                 </div>
             
                                 <div class="mb-3">
-                                    <button type="button" class="btn px-3" >Modifier</button>
+                                    <button type="button" class="btn px-3" (click)=" modifPassword()" [disabled]="!isOldPassword || !isPasswordValid || !isPasswodConform" [class.deseable]="!isOldPassword || !isPasswordValid || !isPasswodConform">Modifier</button>
                                 </div>
                             </form>                           
                         </div>

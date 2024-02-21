@@ -50,5 +50,3 @@ export const AuthGuard = () =>{
 
     return true;
 }
-
-// 778000303

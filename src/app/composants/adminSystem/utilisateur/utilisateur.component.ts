@@ -7,7 +7,7 @@ import { ReseauService } from 'src/app/services/reseau.service';
 import { RoleService } from 'src/app/services/role.service';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { UserService } from 'src/app/services/user.service';
-import { validateEmail, validateLengthField, validateName, validatePassword, validatePhone } from 'src/app/validation/validation';
+import { validateEmail, validateField, validateLengthField, validateName, validatePassword, validatePhone } from 'src/app/validation/validation';
 
 @Component({
   selector: 'app-utilisateur',
@@ -289,9 +289,13 @@ export class UtilisateurComponent {
     this.adresseMessage = "";
 
     let adresseLengthvalidate = validateLengthField(adresse, 3)
+    let format = validateField(adresse);
     if(!adresse){
       this.adresseMessage = "L'adresse est obligatoire";
-    } else if (!adresseLengthvalidate) {
+    } else if(!format) {
+      this.adresseMessage = "L'adresse ne doit pas commencer par un espace";
+    }
+    else if (!adresseLengthvalidate) {
       this.adresseMessage = "La longueur doit être supérieur ou égale à 3";
     } else {
       this.adresseMessage = "";

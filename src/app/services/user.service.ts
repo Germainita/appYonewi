@@ -25,6 +25,11 @@ export class UserService {
         return this.http.post(`${url}/users/${idUser}`, user)
     }
 
+    // Modifier un admin system 
+    updateAdminSystem(user:any){
+        return this.http.post(`${url}/updateadmin`, user)
+    }
+
     // Supprimer un utilisateur (Admin reseaux)
     deleteAdminReseau(idUser:number, motif:any){
         return this.http.patch(`${url}/users/${idUser}`, motif)
