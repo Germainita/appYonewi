@@ -36,9 +36,9 @@ export class LignesComponent implements OnInit{
   tabLigneFilterActifs: Ligne[] = [];
   ligneObject = new Ligne; 
 
-  tabAftu: Ligne[] = [];
-  tabLigneAftuFilter: Ligne[] = [];
   tabLigneAftu: Ligne[] = [];
+  tabLigneAftuFilter: Ligne[] = [];
+  tabAftu: Ligne[] = [];
   
   tabLigneDemDikk: Ligne[] = [];
   tabLigneDemDikkFilter: Ligne[] = [];
@@ -66,12 +66,15 @@ export class LignesComponent implements OnInit{
 
   // Le tableau filtrer peu importe la liste 
   tabFilter:any[] = [];
+  tabFilter1:any[] = [];
   filterValue: string = "";
   filterValueDemDikk: string = "";
 
   // Attribut pour la pagination
   itemsParPage = 3; // Nombre d'articles par page
   pageActuelle = 1; // Page actuelle
+
+  pageActuelle1 = 1; // Page actuelle
 
   messageInfo: string = "";
 
@@ -95,12 +98,12 @@ export class LignesComponent implements OnInit{
     this.listeTypeLigne();
     // this.listeSectionLigneAftu();
     
-    if (!localStorage.getItem("lignesAftu")){
-      localStorage.setItem("lignesAftu", JSON.stringify(this.tabAftu));  
-    }
+    // if (!localStorage.getItem("lignesAftu")){
+    //   localStorage.setItem("lignesAftu", JSON.stringify(this.tabAftu));  
+    // }
 
-    this.tabLigneAftu = JSON.parse(localStorage.getItem("lignesAftu") || "");
-    console.log("Les lignes de AFTU", this.tabLigneAftu);
+    // this.tabLigneAftu = JSON.parse(localStorage.getItem("lignesAftu") || "");
+    // console.log("Les lignes de AFTU", this.tabLigneAftu);
 
 
   }
@@ -196,6 +199,8 @@ export class LignesComponent implements OnInit{
   }
 
   // Liste des tous les Ligne 
+  tabDemDikk: any[];
+
   listeLigne(){
     this.messageInfo = "";
     this.ligneService.getAllLigne().subscribe(
@@ -205,30 +210,30 @@ export class LignesComponent implements OnInit{
         this.tabLigne = this.tabLigneFilterActifs = data.lignes;
 
         // Les infos du réseau de AFTU 
-        this.tabAftu = this.tabLigneAftuFilter = this.tabLigneFilterActifs.filter((element:any)=> element.reseau_id == this.idAftu);
+        this.tabAftu =this.tabLigneAftu = this.tabLigneAftuFilter = this.tabLigneFilterActifs.filter((element:any)=> element.reseau_id == this.idAftu);
         
-        // console.log("Liste des lignes du reseau AFTU ",this.tabAftu);
+        // console.log("Liste des lignes du reseau AFTU ",this.tabLigneAftu);
 
-        // this.tabAftu = this.tabSectionLigneFunction(tabAftu, this.prixSectionAftu, this.prixEntreSectionAftu);
-        // console.log("Liste des lignes du reseau AFTU avec prix ",this.tabAftu);
+        // this.tabLigneAftu = this.tabSectionLigneFunction(tabLigneAftu, this.prixSectionAftu, this.prixEntreSectionAftu);
+        // console.log("Liste des lignes du reseau AFTU avec prix ",this.tabLigneAftu);
 
         // Les infos du réseau de Dakar Dem Dikk 
-        this.tabLigneDemDikk = this.tabLigneDemDikkFilter = this.tabLigneFilterActifs.filter((element:any)=> element.reseau_id == this.idDemDikk);
+        this.tabDemDikk = this.tabLigneDemDikk = this.tabLigneDemDikkFilter = this.tabLigneFilterActifs.filter((element:any)=> element.reseau_id == this.idDemDikk);
         console.log("Liste des lignes du reseau LigneDemDikk ",this.tabLigneDemDikk);
 
         
         
         
         // Algorithme pour avoir les différentes section d'une ligne avec le prix pour aftu
-        for(let i = 0; i<this.tabAftu.length; i++){
+        for(let i = 0; i<this.tabLigneAftu.length; i++){
           let tabSectionLigne:any[]=[];
           // On stocke d'abord le point de départ de la ligne comme premier élément du tableau pour la ligne;
-          tabSectionLigne.push(this.tabAftu[i].lieuDepart);
+          tabSectionLigne.push(this.tabLigneAftu[i].lieuDepart);
 
 
           // Si des sections on été enregistré, on récupère les section de la ligne
           let tabSection: SectionModel[] = [];
-          tabSection = this.tabSection.filter((section:any) => section.ligne_id == this.tabAftu[i].id);
+          tabSection = this.tabSection.filter((section:any) => section.ligne_id == this.tabLigneAftu[i].id);
           if(tabSection){
             // On prend les debut des sections sauf le premier qui est déjà enregistré
             for(let y = 1; y < tabSection.length; y++){
@@ -238,18 +243,18 @@ export class LignesComponent implements OnInit{
               tabSectionLigne.push(tabSection[y].depart)
             }
           }
-          tabSectionLigne.push(this.tabAftu[i].lieuArrivee); // Stocke en dernier le lieu d'arrivé de la ligne;
+          tabSectionLigne.push(this.tabLigneAftu[i].lieuArrivee); // Stocke en dernier le lieu d'arrivé de la ligne;
 
           // console.log("Le tableau des sections test", tabSectionLigne);  
           // On stocke l'itinéraire dans le tableau des itinéraires de la ligne 
-          this.tabAftu[i].itineraires = tabSectionLigne;   
-          // console.log(this.tabAftu[i]);
+          this.tabLigneAftu[i].itineraires = tabSectionLigne;   
+          // console.log(this.tabLigneAftu[i]);
                            
 
           // On a le tableau, on peut maintenant faire l'algo avec les prix 
           // let tabSectionPrix = this.calculPrixSection(tabSectionLigne);
           // console.log(tabSectionPrix);   
-          this.tabAftu[i].sections = this.tabLigneAftuFilter[i].sections = this.calculPrixSection(tabSectionLigne, this.prixSectionAftu, this.prixEntreSectionAftu);
+          this.tabLigneAftu[i].sections = this.tabLigneAftuFilter[i].sections = this.calculPrixSection(tabSectionLigne, this.prixSectionAftu, this.prixEntreSectionAftu);
         }
         
         // Algorithme pour avoir les différentes section d'une ligne avec le prix pour Demdikk
@@ -409,16 +414,54 @@ export class LignesComponent implements OnInit{
   }
 
 
-  // Rechercher une ligne   
+  // Rechercher une ligne suivant ses sections 
   onSearch(){
-    this.tabLigneAftuFilter = this.searchSections(this.tabAftu, this.filterValue);
-    this.tabLigneDemDikkFilter = this.searchSections(this.tabLigneDemDikk, this.filterValueDemDikk);
+    // this.tabLigneAftuFilter = this.searchSections(this.tabLigneAftu, this.filterValue);
+    let sectionLigneAftuFiltered = this.searchSections(this.tabLigneAftu, this.filterValue);
+    this.tabLigneAftuFilter = sectionLigneAftuFiltered.filter((lignes:any )=> lignes.sections.length !=0);
+
+    let sectionLigneDDDFiltered = this.searchSections(this.tabLigneDemDikk, this.filterValueDemDikk);
+    this.tabLigneDemDikkFilter = sectionLigneDDDFiltered.filter((lignes:any )=> lignes.sections.length !=0);
+
+    // this.tabLigneDemDikkFilter = this.searchSections(this.tabLigneDemDikk, this.filterValueDemDikk);
     this.isAll = true;    
     for(let i=0; i<=this.tabTypeLigne.length; i++){
       this.tabTypeLigne[i].isActif = false;
     }
   }
+
+  // Rechercher une ligne suivant son nom 
+  filterNumLigneAFTU: string = "";
+  filterNumLigneDDD: string = "";
+  onSearchLigne(){
+    // Rechercher pour aftu 
+    this.tabLigneAftuFilter = this.tabLigneAftu.filter((ligne:any) => ligne.nom.toLowerCase().includes(this.filterNumLigneAFTU.toLowerCase()));
+    if(this.tabLigneAftuFilter && this.filterNumLigneAFTU) { // Si on trouve une ligne on pourra faire des recherches sur ces sections
+      this.tabLigneAftu = this.tabLigneAftuFilter;
+    } else if(this.filterNumLigneAFTU == "") { // On retourne les valeurs initiales du tableau      
+      this.tabLigneAftuFilter = this.tabLigneAftu = this.tabAftu;
+    }
+
+    // Rechercher pour Dakar Dem Dikk 
+    // let tabDDDTempon = this.tabLigneDemDikk;
+    // console.log("Les lignes du reseau dem dikk quand on recherche le numero de ligne");
+    // console.log((this.tabLigneDemDikk));
+    
+    
+    this.tabLigneDemDikkFilter = this.tabLigneDemDikk.filter((ligne:any) => ligne.nom.toLowerCase().includes(this.filterNumLigneDDD.toLowerCase()));
+    if(this.tabLigneDemDikkFilter && this.filterNumLigneDDD) { // Si on trouve une ligne on pourra faire des recherches sur ces sections
+      this.tabLigneDemDikk = this.tabLigneDemDikkFilter;
+    } else if(this.filterNumLigneDDD == "") { // On retourne les valeurs initiales du tableau      
+      this.tabLigneDemDikkFilter = this.tabLigneDemDikk = this.tabDemDikk;
+    }
+    
+  }
   
+
+  // Methode pour rechercher les numéro de ligne 
+  // searchLignes(tab:any[], filtervalue:any): any[]{
+  //   return tab.filter((ligne:any) => ligne.nom.toLowerCase().includes(filtervalue.toLowerCase()))
+  // }
 
   // Methode pour trouver les sections de la ligne pendant la saisie
   searchSections(tab: any[], filterValue: string): any[] {
@@ -427,20 +470,26 @@ export class LignesComponent implements OnInit{
         ...objet,
         sections: objet.sections.filter(section => section.depart.toLowerCase().includes(filterValue.toLowerCase()))
       };
+
     });
   }
 
 
   // Rechercher l'itinéraire suivant la date de depart et d'arrivee 
   onSearchItineraire(){
-    // this.tabLigneAftuFilter = this.searchSections(this.tabAftu, this.filterValue);
+    // this.tabLigneAftuFilter = this.searchSections(this.tabLigneAftu, this.filterValue);
     this.isSerach = true;
-    this.tabLigneAftuFilter = this.searchItineraire(this.tabAftu, this.departInput, this.arriveeInput);
-    this.tabLigneDemDikkFilter = this.searchItineraire(this.tabLigneDemDikk, this.departInput, this.arriveeInput);
+
+    let sectionsAftuFilterd = this.searchItineraire(this.tabLigneAftu, this.departInput, this.arriveeInput);
+    this.tabLigneAftuFilter = sectionsAftuFilterd.filter((lignes:any )=> lignes.sections.length !=0);
+
+
+    let sectionsDDDFilterd = this.searchItineraire(this.tabLigneDemDikk, this.departInput, this.arriveeInput);
+    this.tabLigneDemDikkFilter = sectionsDDDFilterd.filter((lignes:any )=> lignes.sections.length !=0);
   }
   annulerSearch(){
     this.isSerach = false;
-    this.tabLigneAftuFilter = this.tabAftu;
+    this.tabLigneAftuFilter = this.tabLigneAftu;
     this.tabLigneDemDikkFilter = this.tabLigneDemDikk;
     this.departInput = "";
     this.arriveeInput = "";
@@ -470,15 +519,32 @@ export class LignesComponent implements OnInit{
 
   }
 
+  getItemsPageDDD(){
+    const indexDebut = (this.pageActuelle1 - 1) * this.itemsParPage;
+    const indexFin = indexDebut + this.itemsParPage;
+    // this.tabFilter1 = tabFilter;
+    return this.tabLigneDemDikkFilter.slice(indexDebut, indexFin);
+
+  }
+
   // Méthode pour générer la liste des pages
   get pages(): number[] {
     const totalPages = Math.ceil(this.tabFilter.length / this.itemsParPage);
     return Array(totalPages).fill(0).map((_, index) => index + 1);
   }
 
+  get pages1(): number[] {
+    const totalPages1 = Math.ceil(this.tabLigneDemDikkFilter.length / this.itemsParPage);
+    return Array(totalPages1).fill(0).map((_, index) => index + 1);
+  }
+
   // Méthode pour obtenir le nombre total de pages
   get totalPages(): number {
     return Math.ceil(this.tabFilter.length / this.itemsParPage);
+  }
+
+  get totalPages1(): number {
+    return Math.ceil(this.tabLigneDemDikkFilter.length / this.itemsParPage);
   }
 
   

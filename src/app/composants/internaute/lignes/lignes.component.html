@@ -45,23 +45,30 @@
     <div class="sectionLignesAFTU sectionEspace">
         <!-- Recherhcer une ligne  -->
         <div class="row sectionEspace ligneReseauSearch ">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <h3 class="titre">Lignes réseau AFTU </h3>
             </div>
-            <div class="col-sm-4">
+            <!-- Rechercher une destination  -->
+            <div class="col-sm-3">
               <div class="input-group">
-                <!-- <input type="text" name="search" class="form-control" [(ngModel)]="filterValue" (input)="onSearch()"> -->
-                <input type="text" name="search" class="form-control" placeholder="Rechercher une ligne" [(ngModel)]="filterValue" (input)="onSearch()">
+                <input type="text" name="search" class="form-control" placeholder="Rechercher une destination" [(ngModel)]="filterValue" (input)="onSearch()">
                 <button class="iconesearch input-group-text"><i class="bi bi-search"></i></button>
               </div>
-            </div>  
+            </div> 
+            <!-- Rechercher un numéro de ligne -->
+            <div class="col-sm-3">
+                <div class="input-group">
+                  <input type="text" name="searchLigne" class="form-control" placeholder="Rechercher une ligne" [(ngModel)]="filterNumLigneAFTU" (input)="onSearchLigne()">
+                  <button class="iconesearch input-group-text"><i class="bi bi-search"></i></button>
+                </div>
+              </div> 
         </div>
 
         <!-- Liste des lignes du réseau  -->
         <div class="ligne row ">
 
             <div class="col-md-4 mb-5" *ngFor="let ligneAftu of getItemsPage(tabLigneAftuFilter)">
-                <div class="card text-center p-3 rounded-4 card-ligne" *ngIf="ligneAftu.sections.length">
+                <div class="card text-center p-3 rounded-4 card-ligne">
                     <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">{{ligneAftu.nom}}</span></p>
                     <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
                     <h4 class="itineraireLigne mb-4">{{ligneAftu.lieuDepart}} - {{ligneAftu.lieuArrivee}}</h4>
@@ -109,6 +116,7 @@
 
                 </div>
             </div>
+            <h3 class="text-center fw-bold" *ngIf="! getItemsPage(tabLigneAftuFilter).length">Aucun résultat trouvé</h3>
 
             <!-- Pagination  -->
             <div *ngIf="getItemsPage(tabLigneAftuFilter).length">
@@ -136,13 +144,21 @@
     <div class="sectionLignesDemDikk sectionEspace">
         <!-- Recherhcer une ligne  -->
         <div class="row sectionEspace ligneReseauSearch ">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <h3 class="titre">Lignes réseau Dakar Dem Dikk </h3>
             </div>
-            <div class="col-sm-4">
+            <!-- Rechercher une destination -->
+            <div class="col-sm-3">
               <div class="input-group">
-                <!-- <input type="text" name="search" class="form-control" [(ngModel)]="filterValue" (input)="onSearch()"> -->
-                <input type="text" name="search" class="form-control" placeholder="Rechercher une ligne" [(ngModel)]="filterValueDemDikk" (input)="onSearch()">
+                <input type="text" name="search" class="form-control" placeholder="Rechercher une destination" [(ngModel)]="filterValueDemDikk" (input)="onSearch()">
+                <button class="iconesearch input-group-text"><i class="bi bi-search"></i></button>
+              </div>
+            </div>
+
+            <!-- Rechercher un numéro de ligne -->
+            <div class="col-sm-3">
+              <div class="input-group">
+                <input type="text" name="searchLigne" class="form-control" placeholder="Rechercher une ligne" [(ngModel)]="filterNumLigneDDD" (input)="onSearchLigne()">
                 <button class="iconesearch input-group-text"><i class="bi bi-search"></i></button>
               </div>
             </div>  
@@ -171,23 +187,13 @@
                 <button class="btn fw-bold px-3" [ngClass]="{filtreActive: typeLigne.isActif}" (click)="showLigneFilter(typeLigne, index)">Lignes {{typeLigne.nom}}</button>
                 <!-- <button class="btn fw-bold px-3" *ngIf="!isUrbaine" (click)="showUrbaine()">Lignes Urbaines</button> -->
             </div>
-
-            <!-- <div class="filtreSection">
-                <button class="btn filtreActive fw-bold px-3" *ngIf="isBanlieue">Lignes de banlieue</button>
-                <button class="btn fw-bold px-3" *ngIf="!isBanlieue" (click)="showBanlieue()">Lignes de banlieue</button>
-            </div>
-
-            <div class="filtreSection">
-                <button class="btn filtreActive fw-bold px-3" *ngIf="isAIBD">Lignes AIBD & Diamniadio </button>
-                <button class="btn fw-bold px-3" *ngIf="!isAIBD" (click)="showAIBD()">Lignes AIBD & Diamniadio </button> 
-            </div> -->
         </div>
 
         <!-- Les lignes urbaines  -->
         <div class="lignesUrbaine sectionEspace" *ngIf="isUrbaine">
             <!-- Liste des lignes du réseau  -->
             <div class="ligne row ">
-                <div class="col-md-4 mb-3" *ngFor="let ligneDemDikk of getItemsPage(tabLigneDemDikkFilter)">
+                <div class="col-md-4 mb-3" *ngFor="let ligneDemDikk of getItemsPageDDD()">
                     <div class="card text-center p-3 rounded-4" *ngIf="ligneDemDikk.sections.length">
                         <p class="numLigneContainer text-center"><span class="numLigne fw-bold fs-1 shadow-sm">{{ligneDemDikk.nom}}</span></p>
                         <!-- <span class="numLigne fw-bold fs-1 shadow-sm">1</span> -->
@@ -216,18 +222,21 @@
                     </div>
                 </div>
 
+                <h3 class="text-center fw-bold" *ngIf="!getItemsPageDDD().length">Aucun résultat trouvé</h3>
+
+
                 <!-- Pagination  -->
-                <div *ngIf="getItemsPage(tabLigneDemDikkFilter).length">
+                <div *ngIf="getItemsPageDDD().length">
                     <div class="d-flex justify-content-end mb-2">
-                    <button class="rounded-2 btnColor  mx-2" [disabled]="pageActuelle === 1" (click)="pageActuelle = pageActuelle - 1">
+                    <button class="rounded-2 btnColor  mx-2" [disabled]="pageActuelle1 === 1" (click)="pageActuelle1 = pageActuelle1 - 1">
                         <i class="bi bi-caret-left-fill fs-4"></i>
                     </button>
-                    <button class=" mx-2 page" *ngFor="let page of pages" (click)="pageActuelle = page">
-                        <span class="pageActuelle fs-5" *ngIf="page===pageActuelle">{{page}}</span>
-                        <span  *ngIf="page != pageActuelle">{{page}}</span>
+                    <button class=" mx-2 page" *ngFor="let page of pages1" (click)="pageActuelle1 = page">
+                        <span class="pageActuelle fs-5" *ngIf="page===pageActuelle1">{{page}}</span>
+                        <span  *ngIf="page != pageActuelle1">{{page}}</span>
                         <!-- {{ page }} -->
                     </button>
-                    <button class="rounded-2 btnColor mx-2" [disabled]="pageActuelle === totalPages" (click)="pageActuelle = pageActuelle + 1">
+                    <button class="rounded-2 btnColor mx-2" [disabled]="pageActuelle1 === totalPages1" (click)="pageActuelle1 = pageActuelle1 + 1">
                         <i class="bi bi-caret-right-fill fs-4"></i>
                     </button>
                     </div>
