@@ -81,6 +81,11 @@ export class LignesComponent implements OnInit{
   isAll: boolean = true;
 
   
+  filterNumLigneAFTU: string = "";
+  filterNumLigneDDD: string = "";
+
+  tabDemDikk: any[];
+  
 // Déclaration des méthodes 
   constructor(
     private reseauService: ReseauService,
@@ -96,6 +101,7 @@ export class LignesComponent implements OnInit{
     this.listeSections();
     this.listeLigne();
     this.listeTypeLigne();
+    // this.listeAllSection();
     // this.listeSectionLigneAftu();
     
     // if (!localStorage.getItem("lignesAftu")){
@@ -199,8 +205,6 @@ export class LignesComponent implements OnInit{
   }
 
   // Liste des tous les Ligne 
-  tabDemDikk: any[];
-
   listeLigne(){
     this.messageInfo = "";
     this.ligneService.getAllLigne().subscribe(
@@ -290,6 +294,7 @@ export class LignesComponent implements OnInit{
           this.tabLigneDemDikk[i].sections = this.tabLigneDemDikkFilter[i].sections = this.calculPrixSection(tabSectionLigne, this.prixSectionDemDikk, this.prixEntreSectionDemDikk);
         }
         
+        this.listeAllSection();
 
         
         if(!this.tabLigne.length){
@@ -328,6 +333,80 @@ export class LignesComponent implements OnInit{
         // }
       }
     )
+  }
+
+  // Methodes pour récupérer les zones de toutes les lignes (La totalité des sections) 
+  tabAllSections: any [] = [];
+  tabAllSectionsDepart: any [] = [];
+  tabAllSectionsArriver: any [] = [];
+  isZoneFound: boolean = true;
+  zoneArriver: any[] = [];
+  zoneDepart: any[] = [];
+
+  // La liste de toutes les sections sans redondances appelés dans la liste des lignes 
+  listeAllSection(){
+    // console.log("Le tableau des lignes: ", this.tabLigne);
+    
+    // On prend d'abord les lieux de départ de toutes les lignes 
+    this.tabLigne.forEach(element => {
+      let zoneExist = this.tabAllSections.find((zone:any) => zone.toLowerCase() == element.lieuDepart.toLowerCase());
+      if(zoneExist){
+        console.log("Déjà dans le tableau");        
+      } else {
+        this.tabAllSections.push(element.lieuDepart);
+      }
+    });
+    
+    
+    // console.log("Le tableau des sections", this.tabSection);
+    // On maintenant les arrivée des sections dans la table de toutes les sections
+    this.tabSection.forEach(element => {
+      let zoneExist = this.tabAllSections.find((zone:any) => zone.toLowerCase() == element.arrivee.toLowerCase());
+      if(zoneExist){
+        // console.log("Déjà dans le tableau");        
+      } else {
+        this.tabAllSections.push(element.arrivee);
+      }
+    });
+    // console.log("La liste de toutes les sections pour l'instant");
+    // console.log(this.tabAllSections);
+    this.tabAllSectionsArriver = this.tabAllSectionsDepart = this.tabAllSections;
+    this.zoneDepart = this.tabAllSectionsDepart;
+    this.zoneArriver = this.tabAllSectionsArriver;
+  }
+
+
+   // Résultat filtré lors de la saisie pour lieu de départ   
+  optionNotFoundDepart(){
+    this.zoneDepart = this.tabAllSectionsDepart.filter((zone:any)=> zone.toLowerCase().includes(this.departInput.toLocaleLowerCase()))
+    // console.log(this.zoneDepart);   
+    // console.log(this.zoneArriver);   
+    
+  }
+  
+  // Résultat filtré lors de la saisie pour lieu de arrivée  
+  optionNotFoundArrivee(){
+    this.zoneArriver = this.tabAllSectionsArriver.filter((zone:any)=> zone.toLowerCase().includes(this.arriveeInput.toLocaleLowerCase()))
+    console.log(this.zoneDepart);   
+    console.log(this.zoneArriver);   
+
+  }
+
+  // La methode pour retirer la zone selectionné au lieu de départ dans les zones pour lieu d'arrivée 
+  listeZoneFilteredArriveeFunction(depart: any){
+    console.log(depart);
+    this.tabAllSectionsArriver = this.tabAllSections.filter((zone:any) => zone != depart)
+    // this.zoneDepart = this.tabAllSectionsDepart;
+    // this.optionNotFound()
+    // this.zoneArriver = this.tabAllSectionsArriver.filter((zone:any)=> zone.toLowerCase().includes(this.arriveeInput.toLocaleLowerCase()))
+  }
+
+  // La methode pour retirer la zone selectionné au lieu de d'arrivée dans les zones pour lieu de départ 
+  listeZoneFilteredDepartFunction(arrivee: any){
+    console.log(arrivee);
+    this.tabAllSectionsDepart = this.tabAllSections.filter((zone:any) => zone != arrivee)
+    // this.tabAllSectionsArriver = this.tabAllSections;
+    // this.zoneDepart = this.tabAllSectionsDepart.filter((zone:any)=> zone.toLowerCase().includes(this.departInput.toLocaleLowerCase()))
   }
 
   // Voir les lignes du type filtré 
@@ -431,8 +510,6 @@ export class LignesComponent implements OnInit{
   }
 
   // Rechercher une ligne suivant son nom 
-  filterNumLigneAFTU: string = "";
-  filterNumLigneDDD: string = "";
   onSearchLigne(){
     // Rechercher pour aftu 
     this.tabLigneAftuFilter = this.tabLigneAftu.filter((ligne:any) => ligne.nom.toLowerCase().includes(this.filterNumLigneAFTU.toLowerCase()));
@@ -458,11 +535,6 @@ export class LignesComponent implements OnInit{
   }
   
 
-  // Methode pour rechercher les numéro de ligne 
-  // searchLignes(tab:any[], filtervalue:any): any[]{
-  //   return tab.filter((ligne:any) => ligne.nom.toLowerCase().includes(filtervalue.toLowerCase()))
-  // }
-
   // Methode pour trouver les sections de la ligne pendant la saisie
   searchSections(tab: any[], filterValue: string): any[] {
     return tab.map(objet => {
@@ -487,12 +559,16 @@ export class LignesComponent implements OnInit{
     let sectionsDDDFilterd = this.searchItineraire(this.tabLigneDemDikk, this.departInput, this.arriveeInput);
     this.tabLigneDemDikkFilter = sectionsDDDFilterd.filter((lignes:any )=> lignes.sections.length !=0);
   }
+
+  // Annule la recherche et ramène tout à l'etape initiale 
   annulerSearch(){
     this.isSerach = false;
     this.tabLigneAftuFilter = this.tabLigneAftu;
     this.tabLigneDemDikkFilter = this.tabLigneDemDikk;
     this.departInput = "";
     this.arriveeInput = "";
+    this.zoneDepart = this.tabAllSectionsDepart;
+    this.zoneArriver = this.tabAllSectionsArriver;
   }
   
   searchItineraire(tab: any[], lieuDepart: string, lieuArrivee: string): any[] {

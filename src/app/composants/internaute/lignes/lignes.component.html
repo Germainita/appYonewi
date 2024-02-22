@@ -28,16 +28,28 @@
         <form class="row g-3 ">
             <!-- départ  -->
             <div class="col-auto input-group-lg mb-3">
-                <input type="text" id="depart" name="depart" class="form-control" placeholder="depart...." [(ngModel)]="departInput">
+                <input type="text" list="sectionDepart" id="departInput" name="departInput" class="form-control" placeholder="depart...." [(ngModel)]="departInput" (input)="optionNotFoundDepart()" (change)="listeZoneFilteredArriveeFunction(departInput)">
+                <p *ngIf="zoneDepart.length == 0">Aucun resultat</p>
             </div>
 
             <div class="col-auto input-group-lg mb-3">
-                <input type="text" id="arrivee" name="arrivee" class="form-control" placeholder="Arrivée...." [(ngModel)]="arriveeInput">
+                <input type="text" list="sectionArrivee" id="arriveeInput" name="arriveeInput" class="form-control" placeholder="Arrivée...." [(ngModel)]="arriveeInput" (input)="optionNotFoundArrivee()" (change)="listeZoneFilteredDepartFunction(arriveeInput)"> 
+                <p *ngIf="zoneArriver.length == 0">Aucun resultat</p>
             </div>
             <div class="col-auto">
               <button type="submit" class="btn btn-lg btnRechercher fw-bold mb-3 me-3" (click)="onSearchItineraire()">Rechercher</button>
               <button  class="btn btn-lg btnAnnuler fw-bold mb-3" (click)="annulerSearch()" *ngIf="isSerach">Annuler</button>
-            </div>            
+            </div>  
+
+            <!-- Dataliste pour départ  -->
+            <datalist id="sectionDepart">
+                <option *ngFor="let zone of tabAllSectionsDepart" [value]="zone"></option>
+            </datalist>
+            
+            <!-- Dataliste pour arrivée  -->
+            <datalist id="sectionArrivee">
+                <option *ngFor="let zone of tabAllSectionsArriver" [value]="zone"></option>
+            </datalist>
         </form>
     </div>
 
