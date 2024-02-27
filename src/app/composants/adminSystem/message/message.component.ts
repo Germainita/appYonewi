@@ -9,37 +9,37 @@ import { ContactService } from 'src/app/services/contact.service';
 })
 export class MessageComponent implements OnInit{
   // Déclaration des variables 
-  tabMessage: any[] = [
-    {
-      id: 1,
-      email: "gg@gmail.com",
-      sujet: "Demande d'info",
-      message: "Je veux un compte",
-      createdAt: "10/11/2023"
-    },
-    {
-      id: 2,
-      email: "gg@gmail.com",
-      sujet: "Demande d'info",
-      message: "Je veux un compte",
-      createdAt: "11/11/2023"
-    },
-    {
-      id: 3,
-      email: "gg@gmail.com",
-      sujet: "Demande d'aide",
-      message: "Je veux un compte",
-      createdAt: "20/11/2023"
-    },
-    {
-      id: 4,
-      email: "gg@gmail.com",
-      sujet: "Demande de renseignement",
-      message: "Je veux un compte",
-      createdAt: "14/11/2023"
-    },
+  // tabMessage: any[] = [
+  //   {
+  //     id: 1,
+  //     email: "gg@gmail.com",
+  //     sujet: "Demande d'info",
+  //     message: "Je veux un compte",
+  //     createdAt: "10/11/2023"
+  //   },
+  //   {
+  //     id: 2,
+  //     email: "gg@gmail.com",
+  //     sujet: "Demande d'info",
+  //     message: "Je veux un compte",
+  //     createdAt: "11/11/2023"
+  //   },
+  //   {
+  //     id: 3,
+  //     email: "gg@gmail.com",
+  //     sujet: "Demande d'aide",
+  //     message: "Je veux un compte",
+  //     createdAt: "20/11/2023"
+  //   },
+  //   {
+  //     id: 4,
+  //     email: "gg@gmail.com",
+  //     sujet: "Demande de renseignement",
+  //     message: "Je veux un compte",
+  //     createdAt: "14/11/2023"
+  //   },
 
-  ]
+  // ]
 
   tabMessageFilter: any[] = [];
 

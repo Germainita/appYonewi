@@ -21,6 +21,7 @@ import { GestionLigneComponent } from './composants/adminReseau/gestion-ligne/ge
 import { AuthGuard, AuthGuardAdminReseau, AuthGuardAdminSystem } from './services/guard';
 import { TypeLigneComponent } from './composants/adminReseau/type-ligne/type-ligne.component';
 import { GestionProfilComponent } from './composants/commun/gestion-profil/gestion-profil.component';
+import { HistoriqueComponent } from './composants/adminSystem/historique/historique.component';
 
 const routes: Routes = [
   // Route par défaut 
@@ -57,8 +58,10 @@ const routes: Routes = [
   // Pour les administrateurs réseau 
   {path: "gestionTarifs", component:TarifComponent, title: "Gestion tarifs", canActivate: [AuthGuardAdminReseau]}, //Fait
   {path: "gestionTypeLigne", component:TypeLigneComponent, title: "Gestion type ligne", canActivate: [AuthGuardAdminReseau]}, //Fait
-  {path: "gestionLigne", component:GestionLigneComponent, title: "Gestion lignes", canActivate: [AuthGuardAdminReseau]},
+  {path: "gestionLigne", component:GestionLigneComponent, title: "Gestion lignes", canActivate: [AuthGuardAdminReseau]}, //Fait
   {path: "gestionAbonnemenet", component:AbonnementComponent, title: "Gestion abonnement", canActivate: [AuthGuardAdminReseau]}, //Fait
+  // {path: "historique", component:HistoriqueComponent, title: "Historique", canActivate: [AuthGuardAdminReseau]}, //En cour
+  {path: "historique", component:HistoriqueComponent, title: "Historique"}, //En cour
 ];
 
 @NgModule({

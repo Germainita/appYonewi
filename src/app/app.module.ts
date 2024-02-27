@@ -20,7 +20,6 @@ import { AbonnementAFTUComponent } from './composants/internaute/abonnement-aftu
 import { AuthentificationComponent } from './composants/commun/authentification/authentification.component';
 import { SidebarComponent } from './composants/commun/sidebar/sidebar.component';
 import { NavbarComponent } from './composants/commun/navbar/navbar.component';
-import { DashbordAdminSystemComponent } from './composants/adminSystem/dashbord-admin-system/dashbord-admin-system.component';
 import { ReseauComponent } from './composants/adminSystem/reseau/reseau.component';
 import { NewsletterComponent } from './composants/adminSystem/newsletter/newsletter.component';
 import { MessageComponent } from './composants/adminSystem/message/message.component';
@@ -35,6 +34,7 @@ import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptors/interceptor';
 import { TypeLigneComponent } from './composants/adminReseau/type-ligne/type-ligne.component';
 import { GestionProfilComponent } from './composants/commun/gestion-profil/gestion-profil.component';
+import { HistoriqueComponent } from './composants/adminSystem/historique/historique.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,6 @@ import { GestionProfilComponent } from './composants/commun/gestion-profil/gesti
     AuthentificationComponent,
     SidebarComponent,
     NavbarComponent,
-    DashbordAdminSystemComponent,
     ReseauComponent,
     NewsletterComponent,
     MessageComponent,
@@ -64,7 +63,8 @@ import { GestionProfilComponent } from './composants/commun/gestion-profil/gesti
     AbonnementComponent,
     GestionLigneComponent,
     TypeLigneComponent,
-    GestionProfilComponent
+    GestionProfilComponent,
+    HistoriqueComponent
   ],
   imports: [
     BrowserModule,
