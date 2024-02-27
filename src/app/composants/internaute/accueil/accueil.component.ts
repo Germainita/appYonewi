@@ -27,6 +27,25 @@ export class AccueilComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    // Initialiser le localstorage 
+    if(!localStorage.getItem("refreshCount")){
+      localStorage.setItem("refreshCount", JSON.stringify(0));
+    }
+    
+    if(!localStorage.getItem("userConnect")){
+      localStorage.setItem("userConnect", JSON.stringify(""))
+    }
+
+    // La connexion de l'admin system 
+    if(!localStorage.getItem("isAdminSystemConnected")){
+      localStorage.setItem("isAdminSystemConnected", JSON.stringify(false))
+    }
+    
+    // La connexion de l'admin Reseau 
+    if(!localStorage.getItem("isAdminReseauConnected")){
+      localStorage.setItem("isAdminReseauConnected", JSON.stringify(false))
+    }
+
     // Les réseaux 
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{

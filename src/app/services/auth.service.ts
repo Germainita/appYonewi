@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url } from './apiUrl';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { sweetAlertMessage } from './sweetAlert/alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +33,89 @@ export class AuthService {
   // Réinitialiser mot de passe 
   askResetPassword(email:any){
     return this.http.post(`${url}/forget-password`, email);
+  }
+
+  // Rafraichir le token 
+  // Methode pour rafraichir automatiquement le token après chaque 15mns
+  deconnexionAutomatique() {
+    setTimeout(() => {
+      this.refreshToken(this.onSuccess, this.onError);
+    }, 900000); // 10 secondes 
+  }
+
+  // Service pour rafraichir le token 
+  refreshToken(onSuccess: Function, onError: Function) {
+    // Vérifier si le nombre de rafraîchissements a atteint la limite de 4
+    const refreshCount = parseInt(localStorage.getItem('refreshCount') || '0');
+    if (refreshCount >= 8) {
+      // Afficher SweetAlert pour proposer de rafraîchir le token ou se déconnecter
+      this.showLogoutAlert();
+    } else {
+      // Mettre à jour le nombre de rafraîchissements dans le localStorage
+      localStorage.setItem('refreshCount', (refreshCount + 1).toString());
+      // Réinitialiser le timer de déconnexion automatique
+      this.deconnexionAutomatique();
+    }
+
+    // Effectuer le rafraîchissement du token
+    return this.http.get<any>(`${url}/refresh`).subscribe(
+      (response: any) => onSuccess(response),
+      (error: any) => onError(error)
+    );
+  }
+
+  onSuccess = (response: any) => {
+    // Mettre à jour le token
+    localStorage.setItem('userConnect', JSON.stringify(response));
+    console.log('voici la reponse du changement du token', response);
+  };
+
+  onError = (error: any) => {
+    console.log('Voici les erreurs du changement du token', error);
+  };
+
+  showLogoutAlert() {
+    let refresh = 0;
+    localStorage.setItem('refreshCount', JSON.stringify(refresh));
+    this.logout();
+    sweetAlertMessage("success", "Session expirée", "Veuillez vous reconnectez")
+
+    // this.MessageSucces()
+    // Swal.fire({
+    //   title: 'Votre Session a expirer',
+    //   text: 'Deconnecter vous ou rafraichissez votre token',
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Oui! je raffraichie',
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     Swal.fire({
+    //       title: 'non!',
+    //       text: 'non!, je me deconnecte',
+    //       icon: 'success',
+    //     });
+    //   }
+    // });
+  }
+
+  // Si on supprime le tocken qu'est-ce qu'on fait 
+  deconnexionSansToken(){
+    let isUserConnectToken = false
+    if (localStorage.getItem("userConnect")) {
+      let userConnect = JSON.parse(localStorage.getItem("userConnect") || "");
+      if(userConnect.token){
+        isUserConnectToken = true;
+      }
+      // console.log("Le token",userConnect.tocken);
+    } else {
+      isUserConnectToken = false
+    }
+    if(!isUserConnectToken){
+      sweetAlertMessage("error", "Pas de token", "Vueillez vous reconnectez");
+      this.logout();
+      localStorage.setItem('refreshCount', (0).toString());
+    }
   }
 }

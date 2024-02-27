@@ -29,7 +29,10 @@
                 </li>            
             </ul>
             <div class="profil">
-                <a href="#" class="btn btnConnexion" routerLink="/auth">Se connecter</a>
+                <a href="#" class="btn btnConnexion" routerLink="/auth" *ngIf="!userConnect">Se connecter</a>
+                <img [src]="imageUserConnected" alt="" *ngIf="userConnect && imageUserConnected">        
+                <img src="https://img.freepik.com/vecteurs-premium/icone-profil-utilisateur-dans-style-plat-illustration-vectorielle-avatar-membre-fond-isole-concept-entreprise-signe-autorisation-humaine_157943-15752.jpg" alt="" *ngIf="userConnect && !imageUserConnected">       
+        
             </div>
         </div>
     </div>

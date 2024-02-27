@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Reseau } from 'src/app/models/reseau.model';
 import { Role } from 'src/app/models/role.model';
 import { urlImage } from 'src/app/services/apiUrl';
+import { AuthService } from 'src/app/services/auth.service';
 import { ReseauService } from 'src/app/services/reseau.service';
 import { RoleService } from 'src/app/services/role.service';
 import { sweetAlertMessage } from 'src/app/services/sweetAlert/alert.service';
@@ -37,12 +38,19 @@ export class NavbarComponent implements OnInit{
   imageUserConnected: any;
   
   // Déclaration des méthodes 
-  constructor(private roleService:RoleService, private reseauService: ReseauService, private userService:UserService){}
+  constructor(
+    private roleService:RoleService, 
+    private reseauService: ReseauService, 
+    private userService:UserService,
+    private authService: AuthService
+  ){}
 
   ngOnInit(): void {
+    this.authService.deconnexionSansToken(); //Deconnecte l'utilisateur si on supprime le token
     // On récupère les infos de l'utilisateur qui s'est connecté 
     // localStorage.setItem("userConnect", JSON.stringify(userConnect));
     this.userConnect = JSON.parse(localStorage.getItem("userConnect")) || "";
+
 
     // Les infos de l'utilisateur connecté 
     // console.log(this.userConnect.user);

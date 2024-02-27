@@ -18,6 +18,7 @@ export class SidebarComponent implements OnInit{
   constructor(private auth: AuthService){}
 
   ngOnInit(): void {
+    this.auth.deconnexionSansToken(); //Deconnecte l'utilisateur si on supprime le token
     // On récupère les infos de l'utilisateur qui s'est connecté 
     // localStorage.setItem("userConnect", JSON.stringify(userConnect));
     this.userConnect = JSON.parse(localStorage.getItem("userConnect")) || "";

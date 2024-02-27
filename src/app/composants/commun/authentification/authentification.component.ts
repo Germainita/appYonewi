@@ -36,6 +36,11 @@ export class AuthentificationComponent implements OnInit {
 
 
   ngOnInit(): void { 
+    // Initialiser le localstorage 
+    if(!localStorage.getItem("refreshCount")){
+      localStorage.setItem("refreshCount", JSON.stringify(0));
+    }
+    
     if(!localStorage.getItem("userConnect")){
       localStorage.setItem("userConnect", JSON.stringify(""))
     }
@@ -120,7 +125,9 @@ export class AuthentificationComponent implements OnInit {
           response = rep;
           // console.log(response);
           if (response.status){
+            this.authService.deconnexionAutomatique(); //Rafraichit 9 fois le token à chaque 15 minutes et déconnecte directement la session
             // console.log ("C'est bon");
+            
             Swal.fire({
               position: 'center',
               icon: 'success',

@@ -16,6 +16,7 @@ import { SectionModel } from 'src/app/models/section.model';
 import { TypeLigne } from 'src/app/models/typeLigne.model';
 import { User } from 'src/app/models/user.model';
 import { AbonnementService } from 'src/app/services/abonnement.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { LigneService } from 'src/app/services/ligne.service';
 import { NewsletterService } from 'src/app/services/newsletter.service';
 import { ReseauService } from 'src/app/services/reseau.service';
@@ -87,11 +88,12 @@ export class DashbordComponent implements OnInit{
     private typeLigneService: TypeLigneService, 
     private abonnementService: AbonnementService,
     private tarifService: TarifService, 
+    private authService: AuthService,
 
   ) {}
 
   ngOnInit(): void {
-    
+    this.authService.deconnexionSansToken(); //Deconnecte l'utilisateur si on supprime le token
 
     // On récupère les infos de l'utilisateur qui s'est connecté 
     // localStorage.setItem("userConnect", JSON.stringify(userConnect));

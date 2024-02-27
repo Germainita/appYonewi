@@ -8,7 +8,11 @@ export const AuthGuardAdminReseau = () =>{
     const router = inject(Router);
 
     // L'administrateur réseau connecté
-    const authAdminReseauAccept = JSON.parse(localStorage.getItem("isAdminReseauConnected") || "");
+    let authAdminReseauAccept:any
+    if(localStorage.getItem("isAdminReseauConnected")){
+        authAdminReseauAccept = JSON.parse(localStorage.getItem("isAdminReseauConnected") || "");
+
+    }
 
     if(!authAdminReseauAccept){
         router.navigateByUrl('/auth')
@@ -21,9 +25,12 @@ export const AuthGuardAdminReseau = () =>{
 // Guard pour l'administrateur system 
 export const AuthGuardAdminSystem =() =>{
     const router = inject(Router);
-
+    let authAdminSystemAccept: any
     // L'administrateur system connecté 
-    const authAdminSystemAccept = JSON.parse(localStorage.getItem("isAdminSystemConnected") || "");
+    if(localStorage.getItem("isAdminSystemConnected")) {
+        authAdminSystemAccept = JSON.parse(localStorage.getItem("isAdminSystemConnected") || "");        
+    }
+
     if(!authAdminSystemAccept){
         router.navigateByUrl('/auth')
         return false;
@@ -38,10 +45,23 @@ export const AuthGuard = () =>{
     const router = inject(Router);
 
     // L'administrateur réseau connecté
-    const authAdminReseauAccept = JSON.parse(localStorage.getItem("isAdminReseauConnected") || "");
+    let authAdminReseauAccept:any
+    if(localStorage.getItem("isAdminReseauConnected")){
+        authAdminReseauAccept = JSON.parse(localStorage.getItem("isAdminReseauConnected") || "");
+
+    }
+
+    let authAdminSystemAccept: any
+    // L'administrateur system connecté 
+    if(localStorage.getItem("isAdminSystemConnected")) {
+        authAdminSystemAccept = JSON.parse(localStorage.getItem("isAdminSystemConnected") || "");        
+    }
+
+    // L'administrateur réseau connecté
+    // const authAdminReseauAccept = JSON.parse(localStorage.getItem("isAdminReseauConnected") || "");
 
     // L'administrateur system connecté 
-    const authAdminSystemAccept = JSON.parse(localStorage.getItem("isAdminSystemConnected") || "");
+    // const authAdminSystemAccept = JSON.parse(localStorage.getItem("isAdminSystemConnected") || "");
 
     if(!authAdminReseauAccept && !authAdminSystemAccept){
         router.navigateByUrl('/auth')

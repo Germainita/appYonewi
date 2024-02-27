@@ -1,20 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { urlImage } from 'src/app/services/apiUrl';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-  status: boolean = false;
+export class HeaderComponent implements OnInit {
+  userConnect: string = "";
+  imageUserConnected: any;
 
-  clickEvent(){
-    this.status = true;       
-  }
+  ngOnInit(): void {
+    let user = JSON.parse(localStorage.getItem("userConnect")) || "";
+    if(user){
+      this.userConnect  = user;
 
-  clickLink(){
-    this.status = true;
-    alert("bonjour")
-  }
-
+    }
+    if(user.user.image){
+      this.imageUserConnected = `${urlImage}${user.user.image}`;
+    }
+  }   
 }

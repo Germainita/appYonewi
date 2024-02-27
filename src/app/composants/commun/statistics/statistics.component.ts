@@ -7,6 +7,7 @@ import { Tarif } from 'src/app/models/tarif.model';
 import { TypeLigne } from 'src/app/models/typeLigne.model';
 import { User } from 'src/app/models/user.model';
 import { AbonnementService } from 'src/app/services/abonnement.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { ContactService } from 'src/app/services/contact.service';
 import { LigneService } from 'src/app/services/ligne.service';
 import { ReseauService } from 'src/app/services/reseau.service';
@@ -47,11 +48,12 @@ export class StatisticsComponent implements OnInit{
     private userService: UserService,
     private reseauService: ReseauService,
     private contactService: ContactService,
-    
+    private authService: AuthService
   ){}
 
   // Déclarations des méthodes 
   ngOnInit(): void {
+    this.authService.deconnexionSansToken(); //Deconnecte l'utilisateur si on supprime le token
     // On récupère les infos de l'utilisateur qui s'est connecté 
     // localStorage.setItem("userConnect", JSON.stringify(userConnect));
     this.userConnect = JSON.parse(localStorage.getItem("userConnect")) || "";

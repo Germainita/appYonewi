@@ -13,7 +13,8 @@ export const sweetAlertMessage = (icone:any, title:any, text:any) =>{
         icon: icone,
         title: title,
         text: text,
-        showConfirmButton: true,
+        timer: 3000,
+        showConfirmButton: false,
     })
 }
 // export class SweetAlertService {
