@@ -45,14 +45,18 @@ export class AuthService {
 
   // Service pour rafraichir le token 
   refreshToken(onSuccess: Function, onError: Function) {
+    console.log("Function de rafraichessement");
+    
     // Vérifier si le nombre de rafraîchissements a atteint la limite de 4
     const refreshCount = parseInt(localStorage.getItem('refreshCount') || '0');
     if (refreshCount >= 8) {
       // Afficher SweetAlert pour proposer de rafraîchir le token ou se déconnecter
       this.showLogoutAlert();
+      console.log("Function de rafraichessement superieure à 1", refreshCount);
     } else {
       // Mettre à jour le nombre de rafraîchissements dans le localStorage
       localStorage.setItem('refreshCount', (refreshCount + 1).toString());
+      console.log("Function de rafraichessement inf à 1", refreshCount)
       // Réinitialiser le timer de déconnexion automatique
       this.deconnexionAutomatique();
     }
@@ -115,7 +119,7 @@ export class AuthService {
     if(!isUserConnectToken){
       sweetAlertMessage("error", "Pas de token", "Vueillez vous reconnectez");
       this.logout();
-      localStorage.setItem('refreshCount', (0).toString());
+      // localStorage.setItem('refreshCount', (0).toString());
     }
   }
 }

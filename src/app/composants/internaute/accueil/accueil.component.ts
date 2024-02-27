@@ -28,9 +28,9 @@ export class AccueilComponent implements OnInit {
 
   ngOnInit(): void {
     // Initialiser le localstorage 
-    if(!localStorage.getItem("refreshCount")){
-      localStorage.setItem("refreshCount", JSON.stringify(0));
-    }
+    // if(!localStorage.getItem("refreshCount")){
+    //   localStorage.setItem("refreshCount", JSON.stringify(0));
+    // }
     
     if(!localStorage.getItem("userConnect")){
       localStorage.setItem("userConnect", JSON.stringify(""))
