@@ -150,12 +150,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="inputType" class="form-label">Type de ligne: <span class="require">*</span></label>
-                                        <!-- <select class="form-select" aria-label="Default select example" name="lieuArriveeTemps" id="inputlieuArrivee" [(ngModel)]="temps">
-                                            <option value="Jour">Urbaine</option>
-                                            <option value="Semaine">Banlieu</option>
-                                            <option value="Mois">AIBD & Diamniadio</option>
-                                            <option value="aucun">Aucun</option>
-                                        </select> -->
+                                        
                                         <select id="inputType" class="form-select" name="typeLigne" aria-label="les type de ligne" [(ngModel)] ="ligne.type_id">
                                             <option *ngFor="let typeLigne of tabTypeLigne" [value]="typeLigne.id" >{{typeLigne.nom}}</option>
                                             <option value="">Aucun</option>
@@ -208,16 +203,7 @@
                                         <!-- <p *ngIf="index > 0">CC {{tabAjoutSections[index-1].arrivee}}</p> -->
                                         <input type="text" name="debut" class="form-control" id="inputDebut" [value]="tabAjoutSections[index-1].arrivee" disabled *ngIf="index > 0">
 
-                                        <!-- Si c'est entre les sections  -->
-                                        <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [(ngModel)]="tabAjoutSections[index -1].arrivee" disabled *ngIf="index > 0"> -->
-                                        <!-- <input type="text" name="debut" class="form-control" id="inputDebut" [value]="section.depart" (input)="verifInfosSection(section)" [(ngModel)]="section.depart"> -->
-                                        <!-- <p class="text-danger" *ngIf="!section.isExact ">Doit etre identique à la fin de la section précédente</p>
-                                        <p class="text-success" *ngIf="section.isExact"></p> -->
                                         
-
-                                        <!-- <input type="text" name="debut" class="form-control" id="inputDebut" (input)="verifSectionInfos()" [(ngModel)]="section.depart">
-                                        <p class="text-danger" *ngIf="!isInfosValid && section.num !='1'">Doit etre identique à la fin de la section précédente</p>
-                                        <p class="text-success" *ngIf="isInfosValid && section.num !='1'"></p> -->
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <label for="inputFinSection" class="form-label">Fin section: <span class="require">*</span></label>
@@ -408,7 +394,7 @@
                                                         <path d="M19.7917 19.7917H5.20833V5.20833H11.4583V3.125H5.20833C4.65631 3.12665 4.12736 3.34667 3.73702 3.73702C3.34667 4.12736 3.12665 4.65631 3.125 5.20833V19.7917C3.12665 20.3437 3.34667 20.8726 3.73702 21.263C4.12736 21.6533 4.65631 21.8734 5.20833 21.875H19.7917C20.3437 21.8734 20.8726 21.6533 21.263 21.263C21.6533 20.8726 21.8734 20.3437 21.875 19.7917V13.5417H19.7917V19.7917Z" fill="#F2743B"/>
                                                     </svg>
                                                 </button>
-                                                <button class="btnAction px-2 py-1 rounded-2 me-4" title="Supprimer">
+                                                <button class="btnAction px-2 py-1 rounded-2 me-4" title="Supprimer" (click)="supprimerSection(section, index)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                                                         <path d="M21.0938 4.6875H17.5781V3.51562C17.5781 2.79042 17.29 2.09492 16.7772 1.58213C16.2645 1.06934 15.569 0.78125 14.8438 0.78125H10.1562C9.43105 0.78125 8.73555 1.06934 8.22275 1.58213C7.70996 2.09492 7.42188 2.79042 7.42188 3.51562V4.6875H3.90625C3.59545 4.6875 3.29738 4.81097 3.07761 5.03073C2.85784 5.2505 2.73438 5.54857 2.73438 5.85938C2.73438 6.17018 2.85784 6.46825 3.07761 6.68802C3.29738 6.90778 3.59545 7.03125 3.90625 7.03125H4.29688V20.3125C4.29688 20.8305 4.50265 21.3273 4.86893 21.6936C5.23521 22.0599 5.732 22.2656 6.25 22.2656H18.75C19.268 22.2656 19.7648 22.0599 20.1311 21.6936C20.4974 21.3273 20.7031 20.8305 20.7031 20.3125V7.03125H21.0938C21.4046 7.03125 21.7026 6.90778 21.9224 6.68802C22.1422 6.46825 22.2656 6.17018 22.2656 5.85938C22.2656 5.54857 22.1422 5.2505 21.9224 5.03073C21.7026 4.81097 21.4046 4.6875 21.0938 4.6875ZM9.76562 3.51562C9.76562 3.41202 9.80678 3.31267 9.88004 3.23941C9.95329 3.16616 10.0526 3.125 10.1562 3.125H14.8438C14.9474 3.125 15.0467 3.16616 15.12 3.23941C15.1932 3.31267 15.2344 3.41202 15.2344 3.51562V4.6875H9.76562V3.51562ZM18.3594 19.9219H6.64062V7.03125H18.3594V19.9219ZM11.3281 10.1562V16.4062C11.3281 16.7171 11.2047 17.0151 10.9849 17.2349C10.7651 17.4547 10.4671 17.5781 10.1562 17.5781C9.84545 17.5781 9.54738 17.4547 9.32761 17.2349C9.10784 17.0151 8.98438 16.7171 8.98438 16.4062V10.1562C8.98438 9.84545 9.10784 9.54738 9.32761 9.32761C9.54738 9.10784 9.84545 8.98438 10.1562 8.98438C10.4671 8.98438 10.7651 9.10784 10.9849 9.32761C11.2047 9.54738 11.3281 9.84545 11.3281 10.1562ZM16.0156 10.1562V16.4062C16.0156 16.7171 15.8922 17.0151 15.6724 17.2349C15.4526 17.4547 15.1546 17.5781 14.8438 17.5781C14.5329 17.5781 14.2349 17.4547 14.0151 17.2349C13.7953 17.0151 13.6719 16.7171 13.6719 16.4062V10.1562C13.6719 9.84545 13.7953 9.54738 14.0151 9.32761C14.2349 9.10784 14.5329 8.98438 14.8438 8.98438C15.1546 8.98438 15.4526 9.10784 15.6724 9.32761C15.8922 9.54738 16.0156 9.84545 16.0156 10.1562Z" fill="#F2743B"/>
                                                     </svg>

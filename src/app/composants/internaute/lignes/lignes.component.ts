@@ -198,7 +198,9 @@ export class LignesComponent implements OnInit{
     this.sectionService.getAllSection().subscribe(
       (data:any) =>{
         console.log(data);
-        this.tabSection = data.sections;    
+        this.tabSection = data.sections; 
+        // console.log(this.tabSection);
+           
         this.isAll = false;   
       }
     )

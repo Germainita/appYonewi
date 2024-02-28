@@ -293,43 +293,66 @@ export class GestionLigneComponent {
   // Liste des tous les Ligne 
   listeLigne(){
     this.messageInfo = "";
+    let tabSectionsLignes :any[] = [];
     this.ligneService.getAllLigneReseau().subscribe(
       (data:any) =>{
         console.log("Les lignes recu",data);
+        console.log("Le tableau des sections",this.tabSection);
+        // Je vérifie si tabSection est de type array 
+        // console.log("Est-ce que c'est un tableau ?");
+        
+        console.log("Est-ce que tabSection est un tableau ?", Array.isArray(this.tabSection)); // tabSection n'est pas un tableau mais une liste d'objet
+        if (Array.isArray(this.tabSection)){
+          tabSectionsLignes = this.tabSection;
+        } else {
+          tabSectionsLignes = Object.values(this.tabSection);  // On récupères les valeurs on les mets dans un tableau
+        }
 
-        this.tabLigne = data.lignes;
-        // Pour les sections enregistrés par l'administrateur réseau 
-        for(let i = 0; i<this.tabLigne.length; i++){
-          let tabSection = this.tabSection.filter((section:any) => section.ligne_id == this.tabLigne[i].id);
-          this.tabLigne[i].sections = tabSection;
-          if(tabSection){
-            for(let y = 0; y < tabSection.length; y++){
-              tabSection[y].num = (y + 1).toString();
-              tabSection[y].prix = this.prixSection;
-              tabSection[y].messageInfo = "";
-            }   
-            
-            // console.log(tabSection);         
+        console.log("Est-ce que tabSectionsLignes est un tableau ?", Array.isArray(tabSectionsLignes));
+        console.log("Le tableau des sections converti en tableau",tabSectionsLignes);
+
+
+        if( data.lignes){
+          this.tabLigne = data.lignes;
+          let tabSection = tabSectionsLignes.filter((section:any) => section.ligne_id == 17);
+          console.log("Les sections de la première ligne: ", tabSection);
+          
+          // Pour les sections enregistrés par l'administrateur réseau 
+          for(let i = 0; i<this.tabLigne.length; i++){
+            if(this.tabSection){
+              tabSection = tabSectionsLignes.filter((section:any) => section.ligne_id == this.tabLigne[i].id);
+              this.tabLigne[i].sections = tabSection;
+              if(tabSection){
+                for(let y = 0; y < tabSection.length; y++){
+                  tabSection[y].num = (y + 1).toString();
+                  tabSection[y].prix = this.prixSection;
+                  tabSection[y].messageInfo = "";
+                }   
+            }
+              
+              // console.log(tabSection);         
+            }
+            // On enregistre la dernière section qui est le debut et la fin de la ligne 
+            // if(tabSection.length) {
+            //   let lastSection = new SectionModel;
+            //   lastSection.depart = this.tabLigne[i].lieuDepart;
+            //   lastSection.arrivee = this.tabLigne[i].lieuArrivee;
+            //   lastSection.created_at = this.tabLigne[i].created_at;
+            //   lastSection.created_by = this.tabLigne[i].created_by;
+            //   lastSection.updated_at = this.tabLigne[i].updated_at;
+            //   lastSection.updated_by = this.tabLigne[i].updated_by;
+            //   lastSection.num = (tabSection.length + 1).toString();
+            //   lastSection.prix = this.prixSection + ((tabSection.length - 1 )* this.prixEntreSection);
+  
+            //   // On ajoute la derniere section dans le tableau 
+            //   tabSection.push(lastSection);
+            // }
+  
+            // this.tabLigne[i].sections = tabSection;
+  
+            // console.log(this.tabLigne[i].sections );
           }
-          // On enregistre la dernière section qui est le debut et la fin de la ligne 
-          // if(tabSection.length) {
-          //   let lastSection = new SectionModel;
-          //   lastSection.depart = this.tabLigne[i].lieuDepart;
-          //   lastSection.arrivee = this.tabLigne[i].lieuArrivee;
-          //   lastSection.created_at = this.tabLigne[i].created_at;
-          //   lastSection.created_by = this.tabLigne[i].created_by;
-          //   lastSection.updated_at = this.tabLigne[i].updated_at;
-          //   lastSection.updated_by = this.tabLigne[i].updated_by;
-          //   lastSection.num = (tabSection.length + 1).toString();
-          //   lastSection.prix = this.prixSection + ((tabSection.length - 1 )* this.prixEntreSection);
 
-          //   // On ajoute la derniere section dans le tableau 
-          //   tabSection.push(lastSection);
-          // }
-
-          // this.tabLigne[i].sections = tabSection;
-
-          // console.log(this.tabLigne[i].sections );
         }
 
         // Test2 
@@ -510,7 +533,9 @@ export class GestionLigneComponent {
     this.sectionService.getAllSectionReseau().subscribe(
       (data:any) =>{
         // console.log(data);
-        this.tabSection = this.tabSectionFilterActifs = data.sections;       
+        if(data.sections){
+          this.tabSection = this.tabSectionFilterActifs = data.sections;     
+        }
       }
     )
   }
@@ -840,7 +865,7 @@ export class GestionLigneComponent {
       this.updateSectionFonction(sectionsLigne[this.indexObject + 1].id, section);
     }
 
-    sweetAlertMessage("sucess", "", "La section a bien été modifiée");
+    sweetAlertMessage("success", "", "La section a bien été modifiée");
     console.log(sectionsLigne);
 
     console.log("Les sections modifiées");
@@ -848,11 +873,34 @@ export class GestionLigneComponent {
 
   // suprrimer une section d'une ligne
   supprimerSection(section:any, index:any){
-    console.log("La section à supprimer: ");
-    console.log(section);
-    let tabSections = this.ligne.sections;
-    console.log("Le tableau des sections de la ligne: ");
-    console.log(tabSections);    
+    // console.log("La section à supprimer: ");
+    // console.log(section);
+    let tabSections = this.ligne.sections; //Recupère les sections de la ligne
+    if(tabSections.length <=2){
+      sweetAlertMessage("error", "Suppression impossible", "La ligne doit avoir une moins un point d'arret ")
+    } else {
+      
+      if(index == 0){ // On vérifie si c'est pas la première section 
+        // console.log("C'est la premiere section: ",  tabSections[index]);
+        // La section suivante prend la place de la première 
+        tabSections[index + 1].depart = tabSections[index].depart;
+        // console.log("La section suivante: ",  tabSections[index + 1]);
+        // On met à jour la section suivante 
+        this.updateSectionFonction(tabSections[index + 1].id, tabSections[index + 1]);
+
+        // On supprime la section 
+        this.deleteSectionFunction(section.id);
+        sweetAlertMessage("success", "", "Section supprimer avec succes")
+      }      
+      else if(index >0 &&  index < tabSections.length - 1){ // On prend les deux section qui l'entoure 
+        // la section avant 
+        console.log("Section avant :", tabSections[index - 1] );
+        console.log("Section :", tabSections[index] );
+        console.log("Section apres :", tabSections[index + 1] );        
+      } else{ // On vérifie si c'est pas la dernière section 
+        console.log("C'est la derniere section :", tabSections[index] );        
+      }
+    }   
   }
 
   // Methode qui fait appel au service pour la modification d'une section 
