@@ -846,6 +846,15 @@ export class GestionLigneComponent {
     console.log("Les sections modifiées");
   }
 
+  // suprrimer une section d'une ligne
+  supprimerSection(section:any, index:any){
+    console.log("La section à supprimer: ");
+    console.log(section);
+    let tabSections = this.ligne.sections;
+    console.log("Le tableau des sections de la ligne: ");
+    console.log(tabSections);    
+  }
+
   // Methode qui fait appel au service pour la modification d'une section 
   updateSectionFonction(id:any, section:any){
     this.sectionService.updateSection(id, section).subscribe(

@@ -1,0 +1,65 @@
+.dashbord{
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+}
+
+.container{
+    padding: 0 8vh;
+
+}
+.container .card{
+    border: none;
+    border-radius: 0;
+    /* min-height: 50vh; */
+}
+
+/* Recherche réseaux  */
+.search input{
+    border-right-color: white;
+}
+
+.search .iconesearch{
+    background-color: white;
+    border-left-color: white;
+    color: var(--base2);
+}
+
+/* le tableau  */
+thead tr th{
+    background-color: var(--base1);
+    color: white;
+}
+
+.btnAction{
+    border: 1px solid var(--base2);
+    background-color: white;
+}
+
+/* pagination  */
+.pageActuelle{
+    color: var(--base2);
+    font-weight: bold;
+}
+
+.btnDetail{
+    border: 1px solid var(--base2);
+    background-color: white;
+}
+
+.btn{
+    background-color: var(--base1);
+    color: white;
+    font-weight: bold;
+}
+
+.btnColor{
+    color: var(--base1);
+    border: 1px solid var(--base1);
+    background-color: white;
+}
+
+.page{
+    border: none;
+    background-color: white;
+}
