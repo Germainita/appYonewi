@@ -295,7 +295,7 @@ export class GestionLigneComponent {
     this.messageInfo = "";
     this.ligneService.getAllLigneReseau().subscribe(
       (data:any) =>{
-        console.log(data);
+        console.log("Les lignes recu",data);
 
         this.tabLigne = data.lignes;
         // Pour les sections enregistrés par l'administrateur réseau 
@@ -329,7 +329,7 @@ export class GestionLigneComponent {
 
           // this.tabLigne[i].sections = tabSection;
 
-          console.log(this.tabLigne[i].sections );
+          // console.log(this.tabLigne[i].sections );
         }
 
         // Test2 
@@ -378,6 +378,8 @@ export class GestionLigneComponent {
         
         // console.log(this.tabLigne)
         this.tabLigneFilterActifs = this.tabLigne;
+        console.log("Le tableau des lignes filtré", this.tabLigneFilterActifs);
+        
 
         
         if(!this.tabLigne.length){
@@ -459,7 +461,21 @@ export class GestionLigneComponent {
     this.typeLigneService.getTypesLigneReseau().subscribe(
       (data:any) =>{
         console.log(data);
-        this.tabTypeLigne = data.types;
+        if (data.types){
+          // console.log("Il ya un type de ligne");
+          this.tabTypeLigne = data.types;
+          
+        } else{
+          console.log("Il n'y a pas de getTypeLigneNameype de ligne");
+          this.tabTypeLigne = [];
+        }
+        
+        // if(data){
+        //   this.tabTypeLigne = data.types;
+        // } else{
+        //   this.tabTypeLigne = [];
+        // }
+        console.log("La longueur du tableau des type de ligne", this.tabTypeLigne.length);
       }
     )
   }
@@ -703,6 +719,7 @@ export class GestionLigneComponent {
   }
 
 
+  // Ajouter une section 
   ajoutSection(section:any){
     this.sectionService.addSection(section).subscribe(
       (data:any) =>{
@@ -841,6 +858,20 @@ export class GestionLigneComponent {
     )
   }
 
+  // Methode qui fait appel au service pour la suppression d'une section
+  deleteSectionFunction(idSection:any){
+    this.sectionService.deleteSection(idSection).subscribe(
+      (data:any)=>{
+        console.log("Sucess");
+        console.log(data);  
+      },
+      (err: any) =>{
+        console.log("Erreur");
+        console.log(err);
+      }
+    )
+  }
+
   // Supprimer un Ligne
   supprimer(ligne:any){
     sweetMessageConfirm("Vous allez supprimer cet Ligne", "Oui, je supprime").then( (result) =>{
@@ -861,6 +892,7 @@ export class GestionLigneComponent {
     })
     
   }
+
 
   // Restaurer un Ligne 
   restaurer(ligne:any){
@@ -935,11 +967,14 @@ export class GestionLigneComponent {
   // Le nom du type de ligne 
   getTypeLigneName(idTypeLigne:any) : string{
     let nom: string ="";
-    let typeLigne = this.tabTypeLigne.find((type:any) => type.id == parseInt(idTypeLigne));
-    if(typeLigne){
-      nom = typeLigne.nom;
-    } else {
-      nom = "Aucun";
+    if(this.tabTypeLigne.length !=0){
+      let typeLigne = this.tabTypeLigne.find((type:any) => type.id == parseInt(idTypeLigne));
+      if(typeLigne){
+        nom = typeLigne.nom;
+      } else {
+        nom = "Aucun";
+      }
+      
     }
     return nom;
   }
