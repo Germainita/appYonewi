@@ -57,23 +57,27 @@ export class HistoriqueComponent implements OnInit{
   messageInfoEntity: string = "";
   // Filtrer suivant l'entité 
   filteredByEntite (){
+    this.userFiltered = "";
+    this.messageInfoUser = "";
     this.messageInfoEntity = "";
     // alert(this.entiteFiltered);
-    if(this.entiteFiltered && this.entiteFiltered != "tout"){
+    if(this.entiteFiltered && this.entiteFiltered != "tout"){ // Si on a selectionné une entité
       let tabFilterEntity =  this.tabHistotiquesByClasseUser.filter((historique:any)=> historique.Entite == this.entiteFiltered);
       if(tabFilterEntity.length){
         this.tabHistotiquesFiltered = tabFilterEntity;
-        this.tabHistotiquesByClasseUser = this.tabHistotiquesFiltered;
+        // if(!this.userFiltered){ // Si on n'as pas encore sélectionner de l'autre coté
+        //   this.tabHistotiquesByClasseUser = this.tabHistotiquesFiltered;
+        // }
       } else{
         this.messageInfoEntity = "Aucun resultat"
       }
     } 
-    else if(this.userFiltered){
-      this.tabHistotiquesFiltered = this.tabAllHistotiques.filter((historique:any)=> historique.Utilisateur == this.userFiltered);
-    }
-    else{
-      this.tabHistotiquesFiltered = this.tabAllHistotiques;
-    }
+    // else if(this.userFiltered){
+    //   this.tabHistotiquesFiltered = this.tabAllHistotiques.filter((historique:any)=> historique.Utilisateur == this.userFiltered);
+    // }
+    // else if (!this.entiteFiltered || this.entiteFiltered == "tout"){
+    //   this.tabHistotiquesFiltered = this.tabAllHistotiques;
+    // }
   }
 
   userFiltered:string = "";
@@ -81,22 +85,26 @@ export class HistoriqueComponent implements OnInit{
   // Filtrer suivant l'entité 
   filteredUser (){
     this.messageInfoUser = "";
+    this.entiteFiltered = "";
+    this.messageInfoEntity = "";
     // alert(this.userFiltered);
     if(this.userFiltered && this.userFiltered != "tout"){
       let tabFilterByUser =  this.tabHistotiquesByClasseUser.filter((historique:any)=> historique.Utilisateur == this.userFiltered);
       if(tabFilterByUser.length){
         this.tabHistotiquesFiltered = tabFilterByUser;
-        this.tabHistotiquesByClasseUser = this.tabHistotiquesFiltered;
+        // if(!this.entiteFiltered){
+        //   this.tabHistotiquesByClasseUser = this.tabHistotiquesFiltered;
+        // }
       } else{
         this.messageInfoUser = "Aucun resultat"
       }
     } 
-    else if(this.entiteFiltered){
-      this.tabHistotiquesFiltered = this.tabAllHistotiques.filter((historique:any)=> historique.Entite == this.entiteFiltered);
-    }
-    else{
-      this.tabHistotiquesFiltered = this.tabAllHistotiques;
-    }
+    // else if(this.entiteFiltered){
+    //   this.tabHistotiquesFiltered = this.tabAllHistotiques.filter((historique:any)=> historique.Entite == this.entiteFiltered);
+    // }
+    // else if(!this.userFiltered || this.userFiltered == "tout"){
+    //   this.tabHistotiquesFiltered = this.tabAllHistotiques;
+    // }
   }
 
   // Détails de l'historique 
