@@ -534,8 +534,17 @@ export class GestionLigneComponent {
       (data:any) =>{
         // console.log(data);
         if(data.sections){
-          this.tabSection = this.tabSectionFilterActifs = data.sections;     
+          let tabSectionsLignes = data.sections;
+          if (Array.isArray(tabSectionsLignes)){
+            this.tabSection = tabSectionsLignes;
+          } else {
+            this.tabSection = Object.values(tabSectionsLignes);  // On récupères les valeurs on les mets dans un tableau
+          }   
+        } else {
+          this.tabSection = [];
         }
+
+        this.tabSectionFilterActifs = this.tabSection;
       }
     )
   }

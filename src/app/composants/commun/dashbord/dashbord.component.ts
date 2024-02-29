@@ -281,7 +281,18 @@ export class DashbordComponent implements OnInit{
     this.sectionService.getAllSectionReseau().subscribe(
       (data:any) =>{
         if(data.sections){
-          this.tabSectionReseau = data.sections;
+          // this.tabSectionReseau = data.sections;
+          // this.totalSection += this.tabSectionReseau.length;
+          if(data.sections){
+            let tabSectionsLignes = data.sections;
+            if (Array.isArray(tabSectionsLignes)){
+              this.tabSectionReseau = tabSectionsLignes;
+            } else {
+              this.tabSectionReseau = Object.values(tabSectionsLignes);  // On récupères les valeurs on les mets dans un tableau
+            }   
+          } else {
+            this.tabSectionReseau = [];
+          }
           this.totalSection += this.tabSectionReseau.length;
         }
       },
@@ -292,7 +303,18 @@ export class DashbordComponent implements OnInit{
       (data:any) =>{
         // console.log(data);
         if(data.sections){
-          this.tabSectionReseauSup = data.sections;
+          // this.tabSectionReseauSup = data.sections;
+          // this.totalSection += this.tabSectionReseauSup.length;
+          if(data.sections){
+            let tabSectionsLignes = data.sections;
+            if (Array.isArray(tabSectionsLignes)){
+              this.tabSectionReseauSup = tabSectionsLignes;
+            } else {
+              this.tabSectionReseauSup = Object.values(tabSectionsLignes);  // On récupères les valeurs on les mets dans un tableau
+            }   
+          } else {
+            this.tabSectionReseauSup = [];
+          }
           this.totalSection += this.tabSectionReseauSup.length;
         }
       }, 
