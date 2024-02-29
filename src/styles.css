@@ -14,6 +14,16 @@
     color: white;
 }
 
+/* Media queries pour tous le tableau  */
+@media screen and (max-width: 800px) {
+    table thead tr td, table thead tr th {
+        font-size: small;
+    }
+    .container{
+        padding: 2vh !important;
+    }
+}
+
 @import "~bootstrap/dist/css/bootstrap.css"
 
 /* @import "~sweetalert2/src/sweetalert2.scss" */

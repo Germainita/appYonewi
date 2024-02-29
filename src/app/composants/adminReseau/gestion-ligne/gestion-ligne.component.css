@@ -108,3 +108,12 @@ thead tr th{
     max-height: 50vh !important;
     overflow-y: scroll !important;
 }
+
+@media screen and (max-width: 800px) {
+    .listeLigneContainer{
+        padding: 0 !important;
+    }
+    .container{
+        padding: 2vh !important;
+    }
+}

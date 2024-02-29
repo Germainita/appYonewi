@@ -27,6 +27,10 @@
     box-shadow: 1px 3px 5px var(--base1);
 }
 
+.epsaceChart{
+    height: 8vh;
+}
+
 .iconeChart{
     position: relative;
     top: -18vh;
@@ -70,4 +74,18 @@
 
 .statistiqueDashbord .card .icone{
     margin-top: 4.5vh;
+}
+
+@media screen and (max-width: 1000px) {
+    .iconeChart{
+        visibility: hidden;
+    }
+
+    .epsaceChart{
+        height: 10vh;
+    }
+
+    .chiffre{
+        margin-top: 3vh !important;
+    }
 }
