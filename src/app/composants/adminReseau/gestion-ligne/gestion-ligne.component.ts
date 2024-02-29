@@ -810,10 +810,11 @@ export class GestionLigneComponent {
 
   ajoutSectionLigne(){
     this.verifDepartSection();
-    console.log("La ligne concernée: ", this.ligne);
+    // console.log("La ligne concernée: ", this.ligne);
+    // let sectionsLigne = this.ligne.sections;
     let sectionsLigne = this.ligne.sections;
-    console.log("Les sections de la ligne: ", sectionsLigne);
-    console.log("L'objet section ", this.sectionObject);
+    // console.log("Les sections de la ligne: ", sectionsLigne);
+    // console.log("L'objet section ", this.sectionObject);
     // console.log(this.sectionObject);
     let sectionDepartFound = sectionsLigne.find((section:any) => section.depart.toLowerCase() == this.sectionObject.depart.toLowerCase());
 
@@ -1138,6 +1139,8 @@ export class GestionLigneComponent {
     this.tabLigneFilterActifs = this.tabLigne.filter(
       (elt:any) => (elt?.nom.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.lieuArrivee.toLowerCase().includes(this.filterValue.toLowerCase())) || (elt?.lieuDepart.toLowerCase().includes(this.filterValue.toLowerCase()))  
     );
+
+    this.tabSectionFilterActifs = this.tabSectionLigneActifs.filter((element:any) => (element?.depart.toLowerCase().includes(this.filterValue.toLowerCase())) || (element?.arrivee.toLowerCase().includes(this.filterValue.toLowerCase())))
   }
 
   // Recheche pour les Ligne actifs ou inactifs
