@@ -36,6 +36,15 @@ export class GestionLigneComponent {
   // Tableau des Sections supprimés
   tabSectionsSup: SectionModel [] = []; 
   tabSectionFilterSup: SectionModel[] = [];
+ 
+  // Charger les infos de la section 
+  sectionObject = new SectionModel;
+  indexObject:any;
+  messageUpdated:string= "";
+
+  // Methode pour ajouter une section pour une ligne 
+  sectionsLigne: SectionModel[] = []; //Ajouter une autre section pour la ligne
+  departSection: string = ""; // Le point de départ de la section à ajouter
 
   ligne = new Ligne;
   filterValue: string = "";
@@ -84,7 +93,7 @@ export class GestionLigneComponent {
   // Le tableau pour ajouter les sections
   // tabSectionsStorage: Section[] = [];
   tabAjoutSections:Section[] = [];
-  objectSection = new SectionModel;
+  // objectSection = new SectionModel;
   isInfosValid:boolean = true; //Vérifie si le début de la section est pareille que la fin de la section précédente
 
   tabTypeLigne: TypeLigne[] = [];
@@ -106,6 +115,8 @@ export class GestionLigneComponent {
   // Nombre de sections 
   isNombreSection:boolean = false;
   verifMessageNbreSection: string = "";
+
+
 
   constructor(
     private ligneService: LigneService, 
@@ -135,6 +146,8 @@ export class GestionLigneComponent {
   showLignes(){
     this.isLignes = true;
     this.isSections = false;
+    this.listeSections();
+    this.listeLigne();
   }
 
   // Voir les sections 
@@ -145,7 +158,8 @@ export class GestionLigneComponent {
     this.ligne = ligne;
 
     this.tabSectionLigneActifs = this.tabSectionLigneFilter = ligne.sections;
-    console.log(this.tabSectionLigneActifs)
+    // this.listeSectionLigne(this.ligne);
+    // console.log(this.tabSectionLigneActifs)
 
     // On récupère les sections actifs de la ligne
     // this.tabSectionLigneActifs = this.tabSection.filter((section:any) => section.ligne_id == ligne.id);
@@ -545,9 +559,17 @@ export class GestionLigneComponent {
         }
 
         this.tabSectionFilterActifs = this.tabSection;
+        if(this.ligne){
+          this.tabSectionLigneActifs = this.tabSection.filter((section:any)=> section.ligne_id == this.ligne.id)
+        }
       }
     )
   }
+
+  // Les sections d'une ligne 
+  // listeSectionLigne(ligne:any){
+  //   this.tabSectionLigneActifs = this.tabSectionLigneFilter = this.tabSection.filter((section:any) => section.ligne_id == ligne.id);
+  // }
 
   // Vider Ligne 
   viderChamps(){
@@ -727,9 +749,20 @@ export class GestionLigneComponent {
         console.log(resp);
         sweetAlertMessage("success", "", resp.message);
         this.listeLigne();
-        // this.ligneAjouter = resp.ligne;
-        // console.log(this.ligneAjouter);
+        // On ajoute les sections
+        
+        for(let i = 0; i <this.tabAjoutSections.length; i++){
+          let section = {
+            depart: this.tabAjoutSections[i].depart,
+            arrivee: this.tabAjoutSections[i].arrivee,
+            tarif_id: this.tarif_id,
+            ligne_id: this.lastidLigne + 1,
+          }
+          console.log(section);
+          this.ajoutSection(section);
+        } 
         this.viderChamps();
+        this.showLignes();
       },
       (err:any)=>{
         console.log(err);
@@ -740,20 +773,23 @@ export class GestionLigneComponent {
     // on ajoute les sections
     // let lastLigne = this.tabLigne[this.tabLigne.length - 1].id; 
 
-    for(let i = 0; i <this.tabAjoutSections.length; i++){
-      let section = {
-        depart: this.tabAjoutSections[i].depart,
-        arrivee: this.tabAjoutSections[i].arrivee,
-        tarif_id: this.tarif_id,
-        ligne_id: this.lastidLigne + 1,
-      }
-      console.log(section);
-      this.ajoutSection(section);
+  }
+
+  // Vérification du départ de la section
+  verifDepartSection(){
+    this.isDebutValide = validateLengthField(this.sectionObject.depart, 3);
+    if (!this.sectionObject.depart){
+      this.verifMessageDebut = "";
+    } else if(this.sectionObject.depart.toLowerCase() == this.ligne.lieuArrivee.toLowerCase()){
+      this.verifMessageDebut = "Les lieux de depart et d'arrivée ne peuvent etre identique";
+    } else if(!this.isDebutValide){
+      this.verifMessageDebut = "La longueur doit etre supérieur ou égale à 3";
+    } else {
+      this.verifMessageDebut = "";
     }
   }
 
-
-  // Ajouter une section 
+  // // Methode qui fait appel au service pour ajouter une section 
   ajoutSection(section:any){
     this.sectionService.addSection(section).subscribe(
       (data:any) =>{
@@ -767,7 +803,66 @@ export class GestionLigneComponent {
     )
   }
 
+
+  infosAjoutSectionLigne(){ 
+    this.indexObject =  this.ligne.sections.length;
+  }
+
+  ajoutSectionLigne(){
+    this.verifDepartSection();
+    console.log("La ligne concernée: ", this.ligne);
+    let sectionsLigne = this.ligne.sections;
+    console.log("Les sections de la ligne: ", sectionsLigne);
+    console.log("L'objet section ", this.sectionObject);
+    // console.log(this.sectionObject);
+    let sectionDepartFound = sectionsLigne.find((section:any) => section.depart.toLowerCase() == this.sectionObject.depart.toLowerCase());
+
+    if(!this.sectionObject.depart){
+      this.verifMessageDebut = "Le depart est obligatoir";
+    } else if(sectionDepartFound){
+      this.verifMessageDebut = "Une des section de la ligne a déjà ce point de départ";
+    }
+    else if(this.isDebutValide){
   
+      let section = {
+        depart: this.sectionObject.depart,
+        arrivee: this.ligne.lieuArrivee,
+        tarif_id: this.tarif_id,
+        ligne_id: this.ligne.id,
+      }
+      // la section à ajouter 
+      console.log("La section à ajouter", section);
+      // On ajoute la section 
+      this.sectionService.addSection(section).subscribe(
+        (data:any) =>{
+          console.log(data);
+          sweetAlertMessage("success", "", data.message); 
+
+          // sweetAlertMessage("success", "", "Section ajouter avec success");
+          this.sectionObject = new SectionModel;  
+          // La mis à jour de la section d'avant
+          sectionsLigne[sectionsLigne.length -1].arrivee =  section.depart;
+          this.updateSectionFonction(sectionsLigne[sectionsLigne.length -1].id, sectionsLigne[sectionsLigne.length -1]);
+          console.log("La section d'avant: ",  sectionsLigne[sectionsLigne.length -1]); 
+
+          this.listeSections();
+          this.listeLigne(); 
+          
+          this.indexObject ++;
+        },
+        (err:any)=>{
+            console.log(err);
+            sweetAlertMessage("error", "", err.error.message);
+        }
+      )
+      this.showLignes(); 
+      // this.showSections(this.ligne);
+      
+      // this.showLignes();
+      // this.tabSectionLigneActifs = this.tabSection.filter((section:any) =>section.ligne_id == this.ligne.id)
+    }
+  }
+
 
   // isLigneUpdated: boolean = false;
   // Modifier une Ligne et ses section
@@ -832,17 +927,8 @@ export class GestionLigneComponent {
         }
       }) 
     }
-    // if  (!this.ligne.nom || !this.ligne.lieuArrivee || !this.ligne.lieuDepart){
-    //   sweetAlertMessage("error", "", "Vueillez saisir les informations requises");
-    // } else{
-        
-    // }
   }
 
-  // Charger les infos de la section 
-  sectionObject:any;
-  indexObject:any;
-  messageUpdated:string= "";
 
   // Charger les informations d'une section d'une ligne 
   infosSection(section:any, index:any){
@@ -882,33 +968,65 @@ export class GestionLigneComponent {
 
   // suprrimer une section d'une ligne
   supprimerSection(section:any, index:any){
-    // console.log("La section à supprimer: ");
-    // console.log(section);
     let tabSections = this.ligne.sections; //Recupère les sections de la ligne
     if(tabSections.length <=2){
       sweetAlertMessage("error", "Suppression impossible", "La ligne doit avoir une moins un point d'arret ")
     } else {
+      sweetMessageConfirm("Vous allez supprimer cet Ligne", "Oui, je supprime").then( (result) =>{
+        if(result.isConfirmed ){
+          if( index >= 0 &&  index < tabSections.length - 1){ // On vérifie si c'est pas la première section 
+            // La section suivante prend la place de la première 
+            tabSections[index + 1].depart = tabSections[index].depart;
+            this.updateSectionFonction(tabSections[index + 1].id, tabSections[index + 1]);
+    
+            // On supprime la section 
+            // this.deleteSectionFunction(section.id);
+            this.sectionService.deleteSection(section.id).subscribe(
+              (data:any)=>{
+                console.log("Sucess");
+                console.log(data);  
+                sweetAlertMessage("success", "", "Section supprimée avec succes");
+                // this.listeSections();
+               
+                this.listeSections();
+                this.listeLigne();
+              },
+              (err: any) =>{
+                console.log("Erreur");
+                console.log(err);
+              }
+            )
+            
+            this.showLignes();
+            // window.location.reload();
+          }  
+          else{ // On vérifie si c'est pas la dernière section 
+            console.log("C'est la derniere section :", tabSections[index] ); 
+            tabSections[index - 1].arrivee = tabSections[index].arrivee;
+            // console.log("La section d'avant: ",  tabSections[index - 1]);  
+            this.updateSectionFonction(tabSections[index - 1].id, tabSections[index - 1]); //On met à jour la section d'avant
+            
+            // this.deleteSectionFunction(section.id); // on supprime la section
+            this.sectionService.deleteSection(section.id).subscribe(
+              (data:any)=>{
+                console.log("Sucess");
+                console.log(data);
+                sweetAlertMessage("success", "", "Section supprimée avec succes");
+                this.listeSections();
+                this.listeLigne();
+              },
+              (err: any) =>{
+                console.log("Erreur");
+                console.log(err);
+              }
+            )
+            // sweetAlertMessage("success", "", "Section supprimer avec succes");
+            this.showLignes();
+            
+          }
+        }
+      })
       
-      if(index == 0){ // On vérifie si c'est pas la première section 
-        // console.log("C'est la premiere section: ",  tabSections[index]);
-        // La section suivante prend la place de la première 
-        tabSections[index + 1].depart = tabSections[index].depart;
-        // console.log("La section suivante: ",  tabSections[index + 1]);
-        // On met à jour la section suivante 
-        this.updateSectionFonction(tabSections[index + 1].id, tabSections[index + 1]);
-
-        // On supprime la section 
-        this.deleteSectionFunction(section.id);
-        sweetAlertMessage("success", "", "Section supprimer avec succes")
-      }      
-      else if(index >0 &&  index < tabSections.length - 1){ // On prend les deux section qui l'entoure 
-        // la section avant 
-        console.log("Section avant :", tabSections[index - 1] );
-        console.log("Section :", tabSections[index] );
-        console.log("Section apres :", tabSections[index + 1] );        
-      } else{ // On vérifie si c'est pas la dernière section 
-        console.log("C'est la derniere section :", tabSections[index] );        
-      }
     }   
   }
 
