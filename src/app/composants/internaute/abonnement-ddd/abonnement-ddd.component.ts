@@ -3,6 +3,7 @@ import { Abonnement } from 'src/app/models/abonnement.model';
 import { Reseau } from 'src/app/models/reseau.model';
 import { AbonnementService } from 'src/app/services/abonnement.service';
 import { ReseauService } from 'src/app/services/reseau.service';
+import { Loading, Notify } from 'notiflix';
 
 @Component({
   selector: 'app-abonnement-ddd',
@@ -25,9 +26,10 @@ export class AbonnementDDDComponent {
   
   ngOnInit(): void {
     // On prend la liste des réseau 
+    Loading.dots();
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         this.reseauDemDikk = data.reseaux.find((reseau:any)=> reseau.nom.toLowerCase() == "dakar dem dikk");
         this.emailTo = `mailto:${this.reseauDemDikk.email}`;
         if(this.reseauDemDikk){
@@ -36,11 +38,12 @@ export class AbonnementDDDComponent {
           this.abonnementService.getAllAbonnement().subscribe(
             (data:any) =>{
               let tabAllAbonnement = data.abonnements;
-              console.log(data.abonnements);
-              // console.log(this.reseau_id_DemDikk)
+              // console.log(data.abonnements);
+              // // console.log(this.reseau_id_DemDikk)
               // On récupère la liste des abonnements du réseau DemDikk
               this.tabAbonnementsDemDikk = tabAllAbonnement.filter((abonnement:any) => abonnement.reseau_id == this.reseau_id_DemDikk);
-              console.log(this.tabAbonnementsDemDikk);
+              // // console.log(this.tabAbonnementsDemDikk);
+              Loading.remove();
             }
           )
         }

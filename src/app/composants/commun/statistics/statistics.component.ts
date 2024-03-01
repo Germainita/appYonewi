@@ -92,7 +92,7 @@ export class StatisticsComponent implements OnInit{
   listeAbonnement(){
     this.abonnementService.getAllAbonnementReseau().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         this.tabAbonnement = data.abonnements;
       }
     )
@@ -111,7 +111,7 @@ export class StatisticsComponent implements OnInit{
   listetarif(){
     this.tarifService.getAllTarifReseau().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         this.tabTypeTarif = data.tarifs;        
       }
     )
@@ -123,11 +123,11 @@ export class StatisticsComponent implements OnInit{
   listeUsers(){
     this.userService.getAllUsers().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         this.tabUtilisateur = data.users;
       },
       (error) =>{
-        // console.log(error);
+        // // console.log(error);
         this.tabUtilisateur = [];
       }
     )

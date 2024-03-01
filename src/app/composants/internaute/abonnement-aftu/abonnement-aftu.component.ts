@@ -3,6 +3,8 @@ import { Abonnement } from 'src/app/models/abonnement.model';
 import { Reseau } from 'src/app/models/reseau.model';
 import { AbonnementService } from 'src/app/services/abonnement.service';
 import { ReseauService } from 'src/app/services/reseau.service';
+import { Loading, Notify } from 'notiflix';
+
 
 @Component({
   selector: 'app-abonnement-aftu',
@@ -26,9 +28,10 @@ export class AbonnementAFTUComponent implements OnInit{
   
   ngOnInit(): void {
     // On prend la liste des réseau 
+    Loading.dots();
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         this.reseauAftu = data.reseaux.find((reseau:any)=> reseau.nom.toLowerCase() == "aftu");
         this.emailTo = `mailto:${this.reseauAftu.email}`;
         if(this.reseauAftu){
@@ -37,11 +40,12 @@ export class AbonnementAFTUComponent implements OnInit{
           this.abonnementService.getAllAbonnement().subscribe(
             (data:any) =>{
               let tabAllAbonnement = data.abonnements;
-              // console.log(data.abonnements);
-              // console.log(this.reseau_id_AFTU)
+              // // console.log(data.abonnements);
+              // // console.log(this.reseau_id_AFTU)
               // On récupère la liste des abonnements du réseau AFTU
               this.tabAbonnementsAftu = tabAllAbonnement.filter((abonnement:any) => abonnement.reseau_id == this.reseau_id_AFTU);
-              // console.log(this.tabAbonnementsAftu);
+              // // console.log(this.tabAbonnementsAftu);
+              Loading.remove();
             }
           )
         }
@@ -63,7 +67,7 @@ export class AbonnementAFTUComponent implements OnInit{
   // souscrireAbonnement(){
   //   this.abonnementService.souscrireAbonnement(this.abonnement.id).subscribe(
   //     (data:any) =>{
-  //       console.log(data);
+  //       // console.log(data);
   //     }
   //   )
   // }

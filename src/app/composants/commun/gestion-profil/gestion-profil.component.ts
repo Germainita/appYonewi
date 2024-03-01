@@ -71,14 +71,14 @@ export class GestionProfilComponent implements OnInit{
     this.infosUser = JSON.parse(localStorage.getItem("userConnect")) || "";
     this.userProfilInfos();
 
-    // console.log(this.infosUser);
+    // // console.log(this.infosUser);
     
     // Liste des roles 
     this.roleService.getAllRoles().subscribe(
       (data: any) =>{
-        console.log(data);
+        // console.log(data);
         // this.tabRole = data.roles.filter((role:any) => role.etat == "actif");
-        // console.log(this.tabRole);
+        // // console.log(this.tabRole);
       }
     );
     
@@ -89,14 +89,14 @@ export class GestionProfilComponent implements OnInit{
     // Le profil de l'utilisateur connecté 
     this.userService.getUserProfil().subscribe(
       (resp:any) =>{
-        console.log(resp);
+        // console.log(resp);
         this.userConnect = resp.user;
 
         // L'image de l'utilisateur connecter 
         if (this.userConnect.image){
           this.imageUserConnected = `${urlImage}${this.userConnect.image}`;
         }
-        // console.log(this.imageUserConnected);
+        // // console.log(this.imageUserConnected);
         
 
         // Liste des réseaux 
@@ -109,7 +109,7 @@ export class GestionProfilComponent implements OnInit{
             }
           },
           (error) =>{
-            console.log (error)
+            // console.log (error)
           }
         )
       }
@@ -199,9 +199,9 @@ export class GestionProfilComponent implements OnInit{
   updateAdminReseau(id:number, objectAdminReseau:any){
     this.userService.updateAdminReseau(id, objectAdminReseau).subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         if(data.status){
-          console.log(data.message);
+          // console.log(data.message);
           sweetAlertMessage("success", "", data.message);
           this.userProfilInfos();
           // this.viderChamps();
@@ -222,7 +222,7 @@ export class GestionProfilComponent implements OnInit{
         // this.viderChamps()
       },
       (err) =>{
-        console.log(err);
+        // console.log(err);
         // si l'email existe déjà 
         if(err.error.errors.email){
           this.emailMessage = err.error.errors.email[0];
@@ -239,8 +239,8 @@ export class GestionProfilComponent implements OnInit{
   updateAdminSystem(objectAdminSystem:any){
     this.userService.updateAdminSystem(objectAdminSystem).subscribe(
       (data:any) =>{
-        console.log(data);
-        // console.log(data.message);
+        // console.log(data);
+        // // console.log(data.message);
         sweetAlertMessage("success", "", data.message);
         this.userProfilInfos();
         // this.viderChamps();
@@ -262,7 +262,7 @@ export class GestionProfilComponent implements OnInit{
         // this.viderChamps()
       },
       (err) =>{
-        console.log(err);
+        // console.log(err);
         // si l'email existe déjà 
         if(err.error.errors.email){
           this.emailMessage = err.error.errors.email[0];
@@ -314,14 +314,14 @@ export class GestionProfilComponent implements OnInit{
 
     // Si c'est un admin réseau  
     if(this.isEmailValid && this.isPhoneValid && this.isAdresseValid && (this.infosUser.type != "admin")) {
-      // console.log(dataModif);
+      // // console.log(dataModif);
       sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
         if(result.isConfirmed ){
           // this.userService.updateAdminReseau(dataModif.id, dataModif).subscribe(
           //   (data:any) =>{
-          //     console.log(data);
+          //     // console.log(data);
           //     if(data.status){
-          //       // console.log(data.message);
+          //       // // console.log(data.message);
           //       sweetAlertMessage("success", "", data.message);
           //       this.userProfilInfos();
           //       this.viderChamps();
@@ -342,7 +342,7 @@ export class GestionProfilComponent implements OnInit{
           //     // this.viderChamps()
           //   },
           //   (err) =>{
-          //     console.log(err);
+          //     // console.log(err);
           //     // si l'email existe déjà 
           //     if(err.error.errors.email){
           //       this.emailMessage = err.error.errors.email[0];
@@ -373,7 +373,7 @@ export class GestionProfilComponent implements OnInit{
 
   // Mettre à jour l'image du profil 
   uploadImage(event: any){
-    console.log (event.target.files[0])
+    // console.log (event.target.files[0])
     // event.target.files[0];
     this.image = event.target.files[0] as File;
     this.changeImage();
@@ -393,9 +393,9 @@ export class GestionProfilComponent implements OnInit{
     //   if(result.isConfirmed ){
     //     this.userService.updateAdminReseau(this.userConnect.id, formData).subscribe(
     //       (data:any) =>{
-    //         console.log(data);
+    //         // console.log(data);
     //         if(data.status){
-    //           // console.log(data.message);
+    //           // // console.log(data.message);
     //           sweetAlertMessage("success", "", data.message);
     //           this.userProfilInfos();
     //           this.viderChamps();
@@ -406,10 +406,10 @@ export class GestionProfilComponent implements OnInit{
     //         // this.viderChamps()
     //       },
     //       (err) =>{
-    //         console.log(err);
+    //         // console.log(err);
     //         // si l'email existe déjà 
     //         if(err.error){
-    //           console.log(err.error.error);
+    //           // console.log(err.error.error);
     //           this.passworldOldMessage = err.error.error;
     //         }          
             
@@ -422,7 +422,7 @@ export class GestionProfilComponent implements OnInit{
     if((this.infosUser.type != "admin")) {
       const formData = new FormData();
       formData.append("image", this.image);
-      // console.log(dataModif);
+      // // console.log(dataModif);
       sweetMessageConfirm("Vous allez modifier l'image de votre profil", "Oui je modifie").then( (result) =>{      
         if(result.isConfirmed ){
           this.updateAdminReseau(this.userConnect.id, formData);
@@ -510,14 +510,14 @@ export class GestionProfilComponent implements OnInit{
         password: this.passwordNew,
         password_confirmation: this.passwordConf,
       }
-      // console.log(dataModif);
+      // // console.log(dataModif);
       // sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
       //   if(result.isConfirmed ){
       //     this.userService.updateAdminReseau(userModif.id, userModif).subscribe(
       //       (data:any) =>{
-      //         console.log(data);
+      //         // console.log(data);
       //         if(data.status){
-      //           // console.log(data.message);
+      //           // // console.log(data.message);
       //           sweetAlertMessage("success", "", data.message);
       //           this.userProfilInfos();
       //           this.viderChamps();
@@ -527,10 +527,10 @@ export class GestionProfilComponent implements OnInit{
       //         // this.viderChamps()
       //       },
       //       (err) =>{
-      //         console.log(err);
+      //         // console.log(err);
       //         // si l'email existe déjà 
       //         if(err.error){
-      //           console.log(err.error.error);
+      //           // console.log(err.error.error);
       //           this.passworldOldMessage = err.error.error;
       //         }          
               
@@ -542,7 +542,7 @@ export class GestionProfilComponent implements OnInit{
 
       // Si c'est un admin réseau  
       if((this.infosUser.type != "admin")) {
-        // console.log(dataModif);
+        // // console.log(dataModif);
         sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
           if(result.isConfirmed ){
             this.updateAdminReseau(userModif.id, userModif);

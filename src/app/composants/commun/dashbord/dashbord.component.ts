@@ -134,10 +134,10 @@ export class DashbordComponent implements OnInit{
         if(data.lignes){
           this.tabLigne = data.lignes;
           this.tabLigneAftu = this.tabLigne.filter((ligne:any) => ligne.reseau_id == this.reseau_id_aftu);
-          console.log("Le tableau des ligne de aftu", this.tabLigneAftu);
+          // console.log("Le tableau des ligne de aftu", this.tabLigneAftu);
           
           this.tabLigneDemDikk = this.tabLigne.filter((ligne:any)=> ligne.reseau_id == this.reseau_id_demDikk);
-          console.log("Le tableau des ligne de dakar dem dikk", this.tabLigneDemDikk);
+          // console.log("Le tableau des ligne de dakar dem dikk", this.tabLigneDemDikk);
   
           this.chartOptions = {
             series: [this.tabLigneAftu.length, this.tabLigneDemDikk.length],
@@ -192,13 +192,13 @@ export class DashbordComponent implements OnInit{
   listeUsersActifs(){
     this.userService.getAllUsers().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         if(data.users){
           this.tabUtilisateurActifs = data.users;
         }
       },
       (error) =>{
-        // console.log(error);
+        // // console.log(error);
         this.tabUtilisateurActifs = [];
       }
     )
@@ -208,13 +208,13 @@ export class DashbordComponent implements OnInit{
   listeUsersInactifs(){
     this.userService.getAllUsersBlocked().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         if(data.users){
           this.tabUtilisateurInactifs = data.users;
         }
       },
       (error) =>{
-        // console.log(error);
+        // // console.log(error);
         this.tabUtilisateurInactifs = [];
       }
     )
@@ -238,7 +238,7 @@ export class DashbordComponent implements OnInit{
   listeNewsletters(){
     this.newsletterService.getAllUsersNewsletter().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         if(data.subscribers){
           this.tabNewsletter = data.subscribers;
         }
@@ -301,7 +301,7 @@ export class DashbordComponent implements OnInit{
     // Les sections du réseaux inactifs 
     this.sectionService.getSectionDeleted().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         if(data.sections){
           // this.tabSectionReseauSup = data.sections;
           // this.totalSection += this.tabSectionReseauSup.length;
@@ -329,7 +329,7 @@ export class DashbordComponent implements OnInit{
     // Les types de tarifs du reseau 
     this.tarifService.getAllTarifReseau().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         if(data.tarifs){
           this.tabTypeTarif = data.tarifs;   
         }
@@ -339,7 +339,7 @@ export class DashbordComponent implements OnInit{
     // Les abonnements du réseau 
     this.abonnementService.getAllAbonnementReseau().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         if(data.abonnements){
           this.tabAbonnement = data.abonnements;
         }
@@ -349,7 +349,7 @@ export class DashbordComponent implements OnInit{
     // Les types de ligne du réseau 
     this.typeLigneService.getTypesLigneReseau().subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         if(data.types) {
           this.tabTypeLigne = data.types;
         }

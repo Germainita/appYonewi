@@ -159,7 +159,7 @@ export class GestionLigneComponent {
 
     this.tabSectionLigneActifs = this.tabSectionLigneFilter = ligne.sections;
     // this.listeSectionLigne(this.ligne);
-    // console.log(this.tabSectionLigneActifs)
+    // // console.log(this.tabSectionLigneActifs)
 
     // On récupère les sections actifs de la ligne
     // this.tabSectionLigneActifs = this.tabSection.filter((section:any) => section.ligne_id == ligne.id);
@@ -167,7 +167,7 @@ export class GestionLigneComponent {
     // Les sections supprimées de la ligne 
     this.tabSectionLigneSup = this.tabSectionsSup.filter((section:any) => section.ligne_id == ligne.id);
     // let tabSectionsLigne = this.tabSection.filter((section:any) => section.ligne_id == ligne.id);
-    // console.log(tabSectionsLigne);
+    // // console.log(tabSectionsLigne);
   }
 
   // on recupère le tarif 
@@ -291,7 +291,7 @@ export class GestionLigneComponent {
     
     // On récupère les sections de la ligne 
     this.tabSectionsLigne= this.tabSection.filter((section:any) => section.ligne_id == this.ligne.id);
-    console.log(this.tabSectionsLigne);
+    // console.log(this.tabSectionsLigne);
   }
 
   // Variable pour le nom de la fin de la section 
@@ -310,26 +310,26 @@ export class GestionLigneComponent {
     let tabSectionsLignes :any[] = [];
     this.ligneService.getAllLigneReseau().subscribe(
       (data:any) =>{
-        console.log("Les lignes recu",data);
-        console.log("Le tableau des sections",this.tabSection);
+        // console.log("Les lignes recu",data);
+        // console.log("Le tableau des sections",this.tabSection);
         // Je vérifie si tabSection est de type array 
-        // console.log("Est-ce que c'est un tableau ?");
+        // // console.log("Est-ce que c'est un tableau ?");
         
-        console.log("Est-ce que tabSection est un tableau ?", Array.isArray(this.tabSection)); // tabSection n'est pas un tableau mais une liste d'objet
+        // console.log("Est-ce que tabSection est un tableau ?", Array.isArray(this.tabSection)); // tabSection n'est pas un tableau mais une liste d'objet
         if (Array.isArray(this.tabSection)){
           tabSectionsLignes = this.tabSection;
         } else {
           tabSectionsLignes = Object.values(this.tabSection);  // On récupères les valeurs on les mets dans un tableau
         }
 
-        console.log("Est-ce que tabSectionsLignes est un tableau ?", Array.isArray(tabSectionsLignes));
-        console.log("Le tableau des sections converti en tableau",tabSectionsLignes);
+        // console.log("Est-ce que tabSectionsLignes est un tableau ?", Array.isArray(tabSectionsLignes));
+        // console.log("Le tableau des sections converti en tableau",tabSectionsLignes);
 
 
         if( data.lignes){
           this.tabLigne = data.lignes;
           let tabSection = tabSectionsLignes.filter((section:any) => section.ligne_id == 17);
-          console.log("Les sections de la première ligne: ", tabSection);
+          // console.log("Les sections de la première ligne: ", tabSection);
           
           // Pour les sections enregistrés par l'administrateur réseau 
           for(let i = 0; i<this.tabLigne.length; i++){
@@ -344,7 +344,7 @@ export class GestionLigneComponent {
                 }   
             }
               
-              // console.log(tabSection);         
+              // // console.log(tabSection);         
             }
             // On enregistre la dernière section qui est le debut et la fin de la ligne 
             // if(tabSection.length) {
@@ -364,7 +364,7 @@ export class GestionLigneComponent {
   
             // this.tabLigne[i].sections = tabSection;
   
-            // console.log(this.tabLigne[i].sections );
+            // // console.log(this.tabLigne[i].sections );
           }
 
         }
@@ -384,18 +384,18 @@ export class GestionLigneComponent {
         //     // On prend les debut des sections sauf le premier qui est déjà enregistré
         //     for(let y = 1; y < tabSection.length; y++){
         //       tabSection[y].num = `${y+1}`;
-        //       console.log(tabSection[y].depart);
+        //       // console.log(tabSection[y].depart);
               
         //       tabSectionTest.push(tabSection[y].depart)
         //     }
         //     tabSectionTest.push(this.tabLigne[i].lieuArrivee); // Stocke en dernier le lieu d'arrivé de la ligne;
 
-        //     // console.log(tabSection[tabSection.length - 1].arrivee);  
+        //     // // console.log(tabSection[tabSection.length - 1].arrivee);  
         //     // tabSectionTest.push(tabSection[tabSection.length-1].fin)   
-        //     console.log("Le tableau des sections test", tabSectionTest); 
+        //     // console.log("Le tableau des sections test", tabSectionTest); 
         //     // On a le tableau, on peut maintenant faire l'algo avec les prix 
         //     let tabSectionPrix = this.calculPrixSection(tabSectionTest);
-        //     console.log(tabSectionPrix);
+        //     // console.log(tabSectionPrix);
         //     // for (let j = 0; j< tabSectionTest.length ; j++){
         //     //   for(let x = j+1; x < tabSectionTest.length; x++){
         //     //     let objetTest = {
@@ -404,23 +404,23 @@ export class GestionLigneComponent {
         //     //       arrivee: tabSectionTest[x],
         //     //       prix: 150 + (50* (x-j-1)),
         //     //     }
-        //     //     console.log(objetTest);
+        //     //     // console.log(objetTest);
         //     //     tabSectionPrix.push(objetTest);
-        //     //     console.log(tabSectionPrix);
+        //     //     // console.log(tabSectionPrix);
         //     //   }
         //     // } 
         //     // tabSectionPrix = this.calculPrixSection(tabSectionTest);      
         //   }
         // }
         
-        // console.log(this.tabLigne)
+        // // console.log(this.tabLigne)
         this.tabLigneFilterActifs = this.tabLigne;
-        console.log("Le tableau des lignes filtré", this.tabLigneFilterActifs);
+        // console.log("Le tableau des lignes filtré", this.tabLigneFilterActifs);
         
 
         
         if(!this.tabLigne.length){
-          console.log(this.tabLigne)
+          // console.log(this.tabLigne)
           this.messageInfo = "Aucune ligne enregistrée pour le moment";
         }
       }
@@ -438,9 +438,9 @@ export class GestionLigneComponent {
           arrivee: tabSectionElement[x],
           prix: this.prixSection + (this.prixEntreSection* (x-j-1)),
         }
-        // console.log(objetTest);
+        // // console.log(objetTest);
         tabSectionPrix.push(objetTest);
-        // console.log(tabSectionPrix);
+        // // console.log(tabSectionPrix);
       }
     }
     return tabSectionPrix;
@@ -452,7 +452,7 @@ export class GestionLigneComponent {
     this.ligneService.getLigneDeleted().subscribe(
       (data:any) =>{
         // On filtre les Lignes supprimés 
-        // console.log(data)
+        // // console.log(data)
         this.tabLignesSup = this.tabLigneFilterSup = data.lignes;
         // Pour les sections enregistrés par l'administrateur réseau 
         for(let i = 0; i<this.tabLignesSup.length; i++){
@@ -464,7 +464,7 @@ export class GestionLigneComponent {
               tabSection[y].prix = this.prixSection;
             }   
             
-            console.log(tabSection);         
+            // console.log(tabSection);         
           }
           // On enregistre la dernière section qui est le debut et la fin de la ligne 
           if(tabSection.length > 1) {
@@ -486,7 +486,7 @@ export class GestionLigneComponent {
         }
       },
       (err) =>{
-        console.log(err);
+        // console.log(err);
         this.tabLignesSup = [];
         this.messageInfo1 = "Aucune ligne  dans la corbeille";
       }
@@ -497,13 +497,13 @@ export class GestionLigneComponent {
   listeTypeLignes(){
     this.typeLigneService.getTypesLigneReseau().subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         if (data.types){
-          // console.log("Il ya un type de ligne");
+          // // console.log("Il ya un type de ligne");
           this.tabTypeLigne = data.types;
           
         } else{
-          console.log("Il n'y a pas de getTypeLigneNameype de ligne");
+          // console.log("Il n'y a pas de getTypeLigneNameype de ligne");
           this.tabTypeLigne = [];
         }
         
@@ -512,7 +512,7 @@ export class GestionLigneComponent {
         // } else{
         //   this.tabTypeLigne = [];
         // }
-        console.log("La longueur du tableau des type de ligne", this.tabTypeLigne.length);
+        // console.log("La longueur du tableau des type de ligne", this.tabTypeLigne.length);
       }
     )
   }
@@ -521,7 +521,7 @@ export class GestionLigneComponent {
   listetarif(){
     this.tarifService.getAllTarifReseau().subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         this.tabTarif = data.tarifs;
         
         // On récupère le tarif entre section 
@@ -546,7 +546,7 @@ export class GestionLigneComponent {
   listeSections(){
     this.sectionService.getAllSectionReseau().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         if(data.sections){
           let tabSectionsLignes = data.sections;
           if (Array.isArray(tabSectionsLignes)){
@@ -680,7 +680,7 @@ export class GestionLigneComponent {
       tabSections[i].depart = tabSections[i-1].arrivee;
     } 
     tabSections[tabSections.length-1].arrivee = this.ligne.lieuArrivee;
-    console.log(tabSections);
+    // console.log(tabSections);
 
     if(!section.arrivee) {
       section.messageInfo = "La fin de la section est obligatoire";
@@ -746,7 +746,7 @@ export class GestionLigneComponent {
     // let newLigne: any;
     this.ligneService.addLigne(this.ligne).subscribe(
       (resp:any) =>{
-        console.log(resp);
+        // console.log(resp);
         sweetAlertMessage("success", "", resp.message);
         this.listeLigne();
         // On ajoute les sections
@@ -758,14 +758,14 @@ export class GestionLigneComponent {
             tarif_id: this.tarif_id,
             ligne_id: this.lastidLigne + 1,
           }
-          console.log(section);
+          // console.log(section);
           this.ajoutSection(section);
         } 
         this.viderChamps();
         this.showLignes();
       },
       (err:any)=>{
-        console.log(err);
+        // console.log(err);
         sweetAlertMessage("error", "", err.error.message);
       }
     );
@@ -793,11 +793,11 @@ export class GestionLigneComponent {
   ajoutSection(section:any){
     this.sectionService.addSection(section).subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
 
       },
       (err:any)=>{
-          console.log(err);
+          // console.log(err);
           sweetAlertMessage("error", "", err.error.message);
       }
     )
@@ -810,12 +810,12 @@ export class GestionLigneComponent {
 
   ajoutSectionLigne(){
     this.verifDepartSection();
-    // console.log("La ligne concernée: ", this.ligne);
+    // // console.log("La ligne concernée: ", this.ligne);
     // let sectionsLigne = this.ligne.sections;
     let sectionsLigne = this.ligne.sections;
-    // console.log("Les sections de la ligne: ", sectionsLigne);
-    // console.log("L'objet section ", this.sectionObject);
-    // console.log(this.sectionObject);
+    // // console.log("Les sections de la ligne: ", sectionsLigne);
+    // // console.log("L'objet section ", this.sectionObject);
+    // // console.log(this.sectionObject);
     let sectionDepartFound = sectionsLigne.find((section:any) => section.depart.toLowerCase() == this.sectionObject.depart.toLowerCase());
 
     if(!this.sectionObject.depart){
@@ -832,11 +832,11 @@ export class GestionLigneComponent {
         ligne_id: this.ligne.id,
       }
       // la section à ajouter 
-      console.log("La section à ajouter", section);
+      // console.log("La section à ajouter", section);
       // On ajoute la section 
       this.sectionService.addSection(section).subscribe(
         (data:any) =>{
-          console.log(data);
+          // console.log(data);
           sweetAlertMessage("success", "", data.message); 
 
           // sweetAlertMessage("success", "", "Section ajouter avec success");
@@ -844,7 +844,7 @@ export class GestionLigneComponent {
           // La mis à jour de la section d'avant
           sectionsLigne[sectionsLigne.length -1].arrivee =  section.depart;
           this.updateSectionFonction(sectionsLigne[sectionsLigne.length -1].id, sectionsLigne[sectionsLigne.length -1]);
-          console.log("La section d'avant: ",  sectionsLigne[sectionsLigne.length -1]); 
+          // console.log("La section d'avant: ",  sectionsLigne[sectionsLigne.length -1]); 
 
           this.listeSections();
           this.listeLigne(); 
@@ -852,7 +852,7 @@ export class GestionLigneComponent {
           this.indexObject ++;
         },
         (err:any)=>{
-            console.log(err);
+            // console.log(err);
             sweetAlertMessage("error", "", err.error.message);
         }
       )
@@ -878,10 +878,10 @@ export class GestionLigneComponent {
         if(result.isConfirmed ){
 
           // On modifie la ligne 
-          // console.log(this.ligne);
+          // // console.log(this.ligne);
           this.ligneService.updateLigne(this.ligne.id, this.ligne).subscribe(
             (data:any) =>{
-              // console.log(data);
+              // // console.log(data);
               // Les sections de la ligne 
               this.tabSectionsLigne[0].depart = this.ligne.lieuDepart; //Debut de la premiere section = lieu de depart de la ligne
               this.tabSectionsLigne[this.tabSectionsLigne.length-1].arrivee = this.ligne.lieuArrivee; // Fin de la derniere section = lieu d'arrivée de la ligne
@@ -896,7 +896,7 @@ export class GestionLigneComponent {
             },
             (err) => {
               alert("Error");
-              console.log(err);
+              // console.log(err);
             }
           )
 
@@ -918,7 +918,7 @@ export class GestionLigneComponent {
             } else {
               isValid = false;
             }
-            // console.log(section);
+            // // console.log(section);
             // On met à jour la sectiion 
             if (isValid){
               this.updateSectionFonction(this.tabSectionsLigne[i].id, section);
@@ -949,7 +949,7 @@ export class GestionLigneComponent {
     let sectionsLigne = this.ligne.sections;
     if (this.indexObject < sectionsLigne.length-1){
       sectionsLigne[this.indexObject + 1].depart = this.sectionObject.arrivee;
-      console.log(sectionsLigne[this.indexObject + 1]);
+      // console.log(sectionsLigne[this.indexObject + 1]);
 
       let section = {
         depart: sectionsLigne[this.indexObject + 1].depart,
@@ -962,9 +962,9 @@ export class GestionLigneComponent {
     }
 
     sweetAlertMessage("success", "", "La section a bien été modifiée");
-    console.log(sectionsLigne);
+    // console.log(sectionsLigne);
 
-    console.log("Les sections modifiées");
+    // console.log("Les sections modifiées");
   }
 
   // suprrimer une section d'une ligne
@@ -984,8 +984,8 @@ export class GestionLigneComponent {
             // this.deleteSectionFunction(section.id);
             this.sectionService.deleteSection(section.id).subscribe(
               (data:any)=>{
-                console.log("Sucess");
-                console.log(data);  
+                // console.log("Sucess");
+                // console.log(data);  
                 sweetAlertMessage("success", "", "Section supprimée avec succes");
                 // this.listeSections();
                
@@ -993,8 +993,8 @@ export class GestionLigneComponent {
                 this.listeLigne();
               },
               (err: any) =>{
-                console.log("Erreur");
-                console.log(err);
+                // console.log("Erreur");
+                // console.log(err);
               }
             )
             
@@ -1002,23 +1002,23 @@ export class GestionLigneComponent {
             // window.location.reload();
           }  
           else{ // On vérifie si c'est pas la dernière section 
-            console.log("C'est la derniere section :", tabSections[index] ); 
+            // console.log("C'est la derniere section :", tabSections[index] ); 
             tabSections[index - 1].arrivee = tabSections[index].arrivee;
-            // console.log("La section d'avant: ",  tabSections[index - 1]);  
+            // // console.log("La section d'avant: ",  tabSections[index - 1]);  
             this.updateSectionFonction(tabSections[index - 1].id, tabSections[index - 1]); //On met à jour la section d'avant
             
             // this.deleteSectionFunction(section.id); // on supprime la section
             this.sectionService.deleteSection(section.id).subscribe(
               (data:any)=>{
-                console.log("Sucess");
-                console.log(data);
+                // console.log("Sucess");
+                // console.log(data);
                 sweetAlertMessage("success", "", "Section supprimée avec succes");
                 this.listeSections();
                 this.listeLigne();
               },
               (err: any) =>{
-                console.log("Erreur");
-                console.log(err);
+                // console.log("Erreur");
+                // console.log(err);
               }
             )
             // sweetAlertMessage("success", "", "Section supprimer avec succes");
@@ -1035,10 +1035,10 @@ export class GestionLigneComponent {
   updateSectionFonction(id:any, section:any){
     this.sectionService.updateSection(id, section).subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
       },
       (err:any)=>{
-          console.log(err);
+          // console.log(err);
       }
     )
   }
@@ -1047,12 +1047,12 @@ export class GestionLigneComponent {
   deleteSectionFunction(idSection:any){
     this.sectionService.deleteSection(idSection).subscribe(
       (data:any)=>{
-        console.log("Sucess");
-        console.log(data);  
+        // console.log("Sucess");
+        // console.log(data);  
       },
       (err: any) =>{
-        console.log("Erreur");
-        console.log(err);
+        // console.log("Erreur");
+        // console.log(err);
       }
     )
   }
@@ -1063,14 +1063,14 @@ export class GestionLigneComponent {
       if(result.isConfirmed ){
         this.ligneService.deleteLigne(ligne.id).subscribe(
           (data:any) =>{
-            console.log(data);
+            // console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.listeLigne();
             this.listeLigneSup();
           },
           (err) => {
             alert("Error");
-            console.log(err);
+            // console.log(err);
           }
         )
       }
@@ -1086,14 +1086,14 @@ export class GestionLigneComponent {
         // Ligne.etat = "actif";
         this.ligneService.restaureLigne(ligne.id).subscribe(
           (data:any) =>{
-            console.log(data);
+            // console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.listeLigne();
             this.listeLigneSup();
           },
           (err) => {
             alert("Error");
-            console.log(err);
+            // console.log(err);
           }
         )
       }
@@ -1111,7 +1111,7 @@ export class GestionLigneComponent {
             this.listeLigneSup();
           },
           (err) =>{
-            console.log(err);
+            // console.log(err);
           }
         )
       }

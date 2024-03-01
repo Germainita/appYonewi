@@ -113,7 +113,7 @@ export class TarifComponent {
   listetarif(){
     this.tarifService.getAllTarifReseau().subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         this.tabTarif = data.tarifs;
         let tarifSectionExist = this.tabTarif.find((tarif:any) => tarif.type.toLowerCase() == "tarif section");
         if (tarifSectionExist){
@@ -138,11 +138,11 @@ export class TarifComponent {
     this.tarifService.getTarifDeleted().subscribe(
       (data:any) =>{
         // On filtre les tarifs supprimés 
-        // console.log(data)
+        // // console.log(data)
         this.tabTarifsSup = this.tabTarifFilterSup = data.tarifs;
       },
       (err) =>{
-        // console.log(err);
+        // // console.log(err);
         this.tabTarifsSup = [];
       }
     )
@@ -161,13 +161,13 @@ export class TarifComponent {
     } else{
       this.tarifService.addTarif(this.tarifSection).subscribe( 
         (data:any) =>{
-          console.log(data);
+          // console.log(data);
           sweetAlertMessage("success", "", data.message);
           this.listetarif();
           this.viderChamps();
         },
         (err) =>{
-          console.log(`Erreur lors de l'ajout ${err}`);
+          // console.log(`Erreur lors de l'ajout ${err}`);
         }
       )
     }
@@ -181,14 +181,14 @@ export class TarifComponent {
     } else{
       this.tarifService.addTarif(this.tarif).subscribe( 
         (data:any) =>{
-          console.log(data);
-          console.log(data);
+          // console.log(data);
+          // console.log(data);
           sweetAlertMessage("success", "", data.message);
           this.listetarif();
           this.viderChamps();
         },
         (err) =>{
-          console.log(`Erreur lors de l'ajout ${err}`);
+          // console.log(`Erreur lors de l'ajout ${err}`);
         }
       )
     }
@@ -209,11 +209,11 @@ export class TarifComponent {
   //       sweetAlertMessage("error", "", "Ce type est déjà dans la corbeille. Vueillez le restaure");
   //     } 
   //     else{
-  //       // console.log(this.tarif.duree);
+  //       // // console.log(this.tarif.duree);
   //       this.tarifService.addTarif(this.tarif).subscribe( 
   //         (data:any) =>{
-  //           console.log(data);
-  //           // console.log(data.success);
+  //           // console.log(data);
+  //           // // console.log(data.success);
   //           // if(data.success == false) {
   //           //   sweetAlertMessage("error", "", "Le prix doit etre suppérieur à 1000");
   //           // } else if(data.message) {
@@ -223,7 +223,7 @@ export class TarifComponent {
   //           // }
   //         },
   //         (err) =>{
-  //           console.log(`Erreur lors de l'ajout ${err}`);
+  //           // console.log(`Erreur lors de l'ajout ${err}`);
   //         }
   //       )
   //     }
@@ -243,7 +243,7 @@ export class TarifComponent {
           this.isModifier=true;
         },
         (err) =>{
-          console.log (err)
+          // console.log (err)
   
         }
       )
@@ -256,14 +256,14 @@ export class TarifComponent {
   //     if(result.isConfirmed ){
   //       this.tarifService.deleteTarif(tarif.id).subscribe(
   //         (data:any) =>{
-  //           console.log(data);
+  //           // console.log(data);
   //           sweetAlertMessage("success", "", data.message);
   //           this.listetarif();
   //           this.listetarifSup();
   //         },
   //         (err) => {
   //           alert("Error");
-  //           console.log(err);
+  //           // console.log(err);
   //         }
   //       )
   //     }
@@ -278,14 +278,14 @@ export class TarifComponent {
   //       // tarif.etat = "actif";
   //       this.tarifService.restaureTarif(tarif.id).subscribe(
   //         (data:any) =>{
-  //           console.log(data);
+  //           // console.log(data);
   //           sweetAlertMessage("success", "", data.message);
   //           this.listetarif();
   //           this.listetarifSup();
   //         },
   //         (err) => {
   //           alert("Error");
-  //           console.log(err);
+  //           // console.log(err);
   //         }
   //       )
   //     }
@@ -303,7 +303,7 @@ export class TarifComponent {
   //           this.listetarifSup();
   //         },
   //         (err) =>{
-  //           console.log(err);
+  //           // console.log(err);
   //         }
   //       )
   //     }

@@ -145,7 +145,7 @@ export class RoleComponent implements OnInit{
 
         // On filtre les roles actifs 
         this.tabRolesActif = this.tabRole.filter((role:any) => role.etat == "actif");
-        // console.log(this.tabRolesActif);
+        // // console.log(this.tabRolesActif);
         this.tabRoleFilterActifs = this.tabRolesActif;  
       },
       (err:any) =>{
@@ -163,7 +163,7 @@ export class RoleComponent implements OnInit{
         this.tabRolesSup = this.tabRoleFilterSup = data.roles;
       },
       (err) =>{
-        console.log(err);
+        // console.log(err);
         this.tabRolesSup = [];
       }
     )
@@ -199,13 +199,13 @@ export class RoleComponent implements OnInit{
       let nom = {"nom": this.nomRole}
       this.roleService.addRole(nom).subscribe( 
         (data) =>{
-          console.log(data);
+          // console.log(data);
           sweetAlertMessage("success", "", "Role ajouté avec succes");
           this.listeRoles();
           this.nomRole = ""; // On vide le champs
         },
         (err) =>{
-          console.log(`Erreur lors de l'ajout ${err}`);
+          // console.log(`Erreur lors de l'ajout ${err}`);
         }
       )
     }
@@ -237,7 +237,7 @@ export class RoleComponent implements OnInit{
           this.showAjoutRole();
         },
         (err) =>{
-          console.log (err)
+          // console.log (err)
 
         }
       )
@@ -251,14 +251,14 @@ export class RoleComponent implements OnInit{
         let response: any;
         this.roleService.deleteRole(role.id).subscribe(
           (data) =>{
-            console.log(data);
+            // console.log(data);
             response = data;
             sweetAlertMessage("success", "", response.message);
             this.listeRoles();
           },
           (err) => {
             alert("Error");
-            console.log(err);
+            // console.log(err);
           }
         )
       }
@@ -274,7 +274,7 @@ export class RoleComponent implements OnInit{
         role.etat = "actif";
         this.roleService.restaureRole(role.id).subscribe(
           (data) =>{
-            console.log(data);
+            // console.log(data);
             response = data;
             sweetAlertMessage("success", "", response.message);
             this.listeRoles();
@@ -282,7 +282,7 @@ export class RoleComponent implements OnInit{
           },
           (err) => {
             alert("Error");
-            console.log(err);
+            // console.log(err);
           }
         )
       }
@@ -300,19 +300,19 @@ export class RoleComponent implements OnInit{
             this.listeRolesSup();
           },
           (err) =>{
-            console.log(err);
+            // console.log(err);
           }
         )
         // this.roleService.restaureRole(role.id).subscribe(
         //   (data) =>{
-        //     console.log(data);
+        //     // console.log(data);
         //     response = data;
         //     sweetAlertMessage("success", "", response.message);
         //     this.listeRoles();
         //   },
         //   (err) => {
         //     alert("Error");
-        //     console.log(err);
+        //     // console.log(err);
         //   }
         // )
       }

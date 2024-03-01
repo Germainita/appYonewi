@@ -30,7 +30,7 @@ export class HistoriqueComponent implements OnInit{
     // Liste de tous les historiques 
     this.historiqueService.getAllHistorique().subscribe(
       (response:any) =>{
-        console.log(response.historiques);  
+        // console.log(response.historiques);  
         this.tabHistotiquesByClasseUser = this.tabHistotiquesFiltered =  this.tabAllHistotiques = response.historiques;    
       }
     )
@@ -38,11 +38,11 @@ export class HistoriqueComponent implements OnInit{
     // Liste des utilisateurs 
     this.userService.getAllUsers().subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         this.tabUtilisateurs = data.users;
       },
       (error) =>{
-        console.log(error);
+        // console.log(error);
         this.tabUtilisateurs = [];
       }
     )

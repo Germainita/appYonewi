@@ -197,11 +197,11 @@ export class ReseauComponent implements OnInit {
   getTarifPrix(reseau_id:any){
     this.tarifService.getAllTarif().subscribe(
       (data:any)=>{
-        console.log(data);
+        // console.log(data);
 
         // On trouve le tarif du réseau 
         let tabTarif = data.tarifs.filter((tarif:any) => tarif.reseau_id == reseau_id);
-        console.log(tabTarif);
+        // console.log(tabTarif);
         // On trouve le prix du tarif des section 
         let tarifSection = tabTarif.find((tarif:any) => tarif.type == "tarif section");
         if(tarifSection){
@@ -213,8 +213,8 @@ export class ReseauComponent implements OnInit {
         if(tarifEntreSection){
           this.prixEntreSection = tarifEntreSection.prix;
         }
-        console.log("Prix des section: ", this.prixSection);
-        console.log("Prix entre section: ", this.prixEntreSection);
+        // console.log("Prix des section: ", this.prixSection);
+        // console.log("Prix entre section: ", this.prixEntreSection);
       }
     )
   }
@@ -222,9 +222,9 @@ export class ReseauComponent implements OnInit {
   listeSections(){
     this.sectionService.getAllSection().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         this.tabSections = data.sections;     
-        console.log("Liste des sections",this.tabSections);
+        // console.log("Liste des sections",this.tabSections);
       }
     )
   }
@@ -234,11 +234,11 @@ export class ReseauComponent implements OnInit {
     this.ligneService.getAllLigne().subscribe(
       (data:any) =>{
         this.tabLigne = data.lignes;
-        console.log(this.tabSections);
+        // console.log(this.tabSections);
         // Pour les sections enregistrés par l'administrateur réseau 
         for(let i = 0; i<this.tabLigne.length; i++){
           let tabSection = this.tabSections.filter((section:SectionModel) => parseInt(section.ligne_id) == this.tabLigne[i].id);
-          console.log( "tabSection: ", tabSection)
+          // console.log( "tabSection: ", tabSection)
           this.tabLigne[i].sections = tabSection;
           if(tabSection){
             for(let y = 0; y < tabSection.length; y++){
@@ -246,7 +246,7 @@ export class ReseauComponent implements OnInit {
               tabSection[y].prix = this.prixSection;
             }   
             
-            // console.log(tabSection);         
+            // // console.log(tabSection);         
           }
           // On enregistre la dernière section qui est le debut et la fin de la ligne 
           if(tabSection.length) {
@@ -266,14 +266,14 @@ export class ReseauComponent implements OnInit {
 
           // this.tabLigne[i].sections = tabSection;
 
-          console.log(this.tabLigne[i].sections );
+          // console.log(this.tabLigne[i].sections );
         }
       }
     )
     
     // this.ligneService.getAllLignegReseau().subscribe(
     //   (data:any) =>{
-    //     console.log(data);
+    //     // console.log(data);
 
     //     this.tabLigne = data.lignes;
         
@@ -385,14 +385,14 @@ export class ReseauComponent implements OnInit {
       }
       this.reseauService.addReseau(reseauAdd).subscribe(
         (data:any)=>{
-          console.log(data);
+          // console.log(data);
           sweetAlertMessage("success", "", data.message);
           this.reseau.nom = "";
           this.reseau.description = "";
           this.listeReseau();
         },
         (error) =>{
-          console.log(error);
+          // console.log(error);
           
         }
       )
@@ -403,15 +403,15 @@ export class ReseauComponent implements OnInit {
   listeReseau(){
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
-        console.log (data)
+        // console.log (data)
         this.tabReseauxActifs = this.tabReseauxActifsFilter = data.reseaux;
         for (let i= 0; i< this.tabReseauxActifs.length; i++){
           this.tabReseauxActifs[i].lignes =  this.tabLigne.filter((ligne:Ligne) => ligne.reseau_id == this.tabReseauxActifs[i].id)
         }
-        console.log(this.tabReseauxActifs);
+        // console.log(this.tabReseauxActifs);
       },
       (error) =>{
-        console.log (error);
+        // console.log (error);
         this.tabReseauxActifs = []
       }
     )
@@ -447,13 +447,13 @@ export class ReseauComponent implements OnInit {
           let nomReseau = {"nom": this.reseau.nom}
           this.reseauService.updateReseau(this.reseau.id, nomReseau).subscribe(
             (data:any) =>{
-              // console.log(data);
+              // // console.log(data);
               sweetAlertMessage("success", "", data.message);
               this.reseau.nom = "";
               this.showAjoutReseau();
             },
             (err) =>{
-              console.log(err);
+              // console.log(err);
               
             }
           )
@@ -468,14 +468,14 @@ export class ReseauComponent implements OnInit {
       if(result.isConfirmed ){
         this.reseauService.deleteReseau(reseau.id).subscribe(
           (data:any) =>{
-            console.log(data);
+            // console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.listeReseau();
             this.listeCorbeille();
           },
           (err) => {
             alert("Error");
-            console.log(err);
+            // console.log(err);
           }
         )
       }
@@ -488,11 +488,11 @@ export class ReseauComponent implements OnInit {
   listeCorbeille(){
     this.reseauService.getReseauxDeleted().subscribe(
       (data:any)=>{
-        console.log(data);
+        // console.log(data);
         this.tabReseauxSup = this.tabReseauxSupFilter = data.reseaux;      
       },
       (error) =>{
-        console.log(error);
+        // console.log(error);
         this.tabReseauxSup = [];
       }
     )
@@ -505,14 +505,14 @@ export class ReseauComponent implements OnInit {
       if(result.isConfirmed ){
         this.reseauService.restaureReseau(reseau.id).subscribe(
           (data:any) =>{
-            console.log(data);
+            // console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.listeReseau();
             this.listeCorbeille();
           },
           (err) => {
             alert("Error");
-            console.log(err);
+            // console.log(err);
           }
         )
       }
@@ -525,14 +525,14 @@ export class ReseauComponent implements OnInit {
       if(result.isConfirmed ){
         this.reseauService.deleteDefinitif(reseau.id).subscribe(
           (data:any) =>{
-            console.log(data);
+            // console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.listeReseau();
             this.listeCorbeille();
           },
           (err) => {
             alert("Error");
-            console.log(err);
+            // console.log(err);
           }
         )
       }

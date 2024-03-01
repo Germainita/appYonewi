@@ -128,12 +128,12 @@ export class UtilisateurComponent {
   listeReseau(){
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
-        console.log (data)
+        // console.log (data)
         this.tabReseaux  = data.reseaux;
-        console.log(this.tabReseaux);
+        // console.log(this.tabReseaux);
       },
       (error) =>{
-        console.log (error)
+        // console.log (error)
       }
     )
   }
@@ -143,9 +143,9 @@ export class UtilisateurComponent {
     this.roleService.getAllRoles().subscribe(
       (data: any) =>{
         // On filtre les roles actifs 
-        // console.log(data);
+        // // console.log(data);
         this.tabRole = data.roles.filter((role:any) => role.etat == "actif");
-        console.log(this.tabRole);
+        // console.log(this.tabRole);
       }
     )
   }
@@ -154,11 +154,11 @@ export class UtilisateurComponent {
   listeUsers(){
     this.userService.getAllUsers().subscribe(
       (data:any) =>{
-        console.log(data);
+        // console.log(data);
         this.tabUtilisateur = this.tabUtilisateurFilter = data.users;
       },
       (error) =>{
-        console.log(error);
+        // console.log(error);
         this.tabUtilisateur = [];
       }
     )
@@ -168,11 +168,11 @@ export class UtilisateurComponent {
   listeUsersBlocked(){
     this.userService.getAllUsersBlocked().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         this.tabUtilisateurBlocked = this.tabUtilisateurBlockedFilter = data.users;
       },
       (error) =>{
-        console.log(error);
+        // console.log(error);
         this.tabUtilisateurBlocked = [];
       }
     )
@@ -322,29 +322,29 @@ export class UtilisateurComponent {
     this.verifPrenomFunction(this.utilisateur.prenom);
     this.verifAdresseFunction(this.utilisateur.adresse);
     this.verifEmailFunction(this.utilisateur.email);
-    this.verifPasswordFunction(this.utilisateur.password);
+    // this.verifPasswordFunction(this.utilisateur.password);
     this.verifPhoneFunction(this.utilisateur.telephone);
 
     // On recherche dans la table réseau le role adminReseau 
     let roleAdminRoseau = this.tabRole.find((role:any) => role.nom.toLowerCase() == "adminreseau");
 
-    if(this.isNameValid && this.isPrenomValid && this.isPhoneValid && this.isAdresseValid && this.isEmailValid && this.isPasswordValid) {
+    if(this.isNameValid && this.isPrenomValid && this.isPhoneValid && this.isAdresseValid && this.isEmailValid) {
       // On peut faire appelle au service 
       // Le mot de passe de confirmation est le meme que celui par defaut 
-      this.utilisateur.password_confirmation = this.utilisateur.password;
+      // this.utilisateur.password_confirmation = this.utilisateur.password;
       this.utilisateur.role_id = roleAdminRoseau.id;
       
       this.userService.addAdminReseau(this.utilisateur).subscribe(
         (data:any) =>{
-          // console.log(data);
+          // // console.log(data);
           if(data.status){
-            // console.log(data.message);
+            // // console.log(data.message);
             sweetAlertMessage("success", "", "Compte créé avec succès");
             this.listeUsers();
             this.viderChamps();
           }
           else if(!data.success){
-            console.log(data.errors);
+            // console.log(data.errors);
 
             if(data.errors.email){
               sweetAlertMessage("error", "", data.errors.email);
@@ -361,11 +361,11 @@ export class UtilisateurComponent {
             sweetAlertMessage("success", "", data.message);
           }
         },
-        (err) =>{
+        (err:any) =>{
           // console.log("Les erreurs");
           
           // console.log(err);
-          // console.log(err.error.errors);
+          // // console.log(err.error.errors);
           // si l'email existe déjà 
           if(err.error.errors.email){
             this.emailMessage = err.error.errors.email[0];
@@ -389,8 +389,8 @@ export class UtilisateurComponent {
     this.utilisateur.adresse = "";
     this.utilisateur.telephone = "";
     this.utilisateur.email = "";
-    this.utilisateur.password = "";
-    this.utilisateur.password_confirmation = "";
+    // this.utilisateur.password = "";
+    // this.utilisateur.password_confirmation = "";
     this.utilisateur.role_id =0;
     this.utilisateur.reseau_id =0;
   }
@@ -472,7 +472,7 @@ export class UtilisateurComponent {
     this.verifPrenomFunction(dataModif.prenom);
     this.verifAdresseFunction(dataModif.adresse);
     this.verifEmailModif(this.emailModif);
-    this.verifPasswordModifFunction(this.passwordModif);
+    // this.verifPasswordModifFunction(this.passwordModif);
     this.verifPhoneModif(this.telephoneModif);
 
     if(this.isNameValid && this.isPrenomValid && this.isPhoneValid && this.isAdresseValid) {
@@ -480,22 +480,22 @@ export class UtilisateurComponent {
       if(this.emailModif != this.utilisateur.email){
         dataModif.email = this.emailModif
       }
-      if (this.passwordModif){
-        dataModif.password = this.passwordModif;
-      }
+      // if (this.passwordModif){
+      //   dataModif.password = this.passwordModif;
+      // }
 
       if(this.telephoneModif!= this.utilisateur.telephone) {
         dataModif.telephone = this.telephoneModif;
       }
       
-      // console.log(dataModif);
+      // // console.log(dataModif);
       sweetMessageConfirm("Vous allez modifier ce compte", "Oui je modifie").then( (result) =>{      
         if(result.isConfirmed ){
           this.userService.updateAdminReseau(dataModif.id, dataModif).subscribe(
             (data:any) =>{
-              console.log(data);
+              // console.log(data);
               if(data.status){
-                // console.log(data.message);
+                // // console.log(data.message);
                 sweetAlertMessage("success", "", data.message);
                 this.listeUsers();
                 this.viderChamps();
@@ -514,11 +514,11 @@ export class UtilisateurComponent {
               // sweetAlertMessage("success", "", data.message);
               // this.viderChamps()
             },
-            (err) =>{
+            (err:any) =>{
               // console.log("Les erreurs");
               
               // console.log(err);
-              // console.log(err.error.errors);
+              // // console.log(err.error.errors);
               // si l'email existe déjà 
               if(err.error.errors.email){
                 this.emailMessage = err.error.errors.email[0];
@@ -574,33 +574,33 @@ export class UtilisateurComponent {
       this.motifObject = {
         "motif": this.motif
       };
-      console.log(this.motif);
+      // console.log(this.motif);
     }
     if(this.delete){
       // Suppression d'un admin réseau 
       this.userService.deleteAdminReseau(this.utilisateur.id, this.motifObject).subscribe(
         (data:any) =>{
-          console.log(data); 
+          // console.log(data); 
           sweetAlertMessage("success", "", data.message);
           this.listeUsers(); 
           this.motif = "";       
         },
         (error:any) =>{
-          console.log(error);
+          // console.log(error);
         }
       )
     } else if(this.block){
       // Bloquer un admin réseau 
       this.userService.blockAdminReseau(this.utilisateur.id, this.motifObject).subscribe(
         (data:any) =>{
-          console.log(data);
+          // console.log(data);
           sweetAlertMessage("success", "", data.message);
           this.listeUsers();
           this.listeUsersBlocked();
           this.motif = "";
         },
         (err) =>{
-          console.log(err)
+          // console.log(err)
         }
       )
     } 
@@ -608,11 +608,11 @@ export class UtilisateurComponent {
     //   // Débloquer un admin réseau 
     //   this.userService.unblockAdminReseau(this.utilisateur.id).subscribe(
     //     (data:any) =>{
-    //       console.log(data);
+    //       // console.log(data);
     //       sweetAlertMessage("success", "", data.message);
     //     },
     //     (err) =>{
-    //       console.log(err)
+    //       // console.log(err)
     //     }
     //   )
     // }
@@ -624,13 +624,13 @@ export class UtilisateurComponent {
       if(result.isConfirmed ){
         this.userService.unblockAdminReseau(this.utilisateur.id).subscribe(
           (data:any) =>{
-            console.log(data);
+            // console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.listeUsersBlocked();
             this.listeUsers();
           },
           (err) =>{
-            console.log(err)
+            // console.log(err)
           }
         )
       }

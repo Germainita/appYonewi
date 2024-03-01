@@ -48,12 +48,12 @@ export class FooterComponent implements OnInit{
     if(this.isEmailValid){
       this.newsLetterService.inscriptionNewsletter(this.newsletterObjet).subscribe(
         (resp:any) =>{
-          console.log(resp);
+          // console.log(resp);
           sweetAlertMessage("success", "", resp.message);
           this.newsletterObjet.email = "";
         },
         (err) =>{
-          console.log(err);
+          // console.log(err);
           this.emailMessage  = err.error.message;
           // sweetAlertMessage("error", "", err.error.message);
         }

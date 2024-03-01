@@ -233,11 +233,11 @@
                         <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)]="utilisateur.email" (input)="verifEmailFunction(utilisateur.email)">
                         <p class="text-danger messageInfo" *ngIf="emailMessage"><i class="bi bi-exclamation-circle"></i> {{emailMessage}}</p>
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="telephoneInput" class="form-label">Mot de passe (defaut): <span class="require">*</span></label>
                         <input type="tel" name="pass" class="form-control" id="telephoneInput" [(ngModel)] ="utilisateur.password" (input)="verifPasswordFunction(utilisateur.password)">
                         <p class="text-danger messageInfo" *ngIf="passwordMessage"><i class="bi bi-exclamation-circle"></i> {{passwordMessage}}</p>
-                    </div>
+                    </div> -->
                     
                     <!-- Le role pour l'utilisateur -->
                     <!-- <div class="mb-3">
@@ -257,7 +257,7 @@
                     </div>  
 
                     <div class="text-end">
-                        <button type="button" class="btn me-4" (click)="ajouterAdmin()" [disabled]="!isNameValid || !isPrenomValid || !isPhoneValid || !isAdresseValid || !isEmailValid || !isPasswordValid" [class.deseable]="!isNameValid || !isPrenomValid || !isPhoneValid || !isAdresseValid || !isEmailValid || !isPasswordValid">Ajouter</button>
+                        <button type="button" class="btn me-4" (click)="ajouterAdmin()" [disabled]="!isNameValid || !isPrenomValid || !isPhoneValid || !isAdresseValid || !isEmailValid" [class.deseable]="!isNameValid || !isPrenomValid || !isPhoneValid || !isAdresseValid || !isEmailValid">Ajouter</button>
                         <button type="button" class="btn btnAnnuler" data-bs-dismiss="modal" (click)="viderChamps()">Annuler</button>
                     </div>
                 </form>
@@ -305,11 +305,11 @@
                         <input type="email" name="email" class="form-control" id="emailInput" [(ngModel)]="emailModif" *ngIf="!emailModif">
                         <p class="text-danger messageInfo" *ngIf="emailMessage"><i class="bi bi-exclamation-circle"></i> {{emailMessage}}</p>
                     </div>
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="telephoneInput" class="form-label">Mot de passe (defaut): <span class="require">*</span></label>
                         <input type="tel" name="password" class="form-control" id="telephoneInput" [(ngModel)] ="passwordModif" (input)="verifPasswordModifFunction(passwordModif)">
                         <p class="text-danger messageInfo" *ngIf="passwordMessage"><i class="bi bi-exclamation-circle"></i> {{passwordMessage}}</p>
-                    </div>
+                    </div> -->
                     
                     <!-- Le réseau administré -->
                     <div class="mb-3">

@@ -72,9 +72,9 @@ export class MessageComponent implements OnInit{
   listeContacts(){
     this.contactService.getAllContacts().subscribe(
       (data:any) =>{
-        console.log(data)
+        // console.log(data)
         this.tabContacts = this.tabContactsFilter = data.contact;
-        console.log(this.tabContacts)
+        // console.log(this.tabContacts)
       }, 
       (err:any)=>{
         this.tabContacts = [];

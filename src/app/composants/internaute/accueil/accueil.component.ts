@@ -49,9 +49,9 @@ export class AccueilComponent implements OnInit {
     // Les réseaux 
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
-        console.log (data)
+        // console.log (data)
         this.tabReseauxActifs = data.reseaux;
-        // console.log(this.tabReseauxActifs);
+        // // console.log(this.tabReseauxActifs);
 
         // on trouve l'id du réseau AFTU 
         let reseauAftu = this.tabReseauxActifs.find((element:any) => element.nom == "aftu");
@@ -66,7 +66,7 @@ export class AccueilComponent implements OnInit {
         }
       },
       (error) =>{
-        console.log (error)
+        // console.log (error)
       }
     );
     
@@ -74,17 +74,17 @@ export class AccueilComponent implements OnInit {
     // Les lignes de chaque réseaux 
     this.ligneService.getAllLigne().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
 
         this.tabLigne = data.lignes;
 
         // Les infos du réseau de AFTU 
         this.tabAftu = this.tabLigne.filter((element:any)=> element.reseau_id == this.idAftu);
-        console.log("Liste des lignes du reseau AFTU ",this.tabAftu);
+        // console.log("Liste des lignes du reseau AFTU ",this.tabAftu);
 
         // Les infos du réseau de Dakar Dem Dikk 
         this.tabLigneDemDikk = this.tabLigne.filter((element:any)=> element.reseau_id == this.idDemDikk);
-        console.log("Liste des lignes du reseau LigneDemDikk ",this.tabLigneDemDikk);
+        // console.log("Liste des lignes du reseau LigneDemDikk ",this.tabLigneDemDikk);
       }
     )
   }

@@ -53,7 +53,7 @@ export class NavbarComponent implements OnInit{
 
 
     // Les infos de l'utilisateur connecté 
-    // console.log(this.userConnect.user);
+    // // console.log(this.userConnect.user);
     // this.imageUserConnected = `${urlImage}${this.userConnect.image}`;    
 
     
@@ -73,12 +73,12 @@ export class NavbarComponent implements OnInit{
     // Le profil de l'utilisateur connecté 
     this.userService.getUserProfil().subscribe(
       (resp:any) =>{
-        console.log(resp);
+        // console.log(resp);
         let user = resp.user;
 
-        console.log("Utilisateur connecté");
+        // console.log("Utilisateur connecté");
         
-        console.log(user);
+        // console.log(user);
         
 
         // L'image de l'utilisateur connecter 
@@ -86,7 +86,7 @@ export class NavbarComponent implements OnInit{
         if(user.image){
           this.imageUserConnected = `${urlImage}${user.image}`;
         }
-        // console.log(this.imageUserConnected);
+        // // console.log(this.imageUserConnected);
         
 
         // Liste des réseaux 
@@ -99,7 +99,7 @@ export class NavbarComponent implements OnInit{
         //     }
         //   },
         //   (error) =>{
-        //     console.log (error)
+        //     // console.log (error)
         //   }
         // )
       }
@@ -123,18 +123,18 @@ export class NavbarComponent implements OnInit{
   listeReseau(){
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
-        console.log (data);
+        // console.log (data);
         this.tabReseaux = data.reseaux;
         this.reseauFound = this.tabReseaux.find((reseau:any) => reseau.id == this.userConnect.user.reseau_id);
-        console.log(this.reseauFound);
+        // console.log(this.reseauFound);
         // if(reseauFound){
         //   this.reseauUser = reseauFound.nom;
         //   this.reseauUserId = reseauFound.id;
-        //   // console.log(this.reseauUser);
+        //   // // console.log(this.reseauUser);
         // }
       },
       (error) =>{
-        // console.log (error);
+        // // console.log (error);
         this.tabReseaux = []
       }
     )
@@ -149,12 +149,12 @@ export class NavbarComponent implements OnInit{
       this.reseauFound.description = this.description;
       this.reseauService.updateDetailsReseau(this.reseauFound).subscribe(
         (data:any) =>{
-          console.log(data);
+          // console.log(data);
           this.isDescUpdate = true;
           sweetAlertMessage("success", "", data.message);
           this.listeReseau();
           // this.viderChamps();
-          console.log(data);
+          // console.log(data);
         }
       )
     }
@@ -182,22 +182,22 @@ export class NavbarComponent implements OnInit{
       this.reseauService.updateDetailsReseau(this.reseauFound).subscribe(
         (data:any) =>{
           this.isContactUpdate = true;
-          console.log(data);
+          // console.log(data);
           sweetAlertMessage("success", "", data.message);
         },
         (err:any)=>{
           this.isContactUpdate = false;
-          console.log(err);
+          // console.log(err);
           if(err.error.errors.telephone){
             sweetAlertMessage("error", "", err.error.errors.telephone[0]);
           }
-          console.log(err.error.errors.telephone[0]);
+          // console.log(err.error.errors.telephone[0]);
         }
       )
 
     }
-    // console.log(this.reseauFound.telephone);
-    // console.log(this.reseauFound.email);
+    // // console.log(this.reseauFound.telephone);
+    // // console.log(this.reseauFound.email);
   }
 
 }

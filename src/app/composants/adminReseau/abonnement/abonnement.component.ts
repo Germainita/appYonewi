@@ -124,7 +124,7 @@ export class AbonnementComponent {
       this.isModifier = true;
       this.abonnement = element;
       let abonnementModif = this.abonnement.duree.split(" ");
-      console.log(abonnementModif);
+      // console.log(abonnementModif);
       this.nombreJour = abonnementModif[0];
       this.temps = abonnementModif[1];
     }
@@ -139,7 +139,7 @@ export class AbonnementComponent {
     listeAbonnement(){
       this.abonnementService.getAllAbonnementReseau().subscribe(
         (data:any) =>{
-          console.log(data);
+          // console.log(data);
           this.tabAbonnement = data.abonnements;
           this.tabAbonnementFilterActifs = this.tabAbonnement;
         }
@@ -151,11 +151,11 @@ export class AbonnementComponent {
       this.abonnementService.getAbonnementDeleted().subscribe(
         (data:any) =>{
           // On filtre les abonnements supprimés 
-          // console.log(data)
+          // // console.log(data)
           this.tabAbonnementsSup = this.tabAbonnementFilterSup = data.abonnements;
         },
         (err) =>{
-          // console.log(err);
+          // // console.log(err);
           this.tabAbonnementsSup = [];
         }
       )
@@ -242,11 +242,11 @@ export class AbonnementComponent {
         } 
         else{
           this.abonnement.duree =  `${this.nombreJour} ${this.temps }`;
-          // console.log(this.abonnement.duree);
+          // // console.log(this.abonnement.duree);
           this.abonnementService.addAbonnement(this.abonnement).subscribe( 
             (data:any) =>{
-              // console.log(data);
-              console.log(data.success);
+              // // console.log(data);
+              // console.log(data.success);
               if(data.success == false) {
                 sweetAlertMessage("error", "", "Le prix doit etre suppérieur à 1000");
               } else if(data.message) {
@@ -256,9 +256,9 @@ export class AbonnementComponent {
               }
             },
             (err:any) =>{
-              console.log(err);
+              // console.log(err);
               sweetAlertMessage("error", "", "Le prix doit etre suppérieur à 1000");
-              console.log(`Erreur lors de l'ajout ${err}`);
+              // console.log(`Erreur lors de l'ajout ${err}`);
             }
           )
         }
@@ -288,7 +288,7 @@ export class AbonnementComponent {
             }
           },
           (err) =>{
-            console.log (err)
+            // console.log (err)
     
           }
         )
@@ -301,14 +301,14 @@ export class AbonnementComponent {
         if(result.isConfirmed ){
           this.abonnementService.deleteAbonnement(abonnement.id).subscribe(
             (data:any) =>{
-              console.log(data);
+              // console.log(data);
               sweetAlertMessage("success", "", data.message);
               this.listeAbonnement();
               this.listeAbonnementSup();
             },
             (err) => {
               alert("Error");
-              console.log(err);
+              // console.log(err);
             }
           )
         }
@@ -323,14 +323,14 @@ export class AbonnementComponent {
           // abonnement.etat = "actif";
           this.abonnementService.restaureAbonnement(abonnement.id).subscribe(
             (data:any) =>{
-              console.log(data);
+              // console.log(data);
               sweetAlertMessage("success", "", data.message);
               this.listeAbonnement();
               this.listeAbonnementSup();
             },
             (err) => {
               alert("Error");
-              console.log(err);
+              // console.log(err);
             }
           )
         }
@@ -348,7 +348,7 @@ export class AbonnementComponent {
               this.listeAbonnementSup();
             },
             (err) =>{
-              console.log(err);
+              // console.log(err);
             }
           )
         }

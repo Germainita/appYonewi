@@ -115,7 +115,7 @@ export class TypeLigneComponent implements OnInit {
   listeTypeLignes(){
     this.typeLigneService.getTypesLigneReseau().subscribe(
       (data:any) =>{
-        // console.log(data);
+        // // console.log(data);
         this.tabTypeLigne = data.types;
         this.tabTypeLigneFilterActifs = this.tabTypeLigne;
       }
@@ -127,11 +127,11 @@ export class TypeLigneComponent implements OnInit {
     this.typeLigneService.gettypeLignexDeleted().subscribe(
       (data:any) =>{
         // On filtre les TypeLignes supprimés 
-        // console.log(data)
+        // // console.log(data)
         this.tabTypeLignesSup = this.tabTypeLigneFilterSup = data.types;
       },
       (err) =>{
-        console.log(err);
+        // console.log(err);
         this.tabTypeLignesSup = [];
       }
     )
@@ -180,15 +180,15 @@ export class TypeLigneComponent implements OnInit {
         // let nom = {"nom": this.nomTypeLigne}
         this.typeLigneService.addTypeLigne(this.typeLigne).subscribe( 
           (data:any) =>{
-            console.log(data);
+            // console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.listeTypeLignes();
             this.typeLigne.nom = "";
             this.typeLigne.description = "";
           },
           (err) =>{
-            console.log(`Erreur lors de l'ajout`);
-            console.log(err);
+            // console.log(`Erreur lors de l'ajout`);
+            // console.log(err);
             
           }
         )
@@ -216,7 +216,7 @@ export class TypeLigneComponent implements OnInit {
         this.showAjoutTypeLigne();
       },
       (err) =>{
-        console.log (err)
+        // console.log (err)
 
       }
     )
@@ -228,14 +228,14 @@ export class TypeLigneComponent implements OnInit {
       if(result.isConfirmed ){
         this.typeLigneService.deleteTypeLigne(typeLigne.id).subscribe(
           (data:any) =>{
-            console.log(data);
+            // console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.listeTypeLignes();
             this.listeTypeLignesSup();
           },
           (err) => {
             alert("Error");
-            console.log(err);
+            // console.log(err);
           }
         )
       }
@@ -250,14 +250,14 @@ export class TypeLigneComponent implements OnInit {
         // typeLigne.etat = "actif";
         this.typeLigneService.restaureTypeLigne(typeLigne.id).subscribe(
           (data:any) =>{
-            console.log(data);
+            // console.log(data);
             sweetAlertMessage("success", "", data.message);
             this.listeTypeLignes();
             this.listeTypeLignesSup();
           },
           (err) => {
             alert("Error");
-            console.log(err);
+            // console.log(err);
           }
         )
       }
@@ -275,19 +275,19 @@ export class TypeLigneComponent implements OnInit {
             this.listeTypeLignesSup();
           },
           (err) =>{
-            console.log(err);
+            // console.log(err);
           }
         )
         // this.typeLigneService.restaureTypeLigne(TypeLigne.id).subscribe(
         //   (data) =>{
-        //     console.log(data);
+        //     // console.log(data);
         //     response = data;
         //     sweetAlertMessage("success", "", response.message);
         //     this.listeTypeLignes();
         //   },
         //   (err) => {
         //     alert("Error");
-        //     console.log(err);
+        //     // console.log(err);
         //   }
         // )
       }

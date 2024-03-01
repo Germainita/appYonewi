@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { sweetAlertMessage } from 'src/app/services/sweetAlert/alert.service';
 import { validateEmail} from 'src/app/validation/validation';
 import Swal from 'sweetalert2';
+import { Loading, Notify } from 'notiflix';
 
 @Component({
   selector: 'app-authentification',
@@ -54,6 +55,8 @@ export class AuthentificationComponent implements OnInit {
     if(!localStorage.getItem("isAdminReseauConnected")){
       localStorage.setItem("isAdminReseauConnected", JSON.stringify(false))
     }
+
+    Notify.success('Sol lucet omnibus');
   }
 
   // On vide tous les champs 
@@ -111,8 +114,10 @@ export class AuthentificationComponent implements OnInit {
 
   // Methode de connexion 
   login(){
+    Loading.dots();
     this.verifEmailFunction();
     this.verifPasswordFunction();
+    
     if (this.verifEmail && this.verifPassword){
       let user = {
         email: this.email,
@@ -123,10 +128,10 @@ export class AuthentificationComponent implements OnInit {
       this.authService.login(user).subscribe(
         (rep) =>{
           response = rep;
-          // console.log(response);
+          // // console.log(response);
           if (response.status){
             this.authService.deconnexionAutomatique(); //Rafraichit 9 fois le token à chaque 15 minutes et déconnecte directement la session
-            // console.log ("C'est bon");
+            // // console.log ("C'est bon");
             
             Swal.fire({
               position: 'center',
@@ -135,6 +140,7 @@ export class AuthentificationComponent implements OnInit {
               text: response.message,
               showConfirmButton: true,
             });
+            
             
             this.route.navigate(['/dashbord']); // Redirection vers le dashbord concerné 
             this.authService.isAuthenticated = true; // Définit la variable isAuthicated à true pour la guard
@@ -153,9 +159,9 @@ export class AuthentificationComponent implements OnInit {
             this.password  = "";
 
             // this.iscorrectValues = true; //Les données fournies sont correctes
-
+            Loading.remove();
           }else {
-            console.log( "L'adresse email est incorrecte");
+            // console.log( "L'adresse email est incorrecte");
             Swal.fire({
               position: 'center',
               icon: 'error',
@@ -166,8 +172,9 @@ export class AuthentificationComponent implements OnInit {
           }
         },
         (error) =>{
+          Loading.remove();
           this.verifMessageEmail = this.verifMessagePassword = "Email ou mot de passe incorrect";
-          console.log(error);
+          // console.log(error);
           // Swal.fire({
           //   position: 'center',
           //   icon: 'error',
@@ -184,18 +191,18 @@ export class AuthentificationComponent implements OnInit {
   // Réinitialiser le mot de passe 
   resetPassword(){
     this.verifEmailFunction();
-    // console.log(this.email);
+    // // console.log(this.email);
     if (this.verifEmail){
       let emailObjet = {
         email: this.email
       }
       this.authService.askResetPassword(emailObjet).subscribe(
         (data:any)=>{
-          console.log(data);
+          // console.log(data);
           sweetAlertMessage("success", "", data.message);
         },
         (err:any)=>{
-          console.log("Erreur",err);
+          // console.log("Erreur",err);
           if(err.error.errors){
             this.verifMessageEmail = err.error.errors.email;
           }

@@ -95,12 +95,12 @@ export class ContactComponent implements OnInit{
         contenu: this.contact.contenu
       }
   
-      // console.log(contact);
+      // // console.log(contact);
       // On insère le contact dans la base de donnée 
       this.contactService.addContact(contactObjet).subscribe(
         (data:any) =>{
-          console.log(`Succes \n${data}`);
-          console.log(data);
+          // console.log(`Succes \n${data}`);
+          // console.log(data);
           
           sweetAlertMessage("success", "", data.message);
   
@@ -111,10 +111,10 @@ export class ContactComponent implements OnInit{
           
         },
         (err:any) =>{
-          console.log(`erreur \n${err}`);
-          console.log(err.error.errors.contenu);
+          // console.log(`erreur \n${err}`);
+          // console.log(err.error.errors.contenu);
           if(err.error.errors.sujet){
-            // console.log(err.error.errors.sujet[0]);            
+            // // console.log(err.error.errors.sujet[0]);            
             this.sujetMessage = err.error.errors.sujet[0];
           }
           if(err.error.errors.contenu){

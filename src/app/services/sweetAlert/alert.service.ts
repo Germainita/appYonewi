@@ -51,8 +51,8 @@ export const sweetAlertMessage = (icone:any, title:any, text:any) =>{
   //   //   this.matiereFound.description = this.description;
   //   //   this.matiereFound.updateAt = new Date();
   //   //   this.matiereFound.updateBy = this.adminConnect.email;
-  //   //   console.log(this.matiereFound);
-  //   //   console.log(this.tabMatieres);
+  //   //   // console.log(this.matiereFound);
+  //   //   // console.log(this.tabMatieres);
 
   //   //   // Mis à jour du localStorage
   //   //   localStorage.setItem("matieres", JSON.stringify(this.tabMatieres));
