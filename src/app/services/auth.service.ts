@@ -42,7 +42,7 @@ export class AuthService {
   deconnexionAutomatique() {
     setTimeout(() => {
       this.refreshToken(this.onSuccess, this.onError);
-    }, 10000); // 10 secondes 
+    }, 900000); // 10 secondes 
   }
 
   // Service pour rafraichir le token 
@@ -72,8 +72,15 @@ export class AuthService {
 
   onSuccess = (response: any) => {
     // Mettre à jour le token
-    localStorage.setItem('userConnect', JSON.stringify(response));
-    // console.log('voici la reponse du changement du token', response);
+    let userConnect = JSON.parse (localStorage.getItem("userConnect") || "");
+    if(userConnect){
+      // console.log(userConnect.token);
+      userConnect.token = response.token;
+      
+      localStorage.setItem('userConnect', JSON.stringify(userConnect));
+      // console.log('voici la reponse du changement du token', response.token);
+      
+    }
   };
 
   onError = (error: any) => {

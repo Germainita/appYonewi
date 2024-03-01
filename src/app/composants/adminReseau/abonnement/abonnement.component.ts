@@ -3,6 +3,7 @@ import { Abonnement } from 'src/app/models/abonnement.model';
 import { AbonnementService } from 'src/app/services/abonnement.service';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { validateLengthField } from 'src/app/validation/validation';
+import { Loading, Notify } from 'notiflix';
 
 @Component({
   selector: 'app-abonnement',
@@ -31,7 +32,7 @@ export class AbonnementComponent {
     isSup: boolean = false; 
   
     // Attribut pour la pagination
-    itemsParPage = 3; // Nombre d'articles par page
+    itemsParPage = 5; // Nombre d'articles par page
     pageActuelle = 1; // Page actuelle
 
     // Attribut pour la durée 
@@ -137,26 +138,32 @@ export class AbonnementComponent {
   
     // Liste des tous les Abonnement 
     listeAbonnement(){
+      Loading.dots();
       this.abonnementService.getAllAbonnementReseau().subscribe(
         (data:any) =>{
           // console.log(data);
           this.tabAbonnement = data.abonnements;
           this.tabAbonnementFilterActifs = this.tabAbonnement;
+          Loading.remove();
         }
       )
     }
   
     // Liste des Abonnement supprimés 
     listeAbonnementSup(){
+      Loading.dots();
       this.abonnementService.getAbonnementDeleted().subscribe(
         (data:any) =>{
           // On filtre les abonnements supprimés 
           // // console.log(data)
           this.tabAbonnementsSup = this.tabAbonnementFilterSup = data.abonnements;
+          Loading.remove();
         },
         (err) =>{
           // // console.log(err);
           this.tabAbonnementsSup = [];
+          Loading.remove();
+
         }
       )
     }

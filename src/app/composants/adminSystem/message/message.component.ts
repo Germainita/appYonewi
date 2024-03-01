@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from 'src/app/models/contact.model';
 import { ContactService } from 'src/app/services/contact.service';
+import { Loading, Notify } from 'notiflix';
+
 
 @Component({
   selector: 'app-message',
@@ -70,11 +72,14 @@ export class MessageComponent implements OnInit{
 
   // Methode pour récupérer la liste des messages 
   listeContacts(){
+    Loading.dots();
+
     this.contactService.getAllContacts().subscribe(
       (data:any) =>{
         // console.log(data)
         this.tabContacts = this.tabContactsFilter = data.contact;
         // console.log(this.tabContacts)
+        Loading.remove();
       }, 
       (err:any)=>{
         this.tabContacts = [];

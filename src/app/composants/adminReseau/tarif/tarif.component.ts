@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Tarif } from 'src/app/models/tarif.model';
 import { TarifService } from 'src/app/services/tarif.service';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
+import { Loading, Notify } from 'notiflix';
+
 
 @Component({
   selector: 'app-tarif',
@@ -49,9 +51,6 @@ export class TarifComponent {
   ngOnInit(): void {
     // On charge les tarifs à l'initialisation 
     this.listetarif();
-
-    
-
   }
 
   // Voir la liste des tarif actifs 
@@ -111,6 +110,7 @@ export class TarifComponent {
 
   // Liste des tous les tarif 
   listetarif(){
+    Loading.dots();
     this.tarifService.getAllTarifReseau().subscribe(
       (data:any) =>{
         // console.log(data);
@@ -128,13 +128,14 @@ export class TarifComponent {
         if (this.isTarifEntreSection && this.tarifSection){
           this.showTarifActifs();
         }
-        
+        Loading.remove();        
       }
     )
   }
 
   // Liste des tarif supprimés 
   listetarifSup(){
+    Loading.dots();
     this.tarifService.getTarifDeleted().subscribe(
       (data:any) =>{
         // On filtre les tarifs supprimés 
@@ -144,6 +145,7 @@ export class TarifComponent {
       (err) =>{
         // // console.log(err);
         this.tabTarifsSup = [];
+        Loading.remove();
       }
     )
   }

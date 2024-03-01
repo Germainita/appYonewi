@@ -10,6 +10,9 @@ import { TarifService } from 'src/app/services/tarif.service';
 import { TypeLigneService } from 'src/app/services/typeLigne.service';
 import { validateLengthField, validateLigneName } from 'src/app/validation/validation';
 
+import { Loading, Notify } from 'notiflix';
+
+
 @Component({
   selector: 'app-gestion-ligne',
   templateUrl: './gestion-ligne.component.html',
@@ -146,7 +149,7 @@ export class GestionLigneComponent {
   showLignes(){
     this.isLignes = true;
     this.isSections = false;
-    this.listeSections();
+    // this.listeSections();
     this.listeLigne();
   }
 
@@ -306,8 +309,10 @@ export class GestionLigneComponent {
 
   // Liste des tous les Ligne 
   listeLigne(){
+    Loading.dots();
     this.messageInfo = "";
     let tabSectionsLignes :any[] = [];
+    this.listeSections();
     this.ligneService.getAllLigneReseau().subscribe(
       (data:any) =>{
         // console.log("Les lignes recu",data);
@@ -346,83 +351,23 @@ export class GestionLigneComponent {
               
               // // console.log(tabSection);         
             }
-            // On enregistre la dernière section qui est le debut et la fin de la ligne 
-            // if(tabSection.length) {
-            //   let lastSection = new SectionModel;
-            //   lastSection.depart = this.tabLigne[i].lieuDepart;
-            //   lastSection.arrivee = this.tabLigne[i].lieuArrivee;
-            //   lastSection.created_at = this.tabLigne[i].created_at;
-            //   lastSection.created_by = this.tabLigne[i].created_by;
-            //   lastSection.updated_at = this.tabLigne[i].updated_at;
-            //   lastSection.updated_by = this.tabLigne[i].updated_by;
-            //   lastSection.num = (tabSection.length + 1).toString();
-            //   lastSection.prix = this.prixSection + ((tabSection.length - 1 )* this.prixEntreSection);
-  
-            //   // On ajoute la derniere section dans le tableau 
-            //   tabSection.push(lastSection);
-            // }
-  
-            // this.tabLigne[i].sections = tabSection;
-  
-            // // console.log(this.tabLigne[i].sections );
+           
           }
-
+          
         }
-
-        // Test2 
-        // Algorithme pour avoir les différentes section d'une ligne avec le prix 
-        // for(let i = 0; i<this.tabLigne.length; i++){
-        //   let tabSectionTest:any[]=[];
-        //   // On stocke d'abord le point de départ de la ligne comme premier élément du tableau pour la ligne;
-        //   tabSectionTest.push(this.tabLigne[i].lieuDepart);
-
-
-        //   // Si des sections on été enregistré, on récupère les section de la ligne
-        //   let tabSection: SectionModel[] = [];
-        //   tabSection = this.tabSection.filter((section:any) => section.ligne_id == this.tabLigne[i].id);
-        //   if(tabSection){
-        //     // On prend les debut des sections sauf le premier qui est déjà enregistré
-        //     for(let y = 1; y < tabSection.length; y++){
-        //       tabSection[y].num = `${y+1}`;
-        //       // console.log(tabSection[y].depart);
-              
-        //       tabSectionTest.push(tabSection[y].depart)
-        //     }
-        //     tabSectionTest.push(this.tabLigne[i].lieuArrivee); // Stocke en dernier le lieu d'arrivé de la ligne;
-
-        //     // // console.log(tabSection[tabSection.length - 1].arrivee);  
-        //     // tabSectionTest.push(tabSection[tabSection.length-1].fin)   
-        //     // console.log("Le tableau des sections test", tabSectionTest); 
-        //     // On a le tableau, on peut maintenant faire l'algo avec les prix 
-        //     let tabSectionPrix = this.calculPrixSection(tabSectionTest);
-        //     // console.log(tabSectionPrix);
-        //     // for (let j = 0; j< tabSectionTest.length ; j++){
-        //     //   for(let x = j+1; x < tabSectionTest.length; x++){
-        //     //     let objetTest = {
-        //     //       num : x + j,
-        //     //       depart: tabSectionTest[j],
-        //     //       arrivee: tabSectionTest[x],
-        //     //       prix: 150 + (50* (x-j-1)),
-        //     //     }
-        //     //     // console.log(objetTest);
-        //     //     tabSectionPrix.push(objetTest);
-        //     //     // console.log(tabSectionPrix);
-        //     //   }
-        //     // } 
-        //     // tabSectionPrix = this.calculPrixSection(tabSectionTest);      
-        //   }
-        // }
+        
         
         // // console.log(this.tabLigne)
         this.tabLigneFilterActifs = this.tabLigne;
         // console.log("Le tableau des lignes filtré", this.tabLigneFilterActifs);
         
-
+        
         
         if(!this.tabLigne.length){
           // console.log(this.tabLigne)
           this.messageInfo = "Aucune ligne enregistrée pour le moment";
         }
+        Loading.remove();
       }
     )
   }
@@ -448,7 +393,9 @@ export class GestionLigneComponent {
 
   // Liste des Ligne supprimés 
   listeLigneSup(){
+    Loading.dots();
     this.messageInfo = "";
+    this.listeSections();
     this.ligneService.getLigneDeleted().subscribe(
       (data:any) =>{
         // On filtre les Lignes supprimés 
@@ -467,28 +414,30 @@ export class GestionLigneComponent {
             // console.log(tabSection);         
           }
           // On enregistre la dernière section qui est le debut et la fin de la ligne 
-          if(tabSection.length > 1) {
-            let lastSection = new SectionModel;
-            lastSection.depart = this.tabLignesSup[i].lieuDepart;
-            lastSection.arrivee = this.tabLignesSup[i].lieuArrivee;
-            lastSection.created_at = this.tabLignesSup[i].created_at;
-            lastSection.created_by = this.tabLignesSup[i].created_by;
-            lastSection.updated_at = this.tabLignesSup[i].updated_at;
-            lastSection.updated_by = this.tabLignesSup[i].updated_by;
-            lastSection.num = tabSection.length.toString();
-            lastSection.prix = this.prixSection + (tabSection.length * this.prixEntreSection);
+          // if(tabSection.length > 1) {
+          //   let lastSection = new SectionModel;
+          //   lastSection.depart = this.tabLignesSup[i].lieuDepart;
+          //   lastSection.arrivee = this.tabLignesSup[i].lieuArrivee;
+          //   lastSection.created_at = this.tabLignesSup[i].created_at;
+          //   lastSection.created_by = this.tabLignesSup[i].created_by;
+          //   lastSection.updated_at = this.tabLignesSup[i].updated_at;
+          //   lastSection.updated_by = this.tabLignesSup[i].updated_by;
+          //   lastSection.num = tabSection.length.toString();
+          //   lastSection.prix = this.prixSection + (tabSection.length * this.prixEntreSection);
 
-            // On ajoute la derniere section dans le tableau 
-            tabSection.push(lastSection);
-          }
+          //   // On ajoute la derniere section dans le tableau 
+          //   tabSection.push(lastSection);
+          // }
 
           this.tabLignesSup[i].sections = tabSection;
+          Loading.remove();
         }
       },
       (err) =>{
         // console.log(err);
         this.tabLignesSup = [];
         this.messageInfo1 = "Aucune ligne  dans la corbeille";
+        Loading.remove();
       }
     )
   }

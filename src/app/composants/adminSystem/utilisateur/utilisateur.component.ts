@@ -9,6 +9,8 @@ import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAl
 import { UserService } from 'src/app/services/user.service';
 import { validateEmail, validateField, validateLengthField, validateName, validatePassword, validatePhone } from 'src/app/validation/validation';
 
+import { Loading, Notify } from 'notiflix';
+
 @Component({
   selector: 'app-utilisateur',
   templateUrl: './utilisateur.component.html',
@@ -152,14 +154,18 @@ export class UtilisateurComponent {
 
   // Liste des utilisateurs 
   listeUsers(){
+    Loading.dots();
+
     this.userService.getAllUsers().subscribe(
       (data:any) =>{
         // console.log(data);
         this.tabUtilisateur = this.tabUtilisateurFilter = data.users;
+        Loading.remove();
       },
       (error) =>{
         // console.log(error);
         this.tabUtilisateur = [];
+        Loading.remove();
       }
     )
   }
@@ -338,25 +344,25 @@ export class UtilisateurComponent {
         (data:any) =>{
           // // console.log(data);
           if(data.status){
-            // // console.log(data.message);
+            // console.log(data.message);
             sweetAlertMessage("success", "", "Compte créé avec succès");
             this.listeUsers();
             this.viderChamps();
           }
-          else if(!data.success){
-            // console.log(data.errors);
+          // else if(!data.success){
+          //   console.log(data.errors);
 
-            if(data.errors.email){
-              sweetAlertMessage("error", "", data.errors.email);
-            }
-            if(data.errors.password){
-              sweetAlertMessage("error", "", data.errors.password);
-            }
-            if(data.errors.telephone){
-              sweetAlertMessage("error", "", data.error.errors.telephone);
-            }
+          //   if(data.errors.email){
+          //     sweetAlertMessage("error", "", data.errors.email);
+          //   }
+          //   if(data.errors.password){
+          //     sweetAlertMessage("error", "", data.errors.password);
+          //   }
+          //   if(data.errors.telephone){
+          //     sweetAlertMessage("error", "", data.error.errors.telephone);
+          //   }
             
-          } 
+          // } 
           else if (data.status){
             sweetAlertMessage("success", "", data.message);
           }

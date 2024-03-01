@@ -3,6 +3,8 @@ import { TypeLigne } from 'src/app/models/typeLigne.model';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { TypeLigneService } from 'src/app/services/typeLigne.service';
 import { validateLengthField } from 'src/app/validation/validation';
+import { Loading, Notify } from 'notiflix';
+
 
 @Component({
   selector: 'app-type-ligne',
@@ -113,17 +115,20 @@ export class TypeLigneComponent implements OnInit {
 
   // Liste des tous les TypeLignes 
   listeTypeLignes(){
+    Loading.dots();
     this.typeLigneService.getTypesLigneReseau().subscribe(
       (data:any) =>{
         // // console.log(data);
         this.tabTypeLigne = data.types;
         this.tabTypeLigneFilterActifs = this.tabTypeLigne;
+        Loading.remove();
       }
     )
   }
 
   // Liste des TypeLignes supprimés 
   listeTypeLignesSup(){
+    Loading.dots();
     this.typeLigneService.gettypeLignexDeleted().subscribe(
       (data:any) =>{
         // On filtre les TypeLignes supprimés 
@@ -133,6 +138,7 @@ export class TypeLigneComponent implements OnInit {
       (err) =>{
         // console.log(err);
         this.tabTypeLignesSup = [];
+        Loading.remove();
       }
     )
   }

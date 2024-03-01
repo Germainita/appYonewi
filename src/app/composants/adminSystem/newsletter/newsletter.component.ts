@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Newsletter } from 'src/app/models/newsletter.model';
 import { NewsletterService } from 'src/app/services/newsletter.service';
+import { Loading, Notify } from 'notiflix';
+
 
 @Component({
   selector: 'app-newsletter',
@@ -59,13 +61,18 @@ export class NewsletterComponent implements OnInit{
 
   // Liste des inscrits à la newsletter 
   listeNewsletters(){
+    Loading.dots();
+
     this.newsletterService.getAllUsersNewsletter().subscribe(
       (data:any) =>{
         // // console.log(data);
         this.tabNewsletter =this.tabNewsletterFilter = data.subscribers
+        Loading.remove();
       },
       (err:any)=>{
         this.tabNewsletter = [];
+        Loading.remove();
+        
       }
     )
   }

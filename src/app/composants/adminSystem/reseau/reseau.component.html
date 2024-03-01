@@ -118,16 +118,17 @@
                             <h3 class="titre text-center fw-bold  mb-4">Ajouter un réseaux</h3>
     
                             <form action="">
-                                <div class="mb-3">
+                                <div class="mb-3 my-4">
                                     <label for="exampleFormControlInput1" class="form-label">Nom du réseau: <span class="require">*</span></label>
                                     <input type="email" class="form-control" name="nom" id="exampleFormControlInput1" [(ngModel)]="reseau.nom" (input)="verifNomFunction(reseau.nom)">
+                                    <p class="text-danger">{{verifMessageNom}}</p>
                                 </div>
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">Description: </label>
                                     <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="reseau.description"></textarea>
-                                </div>
+                                </div> -->
     
-                                <div class="text-center">
+                                <div class="text-center mt-5">
                                     <button class="btn px-4" (click)="ajoutReseau()" [disabled]="!isNomValide" [class.deseable]="!isNomValide"> Ajouter</button>
 
                                 </div>

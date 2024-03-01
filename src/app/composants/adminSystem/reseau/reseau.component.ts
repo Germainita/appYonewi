@@ -10,6 +10,8 @@ import { SectionService } from 'src/app/services/section.service';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { TarifService } from 'src/app/services/tarif.service';
 import { validateLengthField } from 'src/app/validation/validation';
+import { Loading, Notify } from 'notiflix';
+
 
 @Component({
   selector: 'app-reseau',
@@ -18,106 +20,106 @@ import { validateLengthField } from 'src/app/validation/validation';
 })
 export class ReseauComponent implements OnInit {
   // Déclaration des variables 
-  tabReseau: any [] = [
-    {
-      id: 1, 
-      nom:"Dakar Dem Dikk",
-      lignes: [ 
-        {
-          id: 1,
-          numLigne: 1,
-          depart: "Yoff",
-          arrivee: "Petersen",
-          sections: [
-            {
-              numSection: "1",
-              debut: "Yoff",
-              fin: "oukam",
-              prix: 150
-            },
-            {
-              numSection: "2",
-              debut: "oukam",
-              fin: "petersen",
-              prix: 150
-            },
-            {
-              numSection: "3",
-              debut: "Yoff",
-              fin: "pertersen",
-              prix: 200
-            },
+  // tabReseau: any [] = [
+  //   {
+  //     id: 1, 
+  //     nom:"Dakar Dem Dikk",
+  //     lignes: [ 
+  //       {
+  //         id: 1,
+  //         numLigne: 1,
+  //         depart: "Yoff",
+  //         arrivee: "Petersen",
+  //         sections: [
+  //           {
+  //             numSection: "1",
+  //             debut: "Yoff",
+  //             fin: "oukam",
+  //             prix: 150
+  //           },
+  //           {
+  //             numSection: "2",
+  //             debut: "oukam",
+  //             fin: "petersen",
+  //             prix: 150
+  //           },
+  //           {
+  //             numSection: "3",
+  //             debut: "Yoff",
+  //             fin: "pertersen",
+  //             prix: 200
+  //           },
 
 
-          ]
-        },
-        {
-          id: 2,
-          numLigne: 2,
-          depart: "Yoff",
-          arrivee: "Petersen",
-          sections: []
-        },
-        {
-          id: 3,
-          numLigne: 7,
-          depart: "Ouakam",
-          arrivee: "Petersen",
-          sections: []
-        }
+  //         ]
+  //       },
+  //       {
+  //         id: 2,
+  //         numLigne: 2,
+  //         depart: "Yoff",
+  //         arrivee: "Petersen",
+  //         sections: []
+  //       },
+  //       {
+  //         id: 3,
+  //         numLigne: 7,
+  //         depart: "Ouakam",
+  //         arrivee: "Petersen",
+  //         sections: []
+  //       }
 
-      ] ,
-      description: "dhdhhdhd",
-    },
-    {
-      id: 2, 
-      nom:"AFTU",
-      lignes: [],
-      description: "dhdhhdhd"
-    },
-    {
-      id: 3, 
-      nom:"DDD",
-      lignes: [],
-      description: "dhdhhdhd"
-    },
-    {
-      id: 4, 
-      nom:"Dakar",
-      lignes: [],
-      description: "dhdhhdhd"
-    },
-    {
-      id: 5, 
-      nom:"AFTU",
-      lignes: [],
-      description: "dhdhhdhd"
-    },
-    {
-      id: 6, 
-      nom:"DDD",
-      lignes: [],
-      description: "dhdhhdhd"
-    },
-    {
-      id: 7, 
-      nom:"Dakar Dem Dikk",
-      lignes: [],
-      description: "dhdhhdhd"
-    },
-    {
-      id: 8, 
-      nom:"AFTU",
-      lignes: [],
-      description: "dhdhhdhd"
-    },
-    {
-      id: 9, 
-      nom:"DDD",
-      lignes: [],
-      description: "dhdhhdhd"
-    },
-  ];
+  //     ] ,
+  //     description: "dhdhhdhd",
+  //   },
+  //   {
+  //     id: 2, 
+  //     nom:"AFTU",
+  //     lignes: [],
+  //     description: "dhdhhdhd"
+  //   },
+  //   {
+  //     id: 3, 
+  //     nom:"DDD",
+  //     lignes: [],
+  //     description: "dhdhhdhd"
+  //   },
+  //   {
+  //     id: 4, 
+  //     nom:"Dakar",
+  //     lignes: [],
+  //     description: "dhdhhdhd"
+  //   },
+  //   {
+  //     id: 5, 
+  //     nom:"AFTU",
+  //     lignes: [],
+  //     description: "dhdhhdhd"
+  //   },
+  //   {
+  //     id: 6, 
+  //     nom:"DDD",
+  //     lignes: [],
+  //     description: "dhdhhdhd"
+  //   },
+  //   {
+  //     id: 7, 
+  //     nom:"Dakar Dem Dikk",
+  //     lignes: [],
+  //     description: "dhdhhdhd"
+  //   },
+  //   {
+  //     id: 8, 
+  //     nom:"AFTU",
+  //     lignes: [],
+  //     description: "dhdhhdhd"
+  //   },
+  //   {
+  //     id: 9, 
+  //     nom:"DDD",
+  //     lignes: [],
+  //     description: "dhdhhdhd"
+  //   },
+  // ];
 
   // Voir entre liste des réseaux, des lignes du réseaux et des sections de la ligne 
   isListeReseaux:boolean = true;
@@ -178,7 +180,7 @@ export class ReseauComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    this.tabReaseauFilter = this.tabReseau;
+    // this.tabReaseauFilter = this.tabReseau;
     this.listeSections();
     this.getTarifPrix(1);
     this.listeLigne();
@@ -359,20 +361,23 @@ export class ReseauComponent implements OnInit {
   verifNomFunction(nom:any){
     this.verifMessageNom = "";
     this.isNomValide = validateLengthField(nom, 3);;
-    let roleExist = this.tabReseauxActifs.find((role:any) => role.nom.toLowerCase() == nom.toLowerCase());
+    let reseauExist = this.tabReseauxActifs.find((reseau:any) => reseau.nom.toLowerCase() == nom.toLowerCase());
 
-    let roleExist1 = this.tabReseauxSup.find((ligne:any) => ligne.nom.toLowerCase() == nom.toLowerCase());
+    let reseauExist1 = this.tabReseauxSup.find((ligne:any) => ligne.nom.toLowerCase() == nom.toLowerCase());
 
     if (!nom){
-      this.verifMessageNom = "Le nom du role est obligatoire";
+      this.verifMessageNom = "";
     } else if (!this.isNomValide){
-      this.verifMessageNom = "Le nom du role doit etre supérieure ou égale à 3";
-    }else if (roleExist1) {
-      this.verifMessageNom = "Ce nom de role est déjà dans la corbeille. Vueillez le restaure";
-    } else if (roleExist){
-      this.verifMessageNom = "Ce nom  existe déja";
+      this.verifMessageNom = "Le nom du reseau doit etre supérieure ou égale à 3";
+    }else if (reseauExist1) {
+      this.verifMessageNom = "Ce reseau est déjà dans la corbeille. Vueillez le restaure";
+      this.isNomValide = false
+    } else if (reseauExist){
+      this.verifMessageNom = "Ce reseau  existe déja";
+      this.isNomValide = false
     } else {
       this.verifMessageNom = "";
+      this.isNomValide = true
     }
   }
 
@@ -392,8 +397,8 @@ export class ReseauComponent implements OnInit {
           this.listeReseau();
         },
         (error) =>{
-          // console.log(error);
-          
+          // console.log(error.error.errors.nom);
+          this.verifMessageNom = error.error.errors.nom;
         }
       )
     }
@@ -401,6 +406,8 @@ export class ReseauComponent implements OnInit {
 
   // Liste des réseaux 
   listeReseau(){
+    Loading.dots();
+
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
         // console.log (data)
@@ -409,10 +416,14 @@ export class ReseauComponent implements OnInit {
           this.tabReseauxActifs[i].lignes =  this.tabLigne.filter((ligne:Ligne) => ligne.reseau_id == this.tabReseauxActifs[i].id)
         }
         // console.log(this.tabReseauxActifs);
+        Loading.remove();
+
       },
       (error) =>{
         // console.log (error);
         this.tabReseauxActifs = []
+        Loading.remove();
+
       }
     )
   }

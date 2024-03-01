@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
       this.userConnect  = user;
 
     }
-    if(user.user.image){
+    if(user && user.user.image){
       this.imageUserConnected = `${urlImage}${user.user.image}`;
     }
   }   

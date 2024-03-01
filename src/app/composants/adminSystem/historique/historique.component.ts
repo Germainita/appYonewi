@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HistoriqueService } from 'src/app/services/historique.service';
 import { UserService } from 'src/app/services/user.service';
+import { Loading, Notify } from 'notiflix';
+
 
 @Component({
   selector: 'app-historique',
@@ -27,11 +29,15 @@ export class HistoriqueComponent implements OnInit{
   // Déclaration des methodes
   constructor(private historiqueService: HistoriqueService, private userService:UserService) {}
   ngOnInit(): void {
+    Loading.dots();
+
     // Liste de tous les historiques 
     this.historiqueService.getAllHistorique().subscribe(
       (response:any) =>{
         // console.log(response.historiques);  
         this.tabHistotiquesByClasseUser = this.tabHistotiquesFiltered =  this.tabAllHistotiques = response.historiques;    
+        
+        Loading.remove();
       }
     )
 

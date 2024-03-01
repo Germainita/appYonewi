@@ -29,6 +29,7 @@ export class AuthentificationComponent implements OnInit {
   verifMessagePassword: string = "";
   verifPassword: boolean = false;
 
+  messageErreur: string = "";
   // iscorrectValues:boolean = true; // Si les identifiants sont incorrects
 
   // Déclaration des méthode 
@@ -56,7 +57,7 @@ export class AuthentificationComponent implements OnInit {
       localStorage.setItem("isAdminReseauConnected", JSON.stringify(false))
     }
 
-    Notify.success('Sol lucet omnibus');
+    // Notify.success('Sol lucet omnibus');
   }
 
   // On vide tous les champs 
@@ -85,9 +86,10 @@ export class AuthentificationComponent implements OnInit {
 
   // Vérification de l'email 
   verifEmailFunction(){
+    this.messageErreur = "";
     this.verifEmail = validateEmail(this.email);
     if(!this.email){
-      this.verifMessageEmail = "L'email est obligatoire"
+      this.verifMessageEmail = ""
     }else if(!this.verifEmail){
       this.verifMessageEmail = "Le format de l'email est incorrect";
     } else{
@@ -98,9 +100,10 @@ export class AuthentificationComponent implements OnInit {
 
   // Vérification du mot de passe 
   verifPasswordFunction(){
+    this.messageErreur = "";
     this.verifPassword = false;
     if(!this.password){
-      this.verifMessagePassword = "Le mot de passe est obligatoire"
+      this.verifMessagePassword = ""
     }
      else if(this.password.length < 5){
       this.verifMessagePassword = "La longueur du mot de passe doit etre supérieure à 5"
@@ -117,30 +120,33 @@ export class AuthentificationComponent implements OnInit {
     Loading.dots();
     this.verifEmailFunction();
     this.verifPasswordFunction();
+    if(!this.email){
+      this.verifMessageEmail = "L'email est obligatoire";
+    }
+    if(!this.password){
+      this.verifMessagePassword = "Le mot de passe est obligatoire";
+    }
     
     if (this.verifEmail && this.verifPassword){
       let user = {
         email: this.email,
         password: this.password
       };
-
-      let response:any
       this.authService.login(user).subscribe(
-        (rep) =>{
-          response = rep;
+        (response :any) =>{
           // // console.log(response);
           if (response.status){
             this.authService.deconnexionAutomatique(); //Rafraichit 9 fois le token à chaque 15 minutes et déconnecte directement la session
             // // console.log ("C'est bon");
             
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: "",
-              text: response.message,
-              showConfirmButton: true,
-            });
-            
+            // Swal.fire({
+            //   position: 'center',
+            //   icon: 'success',
+            //   title: "",
+            //   text: response.message,
+            //   showConfirmButton: true,
+            // });
+            sweetAlertMessage("success", "", response.message)
             
             this.route.navigate(['/dashbord']); // Redirection vers le dashbord concerné 
             this.authService.isAuthenticated = true; // Définit la variable isAuthicated à true pour la guard
@@ -160,28 +166,12 @@ export class AuthentificationComponent implements OnInit {
 
             // this.iscorrectValues = true; //Les données fournies sont correctes
             Loading.remove();
-          }else {
-            // console.log( "L'adresse email est incorrecte");
-            Swal.fire({
-              position: 'center',
-              icon: 'error',
-              title: '',
-              text: 'Veillez saissir un email valide',
-              showConfirmButton: true,
-            })
           }
         },
         (error) =>{
           Loading.remove();
-          this.verifMessageEmail = this.verifMessagePassword = "Email ou mot de passe incorrect";
-          // console.log(error);
-          // Swal.fire({
-          //   position: 'center',
-          //   icon: 'error',
-          //   title: '',
-          //   text: 'Les informations sont incorrectes',
-          //   showConfirmButton: true,
-          // })
+          this.messageErreur= "Email ou mot de passe incorrect";
+         
         })
     }
   }

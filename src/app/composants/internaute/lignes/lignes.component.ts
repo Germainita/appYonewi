@@ -197,8 +197,8 @@ export class LignesComponent implements OnInit{
 
   // Liste des tous les Ligne 
   listeLigne(){
-    this.messageInfo = "";
     Loading.dots();
+    this.messageInfo = "";
     this.listeSections();
     // this.isAll = true;   
     this.ligneService.getAllLigne().subscribe(

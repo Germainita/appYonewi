@@ -26,6 +26,9 @@ import { TarifService } from 'src/app/services/tarif.service';
 import { TypeLigneService } from 'src/app/services/typeLigne.service';
 import { UserService } from 'src/app/services/user.service';
 
+import { Loading, Notify } from 'notiflix';
+
+
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
@@ -167,6 +170,7 @@ export class DashbordComponent implements OnInit{
 
   // Liste des réseaux 
   listeReseau(){
+    Loading.dots();
     this.reseauService.getAllReseaux().subscribe(
       (data:any) =>{
         if(data.reseaux){
@@ -181,9 +185,11 @@ export class DashbordComponent implements OnInit{
             this.reseau_id_demDikk = reseauDemDikk.id;
           }
         }
+        Loading.remove();
       },
       (error) =>{
         this.tabReseaux= []
+        Loading.remove();
       }
     )
   }
@@ -253,12 +259,14 @@ export class DashbordComponent implements OnInit{
   // Pour le dashbord admin reseau 
   // Liste des lignes du réseau
   listeLigneReseau(){
+    Loading.dots();
     // Les lignes du réseaux actifs 
     this.ligneService.getAllLigneReseau().subscribe(
       (data:any) =>{
         if(data.lignes){
           this.tabLigneReseau = data.lignes;
           this.totalLigne += this.tabLigneReseau.length;
+          Loading.remove();
         }
       },
     );

@@ -3,6 +3,8 @@ import { Role} from 'src/app/models/role.model';
 import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAlert/alert.service';
 import { RoleService } from 'src/app/services/role.service';
 import { validateLengthField, validateLigneName } from 'src/app/validation/validation';
+import { Loading, Notify } from 'notiflix';
+
 
 @Component({
   selector: 'app-role',
@@ -71,8 +73,6 @@ export class RoleComponent implements OnInit{
 
   constructor(private roleService:RoleService){}
 
-  
-
   // Déclaration des méhodes 
   ngOnInit(): void {
     // On charge les roles à l'initialisation 
@@ -137,6 +137,7 @@ export class RoleComponent implements OnInit{
 
   // Liste des tous les roles 
   listeRoles(){
+    Loading.dots();
     let response: any;
     this.roleService.getAllRoles().subscribe(
       (data) =>{
@@ -147,9 +148,11 @@ export class RoleComponent implements OnInit{
         this.tabRolesActif = this.tabRole.filter((role:any) => role.etat == "actif");
         // // console.log(this.tabRolesActif);
         this.tabRoleFilterActifs = this.tabRolesActif;  
+        Loading.remove();
       },
       (err:any) =>{
         this.tabRolesActif = [];
+        Loading.remove();
       }
     )
   }
