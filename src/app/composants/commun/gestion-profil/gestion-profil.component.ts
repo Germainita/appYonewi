@@ -9,6 +9,9 @@ import { sweetAlertMessage, sweetMessageConfirm } from 'src/app/services/sweetAl
 import { UserService } from 'src/app/services/user.service';
 import { validateEmail, validateField, validateLengthField, validatePassword, validatePhone } from 'src/app/validation/validation';
 
+import { Loading, Notify } from 'notiflix';
+
+
 @Component({
   selector: 'app-gestion-profil',
   templateUrl: './gestion-profil.component.html',
@@ -86,6 +89,7 @@ export class GestionProfilComponent implements OnInit{
 
   // Les infos de l'utilisateur 
   userProfilInfos(){
+    Loading.dots();
     // Le profil de l'utilisateur connecté 
     this.userService.getUserProfil().subscribe(
       (resp:any) =>{
@@ -106,12 +110,14 @@ export class GestionProfilComponent implements OnInit{
             let reseauFound = this.tabReseaux.find((elemt:any) => (elemt.id == this.userConnect.reseau_id) )
             if (reseauFound){
               this.reseauName = reseauFound.nom;
+              
             }
           },
           (error) =>{
             // console.log (error)
           }
         )
+        Loading.remove();
       }
     )
   }

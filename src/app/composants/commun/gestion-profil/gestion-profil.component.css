@@ -23,6 +23,10 @@
     border: none;
     height: 97%;
 }
+
+.containerProfil i{
+    cursor: pointer;
+}
 /* Pour l'admin réseau  */
 .profil img{
     width: 35vh;

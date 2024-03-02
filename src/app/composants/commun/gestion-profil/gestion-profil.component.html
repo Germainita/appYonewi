@@ -14,7 +14,7 @@
                 <h3 class="text-center fw-bold mb-5">Informations du profil</h3>
                 <div class="row px-4 infoProfil">
                     <!-- Image de la personne  -->
-                    <div class="col-md-5 profil">
+                    <div class="col-lg-5 mb-3 profil">
                         <div class="card py-3">
                             <div class="card-body" >
                                 <div class="text-end"><i class="bi bi-pencil-square" (click)="showModifProfil()"></i></div>
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-7 infosUser">
+                    <div class="col-lg-7 infosUser">
                         <div class="card py-3">
                             <div class="card-body" *ngIf="userConnect">
                               <p class="card-text mb-3"><span class="fw-bold">Nom:</span> {{userConnect.nom}}</p>
@@ -45,11 +45,13 @@
 
             <!-- Modification du profil  -->
             <div class="containerProfil modifProfil px-5" *ngIf="isModifProfil">
-                <h3 class="text-center fw-bold mb-5">Modification du profil</h3>
-                <p (click)="showInfosProfil()" >Voir les infos de mon profil</p>
+                <div class="text-center">
+                    <h3 class="text-center fw-bold mb-5"><span class="float-start" (click)="showInfosProfil()"><i class="bi bi-arrow-left-square-fill"></i></span>Modification du profil</h3>
+                    <!-- <p (click)="showInfosProfil()" >Voir les infos de mon profil</p> -->
+                </div>
                 <div class="row px-4 mt-4">
                     <!-- Image de la personne  -->
-                    <div class="col-md-5 mb-3 profil">
+                    <div class="col-lg-5 mb-3 profil">
                         <div class="card py-3">
                             <div class="card-body">
                                 <!-- formumaire pour modifier l'image avec encryption multipart/form-data  -->
@@ -70,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-7 modifUser">
+                    <div class="col-lg-7 modifUser">
                         <div class="card pt-4 py-2 px-4 border-0 shadow-sm">
                             <form action="">
                                 <div class="mb-3">
@@ -106,12 +108,13 @@
 
             <!-- Changer le mot de passe -->
             <div class="containerProfil px-5" *ngIf="isModifMdp">
-                <h3 class="text-center fw-bold mb-5">Modification du mot de passe</h3>
-                <p (click)="showInfosProfil()" >Voir les infos de mon profil</p>
-                <p (click)="showModifProfil()" >Modifier mon profil</p>
+                <h3 class="text-center fw-bold mb-5"><span class="float-start" (click)="showModifProfil()"><i class="bi bi-arrow-left-square-fill"></i></span>Modification du mot de passe</h3>
+                <!-- <h3 class="text-center fw-bold mb-5">Modification du mot de passe</h3> -->
+                <!-- <p (click)="showInfosProfil()" >Voir les infos de mon profil</p> -->
+                <!-- <p (click)="showModifProfil()" >Modifier mon profil</p> -->
                 <div class="row px-4 ">
                     <!-- Image de la personne  -->
-                    <div class="col-md-5 mb-3 profil">
+                    <div class="col-lg-5 mb-3 profil">
                         <div class="card py-3 border-0">
                             <div class="card-body">
                                 <div class="text-center mb-3">
@@ -124,7 +127,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-7 modifUser">
+                    <div class="col-lg-7 modifUser">
                         <div class="card py-3 px-4 border-0 shadow-sm">
                             <form action="">
                                 <div class="mb-3">

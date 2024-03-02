@@ -16,16 +16,16 @@
                 <!-- Les boutons pour la liste des roles  -->
                 <a href="" routerLink="" class="btn px-2 me-3" *ngIf="isActifs && isAjout"> Ajouter un compte</a>
                 <button class="btn px-2 me-3" *ngIf="isActifs && isModifier" (click)="showAjoutRole()">Ajouter un role</button>
-                <button class="btn px-2 me-3" *ngIf="isActifs" (click)="showCorbeille()">Voir corbeille</button>
+                <button class="btn px-2 me-3" *ngIf="isActifs" (click)="showCorbeille()" [disabled]="!tabRolesSup.length" [class.deseable]="!tabRolesSup.length">Voir corbeille</button>
                 <button class="btn px-2 me-3" *ngIf="isSup" (click)="showRolesActifs()">Voir les roles</button>
-                <button class="btn px-2 me-3" *ngIf="isSup"(click)="viderCorbeille( )">Vider corbeille</button>
+                <button class="btn px-2 me-3" *ngIf="isSup"(click)="viderCorbeille( )"  [disabled]="!tabRolesSup.length" [class.deseable]="!tabRolesSup.length">Vider corbeille</button>
             </div>
 
             <!-- .liste des roles actifs -->
             <div class="listRole" *ngIf="isActifs">
                 <div class="row px-5">
                     <!-- Liste des roles actifs  -->
-                    <div class="col-md-8 px-4">
+                    <div class="col-lg-8 mb-3 px-4">
                         <div class="card px-4 py-2 pt-4 shadow-sm rounded-4" *ngIf="tabRolesActif.length">
                             <!-- Recherhcer une ligne  -->
                             <div class="row sectionEspace search mb-3">
@@ -102,7 +102,7 @@
     
                     <!-- Ajouter et modifier un réseau  -->
     
-                    <div class="col-md-4 px-4">
+                    <div class="col-lg-4 px-4">
                         <!-- Ajouter un réseau  -->                    
                         <div class="card cardAjout px-3 py-4 pt-3 shadow-sm" *ngIf="isAjout">
                             <h3 class="titre text-center fw-bold  mb-5">Ajouter un role</h3>

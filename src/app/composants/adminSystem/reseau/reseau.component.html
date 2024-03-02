@@ -16,7 +16,7 @@
                 <!-- Les boutons pour la liste des réseaux  -->
                 <a href="" routerLink="" class="btn px-2 me-3" *ngIf="isListeReseaux && isAjout"> Ajouter un compte</a>
                 <button class="btn px-2 me-3" *ngIf="isListeReseaux && isModifier" (click)="showAjoutReseau()">Ajouter un reseau</button>
-                <button class="btn px-2" *ngIf="isListeReseaux" (click)="showListeCorbeille()">Voir corbeille</button>
+                <button class="btn px-2" *ngIf="isListeReseaux" (click)="showListeCorbeille()"  [disabled]="!tabReseauxSup.length" [class.deseable]="!tabReseauxSup.length">Voir corbeille</button>
 
                 <!-- Les boutons pour la liste des lignes  -->
                 <button class="btn px-2 me-3" *ngIf=" isListeLignes" (click)="showListeReseaux()">Voir les reseaux</button>
@@ -27,14 +27,14 @@
 
                 <!-- Les boutons pour la corbeille  -->
                 <button class="btn px-2 me-3" *ngIf=" isListeCorbeille" (click)="showListeReseaux()">Voir les reseaux</button>
-                <button class="btn px-2 me-3" *ngIf=" isListeCorbeille" (click)="viderCorbeille()">Vider corbeille</button>
+                <button class="btn px-2 me-3" *ngIf=" isListeCorbeille" (click)="viderCorbeille()"  [disabled]="!tabReseauxSup.length" [class.deseable]="!tabReseauxSup.length">Vider corbeille</button>
             </div>
 
             <!-- .liste des réseaux actifs-->
             <div class="listReseaux" *ngIf="isListeReseaux">
                 <div class="row px-5">
                     <!-- Liste des réseaux  -->
-                    <div class="col-md-8 px-4">
+                    <div class="col-lg-8 mb-3 px-4">
                         <div class="card px-4 py-2 pt-4 shadow-sm rounded-4" *ngIf="tabReseauxActifs.length">
                             <!-- Recherhcer une ligne  -->
                             <div class="row sectionEspace ligneReseauSearch mb-3">
@@ -112,7 +112,7 @@
                     <h3 class="text-center" *ngIf="!tabReseauxActifs.length">Aucun réseau n'a été enregistré</h3>
     
                     <!-- Ajouter et modifier un réseau  -->
-                    <div class="col-md-4 px-4" [class.centerDiv]="!tabReseauxActifs.length">
+                    <div class="col-lg-4 px-4" [class.centerDiv]="!tabReseauxActifs.length">
                         <!-- Ajouter un réseau  -->                    
                         <div class="card cardAjout px-3 py-4 pt-3 shadow-sm" *ngIf="isAjout">
                             <h3 class="titre text-center fw-bold  mb-4">Ajouter un réseaux</h3>

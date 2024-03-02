@@ -79,7 +79,7 @@
         
                     <!-- Pagination  -->
                     <div *ngIf="getItemsPage().length">
-                        <div class="d-flex justify-content-end mb-2">
+                        <div class="d-flex justify-content-end flex-wrap mb-2">
                         <button class="rounded-2 btnColor  mx-2" [disabled]="pageActuelle === 1" (click)="pageActuelle = pageActuelle - 1">
                             <i class="bi bi-caret-left-fill fs-4"></i>
                         </button>

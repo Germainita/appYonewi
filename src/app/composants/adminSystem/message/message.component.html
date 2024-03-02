@@ -46,7 +46,7 @@
                                 <td class="contactEmail"> <a href="mailto:{{message.email}}">{{message.email}}</a></td>
                                 <td>{{message.sujet}}</td>
                                 <td>{{message.contenu}}</td>
-                                <td>{{message.created_at}}</td>
+                                <td>{{message.created_at | date: 'dd/MM/yy, à HH:mm' }}</td>
                             </tr>
                         </tbody>
                     </table>

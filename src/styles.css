@@ -15,12 +15,17 @@
 }
 
 /* Media queries pour tous le tableau  */
+@media screen and (max-width: 1000px) {
+    .container{
+        padding: 2vh !important;
+    }
+    .container .card{
+        min-height: 15vh !important;
+    }
+}
 @media screen and (max-width: 800px) {
     table thead tr td, table thead tr th {
         font-size: small;
-    }
-    .container{
-        padding: 2vh !important;
     }
 }
 
