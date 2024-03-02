@@ -20,15 +20,25 @@ export class AuthService {
     // return this.http.post(`${url}/login`, user).subscribe((reponse:any) => onSuccess(reponse))
   }
 
-  logout() {
-    this.isAuthenticated = false;
-    this.router.navigate(['accueil']);
+  // Logout du backend 
+  logoutAPI(){
+    return this.http.get(`${url}/logout`)
+  }
 
-    // On vide le localStorage 
-    localStorage.setItem("userConnect", JSON.stringify(""));
-    localStorage.setItem("isAdminSystemConnected", JSON.stringify(false));
-    localStorage.setItem("isAdminReseauConnected", JSON.stringify(false));
-    localStorage.setItem('refreshCount', JSON.stringify(0));
+  logout() {
+    this.logoutAPI().subscribe(
+      (response:any) =>{
+        // console.log(response)        
+        this.isAuthenticated = false;
+        this.router.navigate(['accueil']);
+    
+        // On vide le localStorage 
+        localStorage.setItem("userConnect", JSON.stringify(""));
+        localStorage.setItem("isAdminSystemConnected", JSON.stringify(false));
+        localStorage.setItem("isAdminReseauConnected", JSON.stringify(false));
+        localStorage.setItem('refreshCount', JSON.stringify(0));
+      }
+    )
 
   }
 
@@ -42,7 +52,7 @@ export class AuthService {
   deconnexionAutomatique() {
     setTimeout(() => {
       this.refreshToken(this.onSuccess, this.onError);
-    }, 900000); // 10 secondes 
+    }, 600000); // 10 secondes 
   }
 
   // Service pour rafraichir le token 
@@ -51,11 +61,16 @@ export class AuthService {
     
     // Vérifier si le nombre de rafraîchissements a atteint la limite de 4
     const refreshCount = parseInt(localStorage.getItem('refreshCount') || '0');
-    if (refreshCount >= 8) {
+    const userConnect = JSON.parse(localStorage.getItem('userConnect') || '');
+    console.log(userConnect);
+    
+    if (refreshCount >= 15 && userConnect) {
       // Afficher SweetAlert pour proposer de rafraîchir le token ou se déconnecter
       this.showLogoutAlert();
       // console.log("Function de rafraichessement superieure à 1", refreshCount);
-    } else {
+    } else if(!userConnect) {
+      localStorage.setItem('refreshCount', (0).toString());
+    } else{
       // Mettre à jour le nombre de rafraîchissements dans le localStorage
       localStorage.setItem('refreshCount', (refreshCount + 1).toString());
       // console.log("Function de rafraichessement inf à 1", refreshCount)

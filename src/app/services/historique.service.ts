@@ -19,7 +19,7 @@ export class HistoriqueService {
 
     // Lister les historiques par classes 
     getHistoriqueByClasse(classe:any){
-        return this.http.get(`${url}/historiques/${classe}`);
+        return this.http.get(`${url}/historiques/`, classe);
     }
 
     // Lister les historiques par utilisateur 

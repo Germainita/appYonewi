@@ -46,12 +46,25 @@ export class HistoriqueComponent implements OnInit{
       (data:any) =>{
         // console.log(data);
         this.tabUtilisateurs = data.users;
+        // this.getUserName(1);
       },
       (error) =>{
         // console.log(error);
         this.tabUtilisateurs = [];
       }
     )
+
+  }
+
+  getUserName(id_user:any){
+    let utilisateur = "";
+    let user = this.tabUtilisateurs.find((user:any) => user.id == id_user);
+    if(user){
+      // console.log("L'utilsateur concerné ",user);
+      utilisateur = `${user.prenom} ${user.nom}`
+    }
+    return utilisateur;
+// id_user
   }
 
   // Methode de recherche 
@@ -67,6 +80,12 @@ export class HistoriqueComponent implements OnInit{
     this.messageInfoUser = "";
     this.messageInfoEntity = "";
     // alert(this.entiteFiltered);
+    // this.historiqueService.getHistoriqueByClasse(this.entiteFiltered).subscribe(
+    //   (response:any) =>{
+    //     console.log(response);
+    //   }
+    // )
+
     if(this.entiteFiltered && this.entiteFiltered != "tout"){ // Si on a selectionné une entité
       let tabFilterEntity =  this.tabHistotiquesByClasseUser.filter((historique:any)=> historique.Entite == this.entiteFiltered);
       if(tabFilterEntity.length){
@@ -81,9 +100,9 @@ export class HistoriqueComponent implements OnInit{
     // else if(this.userFiltered){
     //   this.tabHistotiquesFiltered = this.tabAllHistotiques.filter((historique:any)=> historique.Utilisateur == this.userFiltered);
     // }
-    // else if (!this.entiteFiltered || this.entiteFiltered == "tout"){
-    //   this.tabHistotiquesFiltered = this.tabAllHistotiques;
-    // }
+    else if (!this.entiteFiltered || this.entiteFiltered == "tout"){
+      this.tabHistotiquesFiltered = this.tabAllHistotiques;
+    }
   }
 
   userFiltered:string = "";
@@ -95,7 +114,7 @@ export class HistoriqueComponent implements OnInit{
     this.messageInfoEntity = "";
     // alert(this.userFiltered);
     if(this.userFiltered && this.userFiltered != "tout"){
-      let tabFilterByUser =  this.tabHistotiquesByClasseUser.filter((historique:any)=> historique.Utilisateur == this.userFiltered);
+      let tabFilterByUser =  this.tabHistotiquesByClasseUser.filter((historique:any)=> historique.id_user == this.userFiltered);
       if(tabFilterByUser.length){
         this.tabHistotiquesFiltered = tabFilterByUser;
         // if(!this.entiteFiltered){
@@ -108,9 +127,9 @@ export class HistoriqueComponent implements OnInit{
     // else if(this.entiteFiltered){
     //   this.tabHistotiquesFiltered = this.tabAllHistotiques.filter((historique:any)=> historique.Entite == this.entiteFiltered);
     // }
-    // else if(!this.userFiltered || this.userFiltered == "tout"){
-    //   this.tabHistotiquesFiltered = this.tabAllHistotiques;
-    // }
+    else if(!this.userFiltered || this.userFiltered == "tout"){
+      this.tabHistotiquesFiltered = this.tabAllHistotiques;
+    }
   }
 
   // Détails de l'historique 

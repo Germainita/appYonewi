@@ -25,9 +25,7 @@
                                 <option value="" selected>Filtrer par entité</option>
                                 <option value="tout" >Toute les entités</option>
                                 <option value="abonnements" >abonnements</option>
-                                <option value="contacts" >contacts</option>
                                 <option value="lignes" >lignes</option>
-                                <option value="reseaus" >reseaus</option>
                                 <option value="sections" >sections</option>
                                 <option value="tarifs" >tarifs</option>
                                 <option value="types" >types</option>
@@ -40,16 +38,10 @@
                             <select name="selectClasse" id="" class="form-select"  [(ngModel)]="userFiltered" (change)="filteredUser()">
                                 <option value="" selected>Filtrer par utilisateur</option>
                                 <option value="tout" >Tous les utilisateurs</option>
-                                <option value="{{user.email}}" *ngFor="let user of tabUtilisateurs" >{{user.email}}</option>
+                                <option value="{{user.id}}" *ngFor="let user of tabUtilisateurs" >{{user.prenom}} {{user.nom}}</option>
                             </select>
                             <p>{{messageInfoUser}}</p>
                         </div>
-                        <!-- <div class="col-lg-3 mb-3">
-                            <div class="input-group">
-                                <input type="text" name="search" class="form-control" [(ngModel)]="filterValue" (input)="onSearch()" placeholder="Rechercher ......">
-                                <button class="iconesearch input-group-text"><i class="bi bi-search"></i></button>
-                            </div>
-                        </div>   -->
                     </div>
         
                     <!-- Le tableau des réseaux -->
@@ -67,12 +59,13 @@
         
                         <tbody *ngFor="let historique of getItemsPage() let index=index">
                             <tr>
-                                <td>{{historique.id}}</td>
+                                <td>{{index+1 +itemsParPage* (pageActuelle - 1)}}</td>
                                 <td> {{historique.Entite}}</td>
                                 <td>
                                     {{historique.Operation}}
                                 </td>
-                                <td>{{historique.Utilisateur}}</td>
+                                <!-- <td>{{historique.Utilisateur}} </td> -->
+                                <td>{{getUserName(historique.id_user)}} </td>
                                 <td>
                                     <button class="btnAction px-2 py-1 rounded-2 me-4" title="Detail" data-bs-toggle="modal" data-bs-target="#detailHistorique" (click)="detailsHistorique(historique)" >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
@@ -118,7 +111,8 @@
                 <div *ngIf="historique">
                     <p class="mb-3"><span class="fw-bold">Entité: </span>{{historique.Entite}}</p> 
                     <p class="mb-3"><span class="fw-bold">Operation: </span>{{historique.Operation}}</p> 
-                    <p class="mb-3"><span class="fw-bold">Utilisateur: </span>{{historique.Utilisateur}}</p> 
+                    <p class="mb-3"><span class="fw-bold">Utilisateur: </span>{{getUserName(historique.id_user)}}</p> 
+                    <p class="mb-3"><span class="fw-bold">Email pendant l'operation: </span>{{historique.Utilisateur}}</p> 
                     <p class="mb-3"><span class="fw-bold">Date: </span>{{historique.created_at}}</p> 
                     <p class="mb-3"><span class="fw-bold">Reseau: </span>{{historique.reseau_utilisateur}}</p> 
                     <p class="mb-3"><span class="fw-bold">Avant modification: </span>{{historique.Valeur_Avant}}</p> 
