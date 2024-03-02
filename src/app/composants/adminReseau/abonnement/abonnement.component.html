@@ -15,19 +15,19 @@
             <div class="btnReseaux mb-5">
                 <!-- Les boutons pour la liste des types de abonnements  -->
                 <a href="" routerLink="/gestionLigne" class="btn px-2 me-3" *ngIf="isActifs && isAjout"> Ajouter une ligne</a>
-                <button class="btn px-2 me-3" *ngIf="isActifs && isModifier" (click)="showAjout()">Ajouter un abonnement</button>
+                <button class="btn px-2 me-3" *ngIf="isActifs && isModifier" (click)="showAjout()" [disabled]="!tabAbonnementsSup.length" [class.deseable]="!tabAbonnementsSup.length">Ajouter un abonnement</button>
                 <button class="btn px-2 me-3" *ngIf="isActifs" (click)="showCorbeille()">Voir corbeille</button>
 
                 <!-- Les boutons de la corbeille  -->
-                <button class="btn px-2 me-3" *ngIf="isSup" (click)="showAbonnementActifs()">Voir les abonnements</button>
-                <button class="btn px-2 me-3" *ngIf="isSup"(click)="viderCorbeille( )">Vider corbeille</button>
+                <button class="btn px-2 me-3" *ngIf="isSup" (click)="showAbonnementActifs()" [disabled]="!tabAbonnementsSup.length" [class.deseable]="!tabAbonnementsSup.length">Voir les abonnements</button>
+                <button class="btn px-2 me-3" *ngIf="isSup"(click)="viderCorbeille( )" >Vider corbeille</button>
             </div>
 
             <!-- liste des types abonnements actifs ajout et modification -->
             <div class="listRole" *ngIf="isActifs">
                 <div class="row px-5">
                     <!-- Liste des abonnements actifs  -->
-                    <div class="col-md-8 px-4">
+                    <div class="col-lg-8 px-4">
                         <div class="card px-4 py-2 pt-4 shadow-sm rounded-4" *ngIf="tabAbonnement.length">
                             <!-- Recherhcer un abonnement  -->
                             <div class="row sectionEspace search mb-3">
@@ -107,7 +107,7 @@
     
                     <!-- Ajouter et modifier un abonnement  -->
     
-                    <div class="col-md-4 px-4" [class.centerDiv]="!tabAbonnement.length">
+                    <div class="col-lg-4 px-4" [class.centerDiv]="!tabAbonnement.length">
                         <!-- Ajouter un abonnement  -->                    
                         <div class="card cardAjout px-3 py-4 pt-3 shadow-sm" *ngIf="isAjout">
                             <h3 class="titre text-center fw-bold  mb-3">Ajouter un abonnement</h3>
@@ -303,9 +303,9 @@
                 <p class="mb-3"><span class="fw-bold">Durée: </span>{{abonnement.duree}}</p> 
                 <p class="mb-3"><span class="fw-bold">Description: </span>{{abonnement.description}}</p> 
                 <p class="mb-3"><span class="fw-bold">Crée par: </span>{{abonnement.created_by}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de création: </span>{{abonnement.created_at}}</p> 
+                <p class="mb-3"><span class="fw-bold">Date de création: </span>{{abonnement.created_at | date: 'dd/MM/yy, à HH:mm'}}</p> 
                 <p class="mb-3" *ngIf="abonnement.updated_at != abonnement.created_at"><span class="fw-bold">Modifié par: </span>{{abonnement.updated_by}}</p> 
-                <p class="mb-3" *ngIf="abonnement.updated_at != abonnement.created_at"><span class="fw-bold">Date de dernière modification: </span>{{abonnement.updated_at}}</p> 
+                <p class="mb-3" *ngIf="abonnement.updated_at != abonnement.created_at"><span class="fw-bold">Date de dernière modification: </span>{{abonnement.updated_at | date: 'dd/MM/yy, à HH:mm'}}</p> 
                 
                         
                 <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>

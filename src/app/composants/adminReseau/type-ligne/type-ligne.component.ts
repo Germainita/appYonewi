@@ -119,8 +119,12 @@ export class TypeLigneComponent implements OnInit {
     this.typeLigneService.getTypesLigneReseau().subscribe(
       (data:any) =>{
         // // console.log(data);
-        this.tabTypeLigne = data.types;
-        this.tabTypeLigneFilterActifs = this.tabTypeLigne;
+        if(data.types){
+          this.tabTypeLigne = data.types;
+          this.tabTypeLigneFilterActifs = this.tabTypeLigne;
+        } else{
+          this.tabTypeLigne = [];
+        }
         Loading.remove();
       }
     )
@@ -131,9 +135,12 @@ export class TypeLigneComponent implements OnInit {
     Loading.dots();
     this.typeLigneService.gettypeLignexDeleted().subscribe(
       (data:any) =>{
-        // On filtre les TypeLignes supprimés 
-        // // console.log(data)
-        this.tabTypeLignesSup = this.tabTypeLigneFilterSup = data.types;
+        if(data.types){
+          this.tabTypeLignesSup = this.tabTypeLigneFilterSup = data.types;
+        } else {
+          this.tabTypeLignesSup = [];
+          Loading.remove();
+        }
       },
       (err) =>{
         // console.log(err);

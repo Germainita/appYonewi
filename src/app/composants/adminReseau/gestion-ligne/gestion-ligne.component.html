@@ -15,7 +15,7 @@
             <div class="btnReseaux mb-5">
                 <!-- Les boutons pour la liste des lignes  -->
                 <button class="btn px-2 me-3" *ngIf="isLignes && isActifs" (click)="showAjout()">Ajouter une Ligne</button>
-                <button class="btn px-2 me-3" *ngIf="isLignes && isActifs" (click)="showCorbeille()">Voir corbeille</button>
+                <button class="btn px-2 me-3" *ngIf="isLignes && isActifs" (click)="showCorbeille()" [disabled]="!tabLignesSup.length" [class.deseable]="!tabLignesSup.length">Voir corbeille</button>
 
                 <!-- Boutons pour les lignes supprimée ou pendant l'ajout  de la ligne  -->
                 <button class="btn px-2 me-3" *ngIf=" isLignes && (isSup || isAjout)" (click)="showLigneActifs()">Voir les lignes</button>
@@ -446,9 +446,9 @@
                 <p class="mb-3"><span class="fw-bold">Type de ligne: </span>{{getTypeLigneName(ligne.type_id)}}</p> 
                 <!-- <p class="mb-3"><span class="fw-bold">Description: </span>{{ligne.description}}</p>  -->
                 <p class="mb-3"><span class="fw-bold">Crée par: </span>{{ligne.created_by}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de création: </span>{{ligne.created_at}}</p> 
+                <p class="mb-3"><span class="fw-bold">Date de création: </span>{{ligne.created_at | date: 'dd/MM/yy, à HH:mm'}}</p> 
                 <p class="mb-3" *ngIf="ligne.updated_at != ligne.created_at"><span class="fw-bold">Modifié par: </span>{{ligne.updated_by}}</p> 
-                <p class="mb-3"  *ngIf="ligne.updated_at != ligne.created_at"><span class="fw-bold">Date de dernière modification: </span>{{ligne.updated_at}}</p> 
+                <p class="mb-3"  *ngIf="ligne.updated_at != ligne.created_at"><span class="fw-bold">Date de dernière modification: </span>{{ligne.updated_at | date: 'dd/MM/yy, à HH:mm'}}</p> 
                 
                         
                 <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>
@@ -576,7 +576,7 @@
     </div>
 </div>
 
-<!-- Modal détails d'un Ligne  -->  
+<!-- Modal détails d'un section  -->  
 <div class="modal fade" id="detailsSection" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content text-center">
@@ -587,9 +587,9 @@
                 <p class="mb-3" *ngIf="sectionObject"><span class="fw-bold">Lieu de depart: </span>{{sectionObject.depart}}</p> 
                 <p class="mb-3" *ngIf="sectionObject"><span class="fw-bold">Lieu d'arrivée: </span>{{sectionObject.arrivee}}</p>  
                 <p class="mb-3" *ngIf="sectionObject"><span class="fw-bold">Crée par: </span>{{sectionObject.created_by}}</p> 
-                <p class="mb-3" *ngIf="sectionObject"><span class="fw-bold">Date de création: </span>{{sectionObject.created_at}}</p> 
+                <p class="mb-3" *ngIf="sectionObject"><span class="fw-bold">Date de création: </span>{{sectionObject.created_at | date: 'dd/MM/yy, à HH:mm'}}</p> 
                 <p class="mb-3" *ngIf="sectionObject && sectionObject.updated_at != sectionObject.created_at"><span class="fw-bold">Modifié par: </span>{{sectionObject.updated_by}}</p> 
-                <p class="mb-3"  *ngIf="sectionObject && sectionObject.updated_at != sectionObject.created_at"><span class="fw-bold">Date de dernière modification: </span>{{sectionObject.updated_at}}</p> 
+                <p class="mb-3"  *ngIf="sectionObject && sectionObject.updated_at != sectionObject.created_at"><span class="fw-bold">Date de dernière modification: </span>{{sectionObject.updated_at | date: 'dd/MM/yy, à HH:mm'}}</p> 
                 
                         
                 <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>

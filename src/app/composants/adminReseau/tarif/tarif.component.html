@@ -13,9 +13,9 @@
         <!-- Contenu dashbord  -->
         <div class="container containerReseau mb-5">
             <div class="btnReseaux mb-5">
-                <!-- Les boutons pour la liste des types de abonnements  -->
+                <!-- Les boutons pour la liste des types de tarifs  -->
                 <!-- <a href="" routerLink="/gestionLigne" class="btn px-2 me-3" *ngIf="isActifs && isAjout"> Voir la liste</a> -->
-                <!-- <button class="btn px-2 me-3" *ngIf="isActifs && isModifier" (click)="showAjout()">Ajouter un abonnement</button> -->
+                <!-- <button class="btn px-2 me-3" *ngIf="isActifs && isModifier" (click)="showAjout()">Ajouter un tarif</button> -->
                 <!-- <button class="btn px-2 me-3" *ngIf="isActifs" (click)="showCorbeille()">Voir corbeille</button> -->
 
                 <!-- Les boutons de la corbeille  -->
@@ -67,16 +67,16 @@
                 </div>            
             </div>
 
-            <!-- .liste des types abonnements actifs -->
+            <!-- .liste des types tarifs actifs -->
             <div class="listeTarifs " *ngIf="isActifs">
                 <div class="row px-5">
-                    <!-- Liste des abonnements actifs  -->
+                    <!-- Liste des tarifs actifs  -->
                     <div class="col-md-12 px-4">
                         <div class="card px-4 py-2 pt-4 shadow-sm rounded-4">
-                            <!-- Recherhcer un abonnement  -->
+                            <!-- Recherhcer un tarif  -->
                             <h3 class="fw-bold">Les tarifs du réseau</h3>
     
-                            <!-- Le tableau des types abonnements actifs -->
+                            <!-- Le tableau des types tarifs actifs -->
                             <table class="table table-responsive mb-4">
                                 <thead>
                                     <tr>
@@ -119,7 +119,7 @@
     </div>
 </div>
 
-<!-- Modal détails d'un abonnement  -->
+<!-- Modal détails d'un tarif  -->
 <div class="modal fade modalItineraire" id="detailsRole" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content text-center">
@@ -129,9 +129,9 @@
                 <p class="mb-3"><span class="fw-bold">Type: </span>{{tarif.type}}</p> 
                 <p class="mb-3"><span class="fw-bold">Prix (FCFA): </span>{{tarif.prix}}</p> 
                 <p class="mb-3"><span class="fw-bold">Crée par: </span>{{tarif.created_by}}</p> 
-                <p class="mb-3"><span class="fw-bold">Date de création: </span>{{tarif.created_at}}</p> 
+                <p class="mb-3"><span class="fw-bold">Date de création: </span>{{tarif.created_at | date: 'dd/MM/yy, à HH:mm'}}</p> 
                 <p class="mb-3" *ngIf="tarif.created_at != tarif.updated_at"><span class="fw-bold">Modifié par: </span>{{tarif.updated_by}}</p> 
-                <p class="mb-3" *ngIf="tarif.created_at != tarif.updated_at"><span class="fw-bold">Date de dernière modification: </span>{{tarif.updated_at}}</p> 
+                <p class="mb-3" *ngIf="tarif.created_at != tarif.updated_at"><span class="fw-bold">Date de dernière modification: </span>{{tarif.updated_at | date: 'dd/MM/yy, à HH:mm'}}</p> 
                 
                         
                 <button type="button" class="btn btnItineraire" data-bs-dismiss="modal">Fermer</button>
