@@ -175,7 +175,6 @@ export class AuthentificationComponent implements OnInit {
         })
     }
   }
-
   
 
   // Réinitialiser le mot de passe 
@@ -198,6 +197,14 @@ export class AuthentificationComponent implements OnInit {
           }
         }
       )
+    }
+  }
+
+  // Afficher ou cacher le mot de passe 
+  hidePassword: boolean = true;
+  passwordVisibility(): void {
+    if(this.password){
+      this.hidePassword = !this.hidePassword;
     }
   }
 }

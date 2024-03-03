@@ -24,9 +24,20 @@
                         </div>
                         <div class="mb-4">
                             <label for="passwordInput" class="form-label fw-bold fs-5">Mot de passe: <span class="require">*</span></label>
-                            <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Votre mot de passe ..." [(ngModel)]="password" (input)="verifPasswordFunction()"> 
+                            <div class="input-group">
+                                <input type="{{ hidePassword ? 'password' : 'text' }}" name="password" class="form-control" id="passwordInput" placeholder="Votre mot de passe ..." [(ngModel)]="password" (input)="verifPasswordFunction()"> 
+                                <span class="input-group-text" (click)="passwordVisibility()" *ngIf="hidePassword"><i class="bi bi-eye-fill iconeEyes"></i></span>
+                                <span class="input-group-text" (click)="passwordVisibility()" *ngIf="!hidePassword"><i class="bi bi-eye-slash-fill iconeEyes"></i></span>
+                            </div>
                             <p class="textIncorrect" *ngIf="verifMessagePassword"> <i class="bi bi-exclamation-circle"></i> {{verifMessagePassword}}</p>
                         </div>
+                        <!-- test  -->
+                        <!-- <div class="input-group">
+                            <input type="{{ hidePassword ? 'password' : 'text' }}" [(ngModel)]="password1" aria-label="Dollar amount (with dot and two decimal places)">
+                            <span class="input-group-text" (click)="passwordVisibility()">$</span>
+                        </div> -->
+                        <!-- fin test  -->
+
                         <p class="mdpOublier ">Mot de passe oublié ? <span class="reinitialiser" (click)="showFirstRein()"> Rénitialiser</span></p>
                         <!-- <p class="mt-3  fs-4 px-2" *ngIf="!iscorrectValues">Email ou mot de passe incorrects</p>
                         <p class="mt-3 text-danger" *ngIf="iscorrectValues"></p> -->

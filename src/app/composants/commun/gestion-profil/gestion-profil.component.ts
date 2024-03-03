@@ -68,6 +68,13 @@ export class GestionProfilComponent implements OnInit{
   isPasswodConform: boolean = false;
   passwordConformMessage: string = "";
 
+  // Afficher ou cacher le mot de passe old
+  hidePassword: boolean = true;
+  // Afficher ou cacher le mot de passe new
+  hidePasswordNew: boolean = true;
+  // Afficher ou cacher le mot de passe conf
+  hidePasswordConf: boolean = true;
+
   // Déclarations des méthodes 
   constructor( private roleService: RoleService, private reseauService:ReseauService, private userService:UserService){}
   ngOnInit() {
@@ -569,6 +576,25 @@ export class GestionProfilComponent implements OnInit{
     }
 
     
+  }
+
+  // Fonctions pour Affchier ou cacher le mot de passe 
+  passwordVisibility(): void {
+    if(this.password){
+      this.hidePassword = !this.hidePassword;
+    }
+  }
+
+  passwordNewVisibility(): void {
+    if(this.passwordNew){
+      this.hidePasswordNew = !this.hidePasswordNew;
+    }
+  }
+
+  passwordConfVisibility(): void {
+    if(this.passwordConf){
+      this.hidePasswordConf = !this.hidePasswordConf;
+    }
   }
   
 }

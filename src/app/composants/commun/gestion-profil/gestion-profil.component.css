@@ -61,6 +61,10 @@
     color: var(--base2);
 }
 
+.iconeEyes{
+    cursor: pointer;
+}
+
 /* Média queries  */
 @media screen and (max-width: 1000px){
     .infoProfil{

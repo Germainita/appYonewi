@@ -132,17 +132,30 @@
                             <form action="">
                                 <div class="mb-3">
                                     <label for="passwordInput" class="form-label">Ancien mot de passe: <span class="require">*</span></label>
-                                    <input type="password" name="password" class="form-control" id="passwordInput" placeholder="Votre ancien mot de passe" [(ngModel)]="password" (input)="verifOldPasswordFunction(password)">
+                                    <div class="input-group">
+                                        <input type="{{ hidePassword ? 'password' : 'text' }}" name="password" class="form-control" id="passwordInput" placeholder="Votre ancien mot de passe" [(ngModel)]="password" (input)="verifOldPasswordFunction(password)">
+                                        <!-- <input type="{{ hidePassword ? 'password' : 'text' }}" name="password" class="form-control" id="passwordInput" placeholder="Votre mot de passe ..." [(ngModel)]="password" (input)="verifPasswordFunction()">  -->
+                                        <span class="input-group-text" (click)="passwordVisibility()" *ngIf="hidePassword"><i class="bi bi-eye-fill iconeEyes"></i></span>
+                                        <span class="input-group-text" (click)="passwordVisibility()" *ngIf="!hidePassword"><i class="bi bi-eye-slash-fill iconeEyes"></i></span>
+                                    </div>
                                     <p class="text-danger messageInfo" *ngIf="passworldOldMessage"><i class="bi bi-exclamation-circle"></i> {{passworldOldMessage}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="passwordNewInput" class="form-label">Nouveau mot de passe: <span class="require">*</span></label>
-                                    <input type="passwordNew" name="passwordNew" class="form-control" id="passwordNewInput" placeholder="Votre nouveau mot de passe" [(ngModel)]="passwordNew" (input)="verifNewPasswordFunction(passwordNew)" >
+                                    <div class="input-group">
+                                        <input type="{{ hidePasswordNew ? 'password' : 'text' }}"  name="passwordNew" class="form-control" id="passwordNewInput" placeholder="Votre nouveau mot de passe" [(ngModel)]="passwordNew" (input)="verifNewPasswordFunction(passwordNew)" >
+                                        <span class="input-group-text" (click)="passwordNewVisibility()" *ngIf="hidePasswordNew"><i class="bi bi-eye-fill iconeEyes"></i></span>
+                                        <span class="input-group-text" (click)="passwordNewVisibility()" *ngIf="!hidePasswordNew"><i class="bi bi-eye-slash-fill iconeEyes"></i></span>
+                                    </div>
                                     <p class="text-danger messageInfo" *ngIf="passwordMessage"><i class="bi bi-exclamation-circle"></i> {{passwordMessage}}</p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="passwordConf" class="form-label">Confirmation de mot de passe: <span class="require">*</span></label>
-                                    <input type="text" name="passwordConf" class="form-control" id="passwordConf" placeholder="Confirmation du nouveau mot de passe" [(ngModel)]="passwordConf" (input)="verifConfirmPasswordFunction(passwordNew, passwordConf)">
+                                    <div class="input-group">
+                                        <input type="{{ hidePasswordConf ? 'password' : 'text' }}" name="passwordConf" class="form-control" id="passwordConf" placeholder="Confirmation du nouveau mot de passe" [(ngModel)]="passwordConf" (input)="verifConfirmPasswordFunction(passwordNew, passwordConf)">
+                                        <span class="input-group-text" (click)="passwordConfVisibility()" *ngIf="hidePasswordConf"><i class="bi bi-eye-fill iconeEyes"></i></span>
+                                        <span class="input-group-text" (click)="passwordConfVisibility()" *ngIf="!hidePasswordConf"><i class="bi bi-eye-slash-fill iconeEyes"></i></span>
+                                    </div>
                                     <p class="text-danger messageInfo" *ngIf="passwordConformMessage"><i class="bi bi-exclamation-circle"></i> {{passwordConformMessage}}</p>
                                 </div>
             

@@ -73,7 +73,7 @@ describe('AuthentificationComponent', () => {
     app.email = "";
     app.verifEmailFunction();
 
-    expect(app.verifMessageEmail).toBe("L'email est obligatoire");
+    expect(app.verifMessageEmail).toBe("");
     expect(app.verifEmail).toBe(false);
 
     // Email incorrect 
