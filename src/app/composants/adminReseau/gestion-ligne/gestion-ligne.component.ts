@@ -333,13 +333,13 @@ export class GestionLigneComponent {
 
         if( data.lignes){
           this.tabLigne = data.lignes;
-          let tabSection = tabSectionsLignes.filter((section:any) => section.ligne_id == 17);
+          // let tabSection = tabSectionsLignes.filter((section:any) => section.ligne_id == 17);
           // console.log("Les sections de la première ligne: ", tabSection);
           
           // Pour les sections enregistrés par l'administrateur réseau 
           for(let i = 0; i<this.tabLigne.length; i++){
             if(this.tabSection){
-              tabSection = tabSectionsLignes.filter((section:any) => section.ligne_id == this.tabLigne[i].id);
+              let tabSection = tabSectionsLignes.filter((section:any) => section.ligne_id == this.tabLigne[i].id);
               this.tabLigne[i].sections = tabSection;
               if(tabSection){
                 for(let y = 0; y < tabSection.length; y++){

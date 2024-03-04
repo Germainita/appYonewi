@@ -136,7 +136,7 @@ export class AuthentificationComponent implements OnInit {
         (response :any) =>{
           // // console.log(response);
           if (response.status){
-            this.authService.deconnexionAutomatique(); //Rafraichit 9 fois le token à chaque 15 minutes et déconnecte directement la session
+            // this.authService.deconnexionAutomatique(); //Rafraichit 9 fois le token à chaque 15 minutes et déconnecte directement la session
             // // console.log ("C'est bon");
             
             // Swal.fire({
